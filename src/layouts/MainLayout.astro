@@ -1,0 +1,39 @@
+---
+// component import
+import MainHead from "./MainHead.astro";
+
+const {
+  title = "My Astro Blog",
+  description = "All about my thoughts and imagination about programming",
+} = Astro.props;
+
+// STYLE IMPORT
+// import "../styles/global.css";
+---
+
+<html lang="en">
+  <MainHead {title} {description} />
+  <body class="body">
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style>
+  html::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-image: url("/test2.JPG");
+    filter: brightness(0.5);
+    background-size: cover;
+    background-position: center;
+    scale: 1;
+    z-index: -1;
+    background-repeat: no-repeat;
+  }
+</style>
