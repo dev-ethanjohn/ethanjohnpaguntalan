@@ -1,0 +1,98 @@
+---
+
+---
+
+<div class="about__favorites">
+  <div class="about__favorites-wrapper">
+    <span class="about__favorites-title"> Favorites ✦ ✧ ✰</span>
+    <p class="about__favorites-description">
+      -&nbsp; Ghibli, Jollibee, <mark
+        class="highlight-pink"
+        style="color: white">SpaceHey</mark
+      > ☁︎, Reddit, jaysean, Silent voice, Kang Kong chips + adobo
+    </p>
+
+    <figure
+      onclick="toggleImageView(this.querySelector('img'), 'about')"
+      class="ghibli-container"
+    >
+      <img
+        id="js-gallery-image"
+        class="about__favorites-ghibli"
+        src="/favorites/jiro.jpg"
+      />
+
+      <figcaption class="image-description hidden" hidden>
+        <p>
+          <mark class="highlight-light-orange"
+            >Like Jiro Horikoshi, just a lil guy chasing big dreams 💫</mark
+          >
+        </p>
+      </figcaption>
+    </figure>
+  </div>
+</div>
+
+<style>
+  .about__favorites {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    grid-column: span 3;
+    background-color: #b2c0ffd4;
+    max-height: 16rem;
+  }
+
+  .about__favorites-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 0.5rem;
+    min-height: 0;
+  }
+
+  .about__favorites-title,
+  .about__favorites-description {
+    flex-shrink: 0;
+  }
+
+  .about__favorites-title {
+    padding: 0.5rem 0 0.5rem 1rem;
+    text-align: center;
+    text-decoration: underline;
+    text-transform: uppercase;
+    border: 0.5px solid #1f3168;
+    font-family: "ADLaM Display", system-ui;
+    background-color: white;
+    color: #1f3168cb;
+  }
+
+  .about__favorites-description {
+    font-size: 1.25rem;
+    font-family: "Gaegu", sans-serif;
+    line-height: 125%;
+    font-weight: 600;
+    color: #1f3168;
+  }
+
+  .about__favorites-ghibli {
+    flex-grow: 1;
+    object-fit: cover;
+    width: 100%;
+    min-height: 0;
+    border: 1.5px solid #555555ee;
+    box-shadow: 0 2px 4px 0 #1616196a;
+    object-position: center;
+    border-radius: 0.5rem;
+  }
+
+  .ghibli-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+</style>

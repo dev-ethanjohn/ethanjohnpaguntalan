@@ -1,0 +1,65 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-image: url("/test.jpg");
+  filter: brightness(0.4);
+  background-size: cover;
+  background-position: center;
+  scale: 1;
+  z-index: -1;
+  background-repeat: no-repeat;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: white;
+  /* font-family: "Be Vietnam Pro", sans-serif; */
+  font-family: "Balsamiq Sans", sans-serif;
+}
+
+img {
+  /* https://www.youtube.com/watch?v=345V2MU3E_w */
+  font-style: italic;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+p,
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
+}
+
+li {
+  list-style-type: none;
+}
+
+button {
+  display: inline;
+  all: unset;
+  cursor: pointer;
+}
+
+/* UTILITIES */
+.section-container {
+  box-shadow: 0 4px 4px 0 hsl(var(--clr-dark-600) / 0.3);
+}

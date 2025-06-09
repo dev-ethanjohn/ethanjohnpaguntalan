@@ -1,0 +1,32 @@
+/* 
+.marker-pink {
+  @include marker-highlight(#ff6db7);
+}
+
+.marker-light-orange {
+  @include marker-highlight(hsl(var(--clr-orange-200)));
+}
+
+.marker-light-blue {
+  @include marker-highlight(hsl(var(--clr-blue-200)));
+}
+
+//MARK: HIGHLIGHT MARK
+.highlight-light-orange {
+  @include mark-highlight(hsl(var(--clr-orange-200)));
+} */
+
+.highlight-pink {
+  background-color: #ff96ca;
+  padding: 0 0.25em;
+  border-radius: 0.25rem;
+  color: inherit;
+}
+
+/* .highlight-light-blue {
+  @include mark-highlight(hsl(var(--clr-blue-200)));
+}
+
+.highlight-green {
+  @include mark-highlight(#c8f7c5);
+} */

@@ -1,0 +1,89 @@
+---
+const {
+  username = "EJ",
+  fullName = "Ethan John Paguntalan 💻",
+  profileImage = "/profile-img.jpg",
+} = Astro.props;
+---
+
+<header class="layout__header">
+  <img
+    src={profileImage}
+    alt={`${username} profile`}
+    class="header__profile-image"
+  />
+  <div class="header__profile-names">
+    <h1 class="header__username">{username}</h1>
+    <p class="header__full-name">{fullName}</p>
+  </div>
+</header>
+
+<style>
+  .layout__header {
+    position: relative;
+    grid-area: header;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 2rem;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .layout__header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 0.5rem;
+    background-image: linear-gradient(
+        rgba(66, 49, 134, 0.4),
+        rgba(123, 123, 123, 0.328)
+      ),
+      url("/header-bg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: grayscale(0.1);
+    z-index: -1;
+  }
+
+  .header__profile-image {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    background-color: gray;
+    object-fit: cover;
+    object-position: top;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+
+  .header__profile-names {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header__username {
+    font-size: 2.25rem;
+    align-self: start;
+    display: inline-block;
+    background-color: black;
+    padding: 0.5rem 0.25rem 0 0.5rem;
+    font-family: "Archivo Black", sans-serif;
+    font-weight: bold;
+    letter-spacing: 0.25em;
+  }
+
+  .header__full-name {
+    font-size: 1rem;
+    align-self: start;
+    display: inline-block;
+    background-color: black;
+    padding: 0.5rem;
+    font-family: "Balsamiq Sans", sans-serif;
+    color: #999999;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+  }
+</style>
