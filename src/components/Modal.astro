@@ -1,0 +1,78 @@
+---
+// src/components/Modal.astro
+interface Props {
+  projectId?: string;
+}
+
+const { projectId } = Astro.props;
+
+import { imageList } from "../data/project";
+
+const image = imageList.find((img) => img.id === projectId);
+
+if (!image) {
+  throw new Error(`Image with id "${projectId}" not found`);
+}
+---
+
+<!-- src/components/Modal.astro -->
+<div class="modal">
+  <div class="modal__overlay">
+    <div class="modal__wrapper">
+      <a href="/" class="modal__link">
+        <img class="modal__image" src={image.src} alt={image.id} />
+      </a>
+      <div class="modal__content">
+        <h3 class="modal__title">Image {projectId}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal {
+    position: fixed;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+  }
+
+  .modal__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(39, 39, 42, 0.7); /* bg-zinc-800/70 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal__wrapper {
+    max-width: 32rem; /* max-w-lg */
+    background-color: white;
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.1),
+      0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-lg */
+  }
+
+  .modal__link {
+    display: block;
+  }
+
+  .modal__image {
+    width: 100%;
+    border-top-left-radius: 0.5rem; /* rounded-t-lg */
+    border-top-right-radius: 0.5rem;
+  }
+
+  .modal__content {
+    padding: 1rem; /* p-4 */
+  }
+
+  .modal__title {
+    font-size: 1.25rem; /* text-xl */
+    line-height: 1.75rem;
+    font-weight: 700; /* font-bold */
+  }
+</style>

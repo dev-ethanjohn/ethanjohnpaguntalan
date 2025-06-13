@@ -1,0 +1,27 @@
+---
+// src/pages/projects/[project].astro
+import Modal from "../../../components/Modal.astro";
+import { projects } from "../../../data/project";
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export async function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { project: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+const projectData = projects.find((p) => p.id === project.id);
+
+if (!projectData) {
+  return Astro.redirect("/404");
+}
+---
+
+<MainLayout title={`Project: ${projectData.title}`}>
+  <div class="modal-overlay">
+    <Modal projectId={project.id} />
+  </div>
+</MainLayout>
