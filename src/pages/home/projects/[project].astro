@@ -1,8 +1,15 @@
 ---
-// src/pages/projects/[project].astro
+import Aside from "../../../components/Aside.astro";
+import Header from "../../../components/Header.astro";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import ProjectsTab from "../../../components/main/ProjectsTab.astro";
+import ArtsTab from "../../../components/main/ArtsTab.astro";
+import BlogsTab from "../../../components/main/BlogsTab.astro";
+import Blurb from "../../../components/Blurb.astro";
 import Modal from "../../../components/Modal.astro";
 import { projects } from "../../../data/project";
-import MainLayout from "../../../layouts/MainLayout.astro";
+import "../../../styles/global.css";
+import "../../../styles/utils.css";
 
 export async function getStaticPaths() {
   return projects.map((project) => ({
@@ -18,10 +25,173 @@ const projectData = projects.find((p) => p.id === project.id);
 if (!projectData) {
   return Astro.redirect("/404");
 }
+
+const tabs = ["projects", "blogs", "arts"];
+const activeTab = "projects";
+const capitalize = (str: string): string =>
+  str.charAt(0).toUpperCase() + str.slice(1);
 ---
 
 <MainLayout title={`Project: ${projectData.title}`}>
-  <div class="modal-overlay">
-    <Modal projectId={project.id} />
+  <div class="grid" transition:animate="fade">
+    <Header />
+
+    <nav class="main-nav">
+      <div class="tabs main-nav__left" id="tab-container">
+        {
+          tabs.map((t) => (
+            <button
+              data-tab={t}
+              class={activeTab === t ? "active" : ""}
+              aria-selected={activeTab === t}
+              role="tab"
+            >
+              {capitalize(t)}
+            </button>
+          ))
+        }
+        <div class="tab-underline" id="tab-underline"></div>
+      </div>
+
+      <section class="main-nav__right">
+        <Blurb />
+      </section>
+    </nav>
+
+    <main class="layout__main" transition:name="main-content">
+      <div id="tab-content" class="tab-content">
+        <div id="projects-content" class="tab-pane" style="display: block;">
+          <ProjectsTab withoutImage={true} projectId={project.id} />
+        </div>
+        <div id="blogs-content" class="tab-pane" style="display: none;">
+          <BlogsTab />
+        </div>
+        <div id="arts-content" class="tab-pane" style="display: none;">
+          <ArtsTab />
+        </div>
+      </div>
+    </main>
+
+    <Aside />
   </div>
+
+  <Modal projectId={project.id} withoutImage={true} />
+  ]
 </MainLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 357px;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "header header"
+      "main-nav main-nav"
+      "main aside";
+    gap: 1rem;
+    width: clamp(47.125rem, 88vw, 77.5rem);
+    margin: 1rem auto;
+  }
+
+  .main-nav {
+    grid-area: main-nav;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .main-nav__left {
+    flex: 2;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .main-nav__right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  .layout__main {
+    grid-area: main;
+    position: relative;
+  }
+
+  .tabs {
+    position: relative;
+    display: flex;
+    gap: 3rem;
+  }
+
+  .tabs button {
+    position: relative;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #999999;
+  }
+
+  .tabs button.active,
+  .tabs button:hover {
+    color: white;
+  }
+
+  .tab-underline {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+    width: 0;
+    left: 0;
+  }
+</style>
+
+<script type="module">
+  import { navigate } from "astro:transitions/client";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const tabButtons = document.querySelectorAll("[data-tab]");
+    const tabPanes = document.querySelectorAll(".tab-pane");
+    const underline = document.getElementById("tab-underline");
+
+    function moveUnderlineToActiveTab(tabId) {
+      const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
+      if (!activeButton || !underline) return;
+
+      const { offsetLeft, offsetWidth } = activeButton;
+      underline.style.width = `${offsetWidth}px`;
+      underline.style.left = `${offsetLeft}px`;
+    }
+
+    function showTab(tabId) {
+      tabButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.tab === tabId);
+        btn.setAttribute("aria-selected", btn.dataset.tab === tabId);
+      });
+
+      tabPanes.forEach((pane) => {
+        pane.style.display = pane.id === `${tabId}-content` ? "block" : "none";
+      });
+
+      moveUnderlineToActiveTab(tabId);
+    }
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const tab = button.dataset.tab;
+        navigate(`/home/${tab}`);
+        showTab(tab);
+      });
+    });
+
+    showTab("projects");
+
+    window.addEventListener("resize", () => {
+      moveUnderlineToActiveTab("projects");
+    });
+  });
+</script>

@@ -1,28 +1,46 @@
 ---
-import { imageList } from "../../utils/imageList";
+import { imageList } from "../../data/project";
 
-// Filter only project images
+interface Props {
+  withoutImage?: boolean;
+  projectId?: string;
+}
+
+const { withoutImage, projectId } = Astro.props;
+
 const projects = imageList.filter((img) => img.category === "projects");
 ---
 
 <div class="projects-grid">
   {
     projects.map((project) => (
-      <a href={`/home/projects/${project.id}`} class="project-card">
-        <div class="project-card__image-container">
-          <img
-            class="project-card__image"
-            src={project.src}
-            alt={project.title}
-          />
-        </div>
-        <div class="project-card__content">
-          <h3 class="project-card__title">{project.title}</h3>
-          <p class="project-card__description">
-            {project.description?.slice(0, 100)}...
-          </p>
-        </div>
-      </a>
+      <div class="break-inside-avoid">
+        {withoutImage && projectId === project.id ? (
+          <div class="bg-white rounded-lg" style="display: none;">
+            <img
+              class="h-auto w-full rounded-lg opacity-0"
+              src={project.src}
+              alt=""
+            />
+          </div>
+        ) : (
+          <a href={`/home/projects/${project.id}`} class="project-card">
+            <div class="project-card__image-container">
+              <img
+                class="project-card__image"
+                src={project.src}
+                alt={project.title}
+              />
+            </div>
+            <div class="project-card__content">
+              <h3 class="project-card__title">{project.title}</h3>
+              <p class="project-card__description">
+                {project.description?.slice(0, 100)}...
+              </p>
+            </div>
+          </a>
+        )}
+      </div>
     ))
   }
 </div>
@@ -44,11 +62,6 @@ const projects = imageList.filter((img) => img.category === "projects");
       box-shadow 0.3s ease;
     text-decoration: none;
     color: inherit;
-  }
-
-  .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   }
 
   .project-card__image-container {

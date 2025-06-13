@@ -1,10 +1,10 @@
 ---
-// src/components/Modal.astro
 interface Props {
   projectId?: string;
+  withoutImage?: boolean;
 }
 
-const { projectId } = Astro.props;
+const { projectId, withoutImage } = Astro.props;
 
 import { imageList } from "../data/project";
 
@@ -15,16 +15,22 @@ if (!image) {
 }
 ---
 
-<!-- src/components/Modal.astro -->
-<div class="modal">
+<div class="modal" transition:name="overlay">
   <div class="modal__overlay">
     <div class="modal__wrapper">
-      <a href="/" class="modal__link">
-        <img class="modal__image" src={image.src} alt={image.id} />
+      <a href="/home/projects" class="modal__link">
+        <img
+          class="modal__image"
+          src={image.src}
+          alt={image.title}
+          transition:name={`image-${projectId}`}
+        />
       </a>
       <div class="modal__content">
-        <h3 class="modal__title">Image {projectId}</h3>
+        <h3 class="modal__title">{image.title}</h3>
+        <p>{image.description}</p>
       </div>
+      <button class="modal__close">Close</button>
     </div>
   </div>
 </div>
@@ -35,44 +41,87 @@ if (!image) {
     inset: 0;
     height: 100%;
     width: 100%;
-    z-index: 10;
+    z-index: 1000;
   }
-
   .modal__overlay {
     position: absolute;
     inset: 0;
-    background-color: rgba(39, 39, 42, 0.7); /* bg-zinc-800/70 */
+    background-color: rgba(39, 39, 42, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-
   .modal__wrapper {
-    max-width: 32rem; /* max-w-lg */
+    max-width: 32rem;
     background-color: white;
-    border-radius: 0.5rem; /* rounded-lg */
+    border-radius: 0.5rem;
     box-shadow:
       0 4px 6px -1px rgb(0 0 0 / 0.1),
-      0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-lg */
+      0 2px 4px -2px rgb(0 0 0 / 0.1);
+    position: relative;
   }
-
   .modal__link {
     display: block;
   }
-
   .modal__image {
     width: 100%;
-    border-top-left-radius: 0.5rem; /* rounded-t-lg */
+    border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
   }
-
   .modal__content {
-    padding: 1rem; /* p-4 */
+    padding: 1rem;
+  }
+  .modal__title {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+  }
+  .modal__close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #333;
   }
 
-  .modal__title {
-    font-size: 1.25rem; /* text-xl */
-    line-height: 1.75rem;
-    font-weight: 700; /* font-bold */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  ::view-transition-new(overlay) {
+    animation: fade-in 300ms ease-out;
+  }
+  ::view-transition-old(overlay) {
+    display: none;
   }
 </style>
+
+<!-- <script>
+  import { navigate } from "astro:transitions/client";
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const closeButton = document.querySelector(".modal__close");
+    const overlay = document.querySelector(".modal__overlay");
+    if (closeButton) {
+      closeButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        navigate("/home/projects");
+      });
+    }
+    if (overlay) {
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+          e.preventDefault();
+          navigate("/home/projects");
+        }
+      });
+    }
+  });
+</script> -->
