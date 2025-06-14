@@ -6,7 +6,6 @@ import ProjectsTab from "../../components/main/ProjectsTab.astro";
 import ArtsTab from "../../components/main/ArtsTab.astro";
 import BlogsTab from "../../components/main/BlogsTab.astro";
 import Blurb from "../../components/Blurb.astro";
-import Modal from "../../components/Modal.astro";
 
 import "../../styles/global.css";
 import "../../styles/utils.css";
@@ -22,10 +21,14 @@ const capitalize = (str: string): string =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
 const { tab } = Astro.params;
+
+if (!tabs.includes(tab)) {
+  return Astro.redirect("/404");
+}
 ---
 
-<MainLayout>
-  <div class="grid">
+<MainLayout title={`Home - ${capitalize(tab)}`}>
+  <div class="grid" transition:animate="fade">
     <Header />
 
     <nav class="main-nav">
@@ -45,21 +48,32 @@ const { tab } = Astro.params;
         <div class="tab-underline" id="tab-underline"></div>
       </div>
 
-      <!-- BLURB -->
       <section class="main-nav__right">
         <Blurb />
       </section>
     </nav>
 
-    <main class="layout__main">
+    <main class="layout__main" transition:name="main-content">
       <div id="tab-content" class="tab-content">
-        <div id="projects-content" class="tab-pane" style="display: none;">
+        <div
+          id="projects-content"
+          class="tab-pane"
+          style={tab === "projects" ? "display: block;" : "display: none;"}
+        >
           <ProjectsTab />
         </div>
-        <div id="blogs-content" class="tab-pane" style="display: none;">
+        <div
+          id="blogs-content"
+          class="tab-pane"
+          style={tab === "blogs" ? "display: block;" : "display: none;"}
+        >
           <BlogsTab />
         </div>
-        <div id="arts-content" class="tab-pane" style="display: none;">
+        <div
+          id="arts-content"
+          class="tab-pane"
+          style={tab === "arts" ? "display: block;" : "display: none;"}
+        >
           <ArtsTab />
         </div>
       </div>
@@ -105,6 +119,7 @@ const { tab } = Astro.params;
 
   .layout__main {
     grid-area: main;
+    margin-right: 3rem;
   }
 
   .tabs {
@@ -138,8 +153,8 @@ const { tab } = Astro.params;
   }
 </style>
 
-<script type="module">
-  document.addEventListener("DOMContentLoaded", () => {
+<script is:inline data-astro-rerun>
+  document.addEventListener("astro:page-load", () => {
     const tabButtons = document.querySelectorAll("[data-tab]");
     const tabPanes = document.querySelectorAll(".tab-pane");
     const underline = document.getElementById("tab-underline");
@@ -156,6 +171,7 @@ const { tab } = Astro.params;
     function showTab(tabId) {
       tabButtons.forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.tab === tabId);
+        btn.setAttribute("aria-selected", btn.dataset.tab === tabId);
       });
 
       tabPanes.forEach((pane) => {

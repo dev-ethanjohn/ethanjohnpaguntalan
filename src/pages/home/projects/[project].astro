@@ -32,7 +32,7 @@ const capitalize = (str: string): string =>
   str.charAt(0).toUpperCase() + str.slice(1);
 ---
 
-<MainLayout title={`Project: ${projectData.title}`}>
+<MainLayout title={`Project: ${projectData.title}`} projectId={project.id}>
   <div class="grid" transition:animate="fade">
     <Header />
 
@@ -73,10 +73,9 @@ const capitalize = (str: string): string =>
     </main>
 
     <Aside />
-  </div>
 
-  <Modal projectId={project.id} withoutImage={true} />
-  ]
+    <Modal projectId={project.id} withoutImage={true} />
+  </div>
 </MainLayout>
 
 <style>
@@ -116,6 +115,7 @@ const capitalize = (str: string): string =>
   .layout__main {
     grid-area: main;
     position: relative;
+    margin-right: 3rem;
   }
 
   .tabs {
@@ -149,10 +149,8 @@ const capitalize = (str: string): string =>
   }
 </style>
 
-<script type="module">
-  import { navigate } from "astro:transitions/client";
-
-  document.addEventListener("DOMContentLoaded", () => {
+<script is:inline data-astro-rerun>
+  document.addEventListener("astro:page-load", () => {
     const tabButtons = document.querySelectorAll("[data-tab]");
     const tabPanes = document.querySelectorAll(".tab-pane");
     const underline = document.getElementById("tab-underline");
@@ -183,12 +181,16 @@ const capitalize = (str: string): string =>
       button.addEventListener("click", (e) => {
         e.preventDefault();
         const tab = button.dataset.tab;
-        navigate(`/home/${tab}`);
+        history.pushState(null, null, `/home/${tab}`);
         showTab(tab);
       });
     });
 
     showTab("projects");
+
+    window.addEventListener("popstate", () => {
+      showTab("projects");
+    });
 
     window.addEventListener("resize", () => {
       moveUnderlineToActiveTab("projects");

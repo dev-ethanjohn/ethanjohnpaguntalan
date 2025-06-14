@@ -103,25 +103,20 @@ if (!image) {
   }
 </style>
 
-<!-- <script>
-  import { navigate } from "astro:transitions/client";
-
-  document.addEventListener("DOMContentLoaded", async () => {
+<!-- Add this script at the bottom of Modal.astro -->
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
     const closeButton = document.querySelector(".modal__close");
     const overlay = document.querySelector(".modal__overlay");
-    if (closeButton) {
-      closeButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        navigate("/home/projects");
-      });
+
+    function closeModal() {
+      window.history.back();
     }
-    if (overlay) {
+
+    if (closeButton) closeButton.addEventListener("click", closeModal);
+    if (overlay)
       overlay.addEventListener("click", (e) => {
-        if (e.target === overlay) {
-          e.preventDefault();
-          navigate("/home/projects");
-        }
+        if (e.target === overlay) closeModal();
       });
-    }
   });
-</script> -->
+</script>

@@ -1,4 +1,5 @@
 ---
+// projectsTab.astro
 import { imageList } from "../../data/project";
 
 interface Props {
@@ -6,22 +7,19 @@ interface Props {
   projectId?: string;
 }
 
-const { withoutImage, projectId } = Astro.props;
+const { withoutImage = false, projectId } = Astro.props; // Set default value for withoutImage
 
 const projects = imageList.filter((img) => img.category === "projects");
 ---
 
 <div class="projects-grid">
   {
-    projects.map((project) => (
+    projects.map(async (project) => (
       <div class="break-inside-avoid">
         {withoutImage && projectId === project.id ? (
-          <div class="bg-white rounded-lg" style="display: none;">
-            <img
-              class="h-auto w-full rounded-lg opacity-0"
-              src={project.src}
-              alt=""
-            />
+          // Hidden project when withoutImage is true and IDs match
+          <div>
+            <img class="project-card__image" src={project.src} alt="" />
           </div>
         ) : (
           <a href={`/home/projects/${project.id}`} class="project-card">
@@ -30,14 +28,15 @@ const projects = imageList.filter((img) => img.category === "projects");
                 class="project-card__image"
                 src={project.src}
                 alt={project.title}
+                transition:name={`image-${project.id}`}
               />
             </div>
-            <div class="project-card__content">
+            {/* <div class="project-card__content">
               <h3 class="project-card__title">{project.title}</h3>
               <p class="project-card__description">
                 {project.description?.slice(0, 100)}...
               </p>
-            </div>
+            </div> */}
           </a>
         )}
       </div>
