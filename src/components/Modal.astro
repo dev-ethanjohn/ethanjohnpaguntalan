@@ -4,7 +4,7 @@ interface Props {
   withoutImage?: boolean;
 }
 
-const { projectId, withoutImage } = Astro.props;
+const { projectId } = Astro.props;
 
 import { imageList } from "../data/project";
 
@@ -15,43 +15,59 @@ if (!image) {
 }
 ---
 
-<div class="modal" transition:name="overlay">
-  <div class="modal__overlay">
-    <div class="modal__wrapper">
-      <a href="/home/projects" class="modal__link">
-        <img
-          class="modal__image"
-          src={image.src}
-          alt={image.title}
-          transition:name={`image-${projectId}`}
-        />
-      </a>
-      <div class="modal__content">
-        <h3 class="modal__title">{image.title}</h3>
-        <p>{image.description}</p>
-      </div>
-      <button class="modal__close">Close</button>
-    </div>
+<!-- <div class="modal" > -->
+<div class="modal__overlay" transition:name="overlay">
+  <!-- Modal wrapper -->
+  <div
+    style="background-color: white; border-radius: 0.5rem"
+    transition:name={`wrapper-${projectId}`}
+  >
+    <a href="/" class="product-img">
+      <img
+        class="modal-image"
+        src={image.src}
+        alt={image.id}
+        transition:name={`image-${projectId}`}
+      />
+    </a>
   </div>
 </div>
+<!-- </div> -->
 
 <style>
-  .modal {
+  /* .modal {
     position: fixed;
     inset: 0;
     height: 100%;
     width: 100%;
     z-index: 1000;
   }
+   */
   .modal__overlay {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(39, 39, 42, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(26, 32, 44, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1000;
+    inset: 0;
   }
-  .modal__wrapper {
+
+  .modal {
+    width: 50%;
+    height: 50%;
+    background-color: white;
+    border-radius: 1.5rem;
+    display: flex;
+    gap: 2rem;
+    color: black;
+  }
+
+  /* .modal__wrapper {
     max-width: 32rem;
     background-color: white;
     border-radius: 0.5rem;
@@ -59,23 +75,29 @@ if (!image) {
       0 4px 6px -1px rgb(0 0 0 / 0.1),
       0 2px 4px -2px rgb(0 0 0 / 0.1);
     position: relative;
-  }
-  .modal__link {
+  } */
+
+  /* .modal__link {
     display: block;
-  }
-  .modal__image {
+  } */
+
+  .modal-image {
+    display: block;
     width: 100%;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
   }
-  .modal__content {
+  /* .modal__content {
     padding: 1rem;
-  }
-  .modal__title {
+  } */
+  /* .modal__title {
     font-size: 1.25rem;
     line-height: 1.75rem;
     font-weight: 700;
   }
+
+
   .modal__close {
     position: absolute;
     top: 0.5rem;
@@ -85,9 +107,9 @@ if (!image) {
     font-size: 1rem;
     cursor: pointer;
     color: #333;
-  }
+  } */
 
-  @keyframes fade-in {
+  /* @keyframes fade-in {
     from {
       opacity: 0;
     }
@@ -100,23 +122,61 @@ if (!image) {
   }
   ::view-transition-old(overlay) {
     display: none;
-  }
+  } */
 </style>
 
-<!-- Add this script at the bottom of Modal.astro -->
-<script is:inline>
+<!-- <script>
+  import { navigate } from "astro:transitions/client";
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const closeButton = document.querySelector(".modal__close");
+    const overlay = document.querySelector(".modal__overlay");
+    if (closeButton) {
+      closeButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        navigate("/home/projects");
+      });
+    }
+    if (overlay) {
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+          e.preventDefault();
+          navigate("/home/projects");
+        }
+      });
+    }
+  });
+</script> -->
+
+<!-- <script>
+  import { navigate } from "astro:transitions/client";
+
   document.addEventListener("DOMContentLoaded", () => {
+    console.log("Modal script initialized");
     const closeButton = document.querySelector(".modal__close");
     const overlay = document.querySelector(".modal__overlay");
 
-    function closeModal() {
-      window.history.back();
+    if (!closeButton || !overlay) {
+      console.error("Modal elements missing:", { closeButton, overlay });
+      return;
     }
 
-    if (closeButton) closeButton.addEventListener("click", closeModal);
-    if (overlay)
-      overlay.addEventListener("click", (e) => {
-        if (e.target === overlay) closeModal();
-      });
+    closeButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("Modal close button clicked");
+      navigate("/home/projects").catch((err) =>
+        console.error("Modal navigation error:", err)
+      );
+    });
+
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        e.preventDefault();
+        console.log("Modal overlay clicked");
+        navigate("/home/projects").catch((err) =>
+          console.error("Modal navigation error:", err)
+        );
+      }
+    });
   });
-</script>
+</script> -->

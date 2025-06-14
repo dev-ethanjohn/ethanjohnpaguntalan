@@ -1,21 +1,137 @@
 ---
 // component import
-import MainHead from "./MainHead.astro";
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title: string;
+  projectId?: string;
+  description?: string;
+}
 
 const {
+  projectId,
   title = "My Astro Blog",
   description = "All about my thoughts and imagination about programming",
 } = Astro.props;
 
-const classes = Astro.props.class ?? Astro.props["class:list"];
+// const classes = Astro.props.class ?? Astro.props["class:list"];
 
 // STYLE IMPORT
-// import "../styles/global.css";
+import "../styles/global.css";
 ---
 
 <html lang="en">
-  <MainHead {title} {description} />
-  <body class=`${classes ?? ""}`>
+  <!-- <MainHead {title} {description} /> -->
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+
+    <!--IMPORTANT FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Archivo+Black&family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Gaegu&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+    <ClientRouter />
+
+    {
+      projectId && (
+        <style
+          is:global
+          set:html={`
+        ::view-transition-old(wrapper-${projectId}),
+        ::view-transition-new(wrapper-${projectId}) {
+          animation: none;
+          mix-blend-mode: normal;
+          height: 100%;
+          overflow: clip;
+        }
+
+        ::view-transition-old(wrapper-${projectId}) {
+          object-fit: contain;
+        }
+
+        ::view-transition-new(wrapper-${projectId}) {
+          object-fit: cover;
+          animation: spring-scale-in 500ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        ::view-transition-old(image-${projectId}),
+        ::view-transition-new(image-${projectId}) {
+          animation: none;
+          mix-blend-mode: normal;
+          height: 100%;
+          overflow: clip;
+        }
+
+        ::view-transition-new(image-${projectId}) {
+          animation: spring-scale-in 450ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        ::view-transition-group(wrapper-${projectId}),
+        ::view-transition-group(image-${projectId}) {
+          z-index: 2;
+        }
+
+        ::view-transition-group(modal-content) {
+          z-index: 3;
+        }
+
+        ::view-transition-old(modal-content):only-child {
+          display: none;
+        }
+
+        ::view-transition-new(modal-content) {
+          animation: spring-fade-up 500ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+   
+    
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes spring-scale-in {
+          0% { 
+            opacity: 0.2;
+            transform: scale(0.9);
+          }
+          60% {
+            transform: scale(1.01);
+          }
+          100% { 
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes spring-fade-up {
+          0% { 
+            opacity: 0;
+            transform: translateY(10px) scale(0.97);
+          }
+          50% {
+            transform: translateY(-2px) scale(1.015);
+          }
+          100% { 
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+      `}
+        />
+      )
+    }
+  </head>
+
+  <body>
+    <!--   <body class=`${classes ?? ""}`> -->
     <slot />
   </body>
 </html>
