@@ -1,7 +1,7 @@
 ---
+import { logos, type LogoKey } from "../../public/icons/LogoLinkMap.ts";
 import AboutMe from "./about/AboutMe.astro";
 import Favorites from "./about/Favorites.astro";
-import { logos, type LogoKey } from "../../public/icons/LogoLinkMap.ts";
 
 const links = [
   { name: "LinkedIn", logo: "linkedIn" },
@@ -18,7 +18,7 @@ function getLogoComponent(name: string) {
 }
 ---
 
-<aside class="aside layout-aside">
+<aside class="aside layout__aside">
   <!-- NOTE: ABOUT -->
 
   <!-- TODO: change class name for this parent container -->
@@ -185,11 +185,17 @@ function getLogoComponent(name: string) {
 
   .layout__aside {
     grid-area: aside;
+    position: sticky;
+    top: 8rem;
+    align-self: start;
   }
 
   .profile__templates {
     gap: 2rem;
-    display: grid;
+    display: flex;
+    flex-direction: column;
+
+    /* background-color: red; */
   }
 
   /* NOTE: HERO */

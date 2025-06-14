@@ -14,6 +14,14 @@ export const projects = [
     src: "/images/project-2.jpg",
     category: "projects",
   },
+
+  {
+    id: "project-3",
+    title: "Project Two",
+    description: "Another awesome project",
+    src: "/images/project-2.jpg",
+    category: "projects",
+  },
 ];
 
 export const imageList = projects.map((project) => ({

@@ -57,13 +57,23 @@ const projects = imageList.filter((img) => img.category === "projects");
             style="background-color: white; border-radius: 0.5rem;"
             transition:name={`wrapper-${project.id}`}
           >
-            <a href={`/home/projects/${project.id}`}>
+            <a href={`/home/projects/${project.id}`} class="project">
               <img
                 style="height: 100%; width: 100%; border-radius: 0.5rem;"
                 src={project.src}
                 alt={project.id}
                 transition:name={`image-${project.id}`}
               />
+
+              <div class="project__content">
+                <h3>App</h3>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est
+                  esse, tempora possimus minus quas iusto eveniet porro eaque!
+                  Odio temporibus, cum totam eaque dignissimos asperiores minus
+                  officia ipsam et adipisci!
+                </p>
+              </div>
             </a>
           </div>
         )}
@@ -73,9 +83,14 @@ const projects = imageList.filter((img) => img.category === "projects");
 </div>
 
 <style>
+  .card {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+  }
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     gap: 2rem;
   }
 

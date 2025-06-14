@@ -21,14 +21,10 @@ const capitalize = (str: string): string =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
 const { tab } = Astro.params;
-
-if (!tabs.includes(tab)) {
-  return Astro.redirect("/404");
-}
 ---
 
-<MainLayout title={`Home - ${capitalize(tab)}`}>
-  <div class="grid" transition:animate="fade">
+<MainLayout title="Home">
+  <div class="grid">
     <Header />
 
     <nav class="main-nav">
@@ -53,7 +49,7 @@ if (!tabs.includes(tab)) {
       </section>
     </nav>
 
-    <main class="layout__main" transition:name="main-content">
+    <main class="layout__main">
       <div id="tab-content" class="tab-content">
         <div
           id="projects-content"
@@ -171,7 +167,6 @@ if (!tabs.includes(tab)) {
     function showTab(tabId) {
       tabButtons.forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.tab === tabId);
-        btn.setAttribute("aria-selected", btn.dataset.tab === tabId);
       });
 
       tabPanes.forEach((pane) => {
