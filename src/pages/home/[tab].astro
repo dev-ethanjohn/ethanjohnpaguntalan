@@ -83,8 +83,8 @@ const { tab } = Astro.params;
 <style>
   .dropBar {
     padding: 2rem;
-    width: 100%;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.66);
+    backdrop-filter: blur(24px);
     position: fixed;
     top: 0;
     z-index: 15;
@@ -93,14 +93,16 @@ const { tab } = Astro.params;
     justify-content: center;
     color: white;
     visibility: hidden;
-    transform: translate3d(0, -100%, 0);
+    transform: translateX(-50%) translateY(-100%);
+    width: clamp(47.125rem, 88vw, 77.5rem);
+    left: 50%;
     transition:
       transform 0.3s,
       visibility 0.3s;
   }
 
   .dropBar.bar-active {
-    transform: translateZ(0);
+    transform: translateX(-50%) translateY(0);
     visibility: visible;
   }
 
@@ -115,6 +117,8 @@ const { tab } = Astro.params;
     gap: 1rem;
     width: clamp(47.125rem, 88vw, 77.5rem);
     margin: 1rem auto;
+    /* align-items: start;
+    min-height: 100vh; */
   }
 
   .main-nav {
@@ -258,38 +262,38 @@ const { tab } = Astro.params;
       threshold: 0,
     };
 
-    const aside__inner = document.querySelector(".profile__templates");
-    const aside = document.querySelector(".aside");
+    // const aside__inner = document.querySelector(".profile__templates");
+    // const aside = document.querySelector(".aside");
 
     const callback = (entries) => {
       const entry = entries[0];
 
-      const moveDown = () => {
-        const asideWidth = getComputedStyle(aside).width;
+      // const moveDown = () => {
+      //   const asideWidth = getComputedStyle(aside).width;
 
-        aside__inner.style.transition = "transform 0.3s ease";
-        aside__inner.style.transform = "translateY(7rem)";
-        aside__inner.style.position = "fixed";
-        aside__inner.style.top = "0";
-        aside__inner.style.width = asideWidth;
-      };
+      //   aside__inner.style.transition = "transform 0.3s ease";
+      //   aside__inner.style.transform = "translateY(7rem)";
+      //   aside__inner.style.position = "fixed";
+      //   aside__inner.style.top = "0";
+      //   aside__inner.style.width = asideWidth;
+      // };
 
-      const moveUp = () => {
-        aside__inner.style.transition = "transform 0.5s ease";
-        aside__inner.style.transform = "translateY(0rem)";
-        aside__inner.style.position = "static";
-        aside__inner.style.top = "";
-        aside__inner.style.width = "";
-      };
+      // const moveUp = () => {
+      //   aside__inner.style.transition = "transform 0.5s ease";
+      //   aside__inner.style.transform = "translateY(0rem)";
+      //   aside__inner.style.position = "static";
+      //   aside__inner.style.top = "";
+      //   aside__inner.style.width = "";
+      // };
 
       if (entry.isIntersecting) {
         console.log("entering");
         dropBar.classList.remove("bar-active");
-        moveUp();
+        // moveUp();
       } else {
         console.log("leaving");
         dropBar.classList.add("bar-active");
-        moveDown();
+        // moveDown();
       }
     };
     const obs = new IntersectionObserver(callback, options);
