@@ -24,6 +24,7 @@ const { tab } = Astro.params;
 ---
 
 <MainLayout title="Home">
+  <div class="dropBar">Hello</div>
   <div class="grid">
     <Header />
 
@@ -80,6 +81,29 @@ const { tab } = Astro.params;
 </MainLayout>
 
 <style>
+  .dropBar {
+    padding: 2rem;
+    width: 100%;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    visibility: hidden;
+    transform: translate3d(0, -100%, 0);
+    transition:
+      transform 0.3s,
+      visibility 0.3s;
+  }
+
+  .dropBar.bar-active {
+    transform: translateZ(0);
+    visibility: visible;
+  }
+
   .grid {
     display: grid;
     grid-template-columns: 1fr 357px;
@@ -147,6 +171,27 @@ const { tab } = Astro.params;
     width: 0;
     left: 0;
   }
+  /* 
+  .dropBar.bar-active ~ .grid .aside {
+    margin-top: 10rem;
+  }
+
+  .aside {
+    transition: margin-top 0.3s ease;
+  } */
+
+  /* .move-asidedown {
+    background-color: red !important;
+  } */
+
+  .aside {
+    transition: transform 0.3s ease;
+    transform: translateY(0);
+  }
+
+  .move-aside--down {
+    transform: translateY(5rem);
+  }
 </style>
 
 <script is:inline data-astro-rerun>
@@ -154,6 +199,8 @@ const { tab } = Astro.params;
     const tabButtons = document.querySelectorAll("[data-tab]");
     const tabPanes = document.querySelectorAll(".tab-pane");
     const underline = document.getElementById("tab-underline");
+    const nav = document.querySelector(".main-nav");
+    const dropBar = document.querySelector(".dropBar");
 
     function moveUnderlineToActiveTab(tabId) {
       const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
@@ -203,5 +250,49 @@ const { tab } = Astro.params;
       const tab = getCurrentTabFromPath();
       moveUnderlineToActiveTab(tab);
     });
+
+    //NOTE: sticky nav
+    const options = {
+      root: document,
+      rootMargin: "32px",
+      threshold: 0,
+    };
+
+    const aside__inner = document.querySelector(".profile__templates");
+    const aside = document.querySelector(".aside");
+
+    const callback = (entries) => {
+      const entry = entries[0];
+
+      const moveDown = () => {
+        const asideWidth = getComputedStyle(aside).width;
+
+        aside__inner.style.transition = "transform 0.3s ease";
+        aside__inner.style.transform = "translateY(7rem)";
+        aside__inner.style.position = "fixed";
+        aside__inner.style.top = "0";
+        aside__inner.style.width = asideWidth;
+      };
+
+      const moveUp = () => {
+        aside__inner.style.transition = "transform 0.5s ease";
+        aside__inner.style.transform = "translateY(0rem)";
+        aside__inner.style.position = "static";
+        aside__inner.style.top = "";
+        aside__inner.style.width = "";
+      };
+
+      if (entry.isIntersecting) {
+        console.log("entering");
+        dropBar.classList.remove("bar-active");
+        moveUp();
+      } else {
+        console.log("leaving");
+        dropBar.classList.add("bar-active");
+        moveDown();
+      }
+    };
+    const obs = new IntersectionObserver(callback, options);
+    obs.observe(nav);
   });
 </script>

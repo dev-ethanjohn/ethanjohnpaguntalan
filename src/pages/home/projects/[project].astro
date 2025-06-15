@@ -33,6 +33,7 @@ const capitalize = (str: string): string =>
 ---
 
 <MainLayout title={`Project: ${projectData.title}`} projectId={project.id}>
+  <div class="dropBar">Hello</div>
   <div class="grid" transition:animate="fade">
     <Header />
 
@@ -79,6 +80,28 @@ const capitalize = (str: string): string =>
 </MainLayout>
 
 <style>
+  .dropBar {
+    padding: 2rem;
+    width: 100%;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    visibility: hidden;
+    transform: translate3d(0, -100%, 0);
+    transition:
+      transform 0.3s,
+      visibility 0.3s;
+  }
+
+  .dropBar.bar-active {
+    transform: translateZ(0);
+    visibility: visible;
+  }
   .grid {
     display: grid;
     grid-template-columns: 1fr 357px;
@@ -154,6 +177,8 @@ const capitalize = (str: string): string =>
     const tabButtons = document.querySelectorAll("[data-tab]");
     const tabPanes = document.querySelectorAll(".tab-pane");
     const underline = document.getElementById("tab-underline");
+    const nav = document.querySelector(".main-nav");
+    const dropBar = document.querySelector(".dropBar");
 
     function moveUnderlineToActiveTab(tabId) {
       const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
@@ -195,5 +220,25 @@ const capitalize = (str: string): string =>
     window.addEventListener("resize", () => {
       moveUnderlineToActiveTab("projects");
     });
+
+    //NOTE: sticky nav
+    const options = {
+      root: document,
+      rootMargin: "32px",
+      threshold: 0,
+    };
+
+    const callback = (entries) => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        console.log("entering");
+        dropBar.classList.remove("bar-active");
+      } else {
+        console.log("leaving");
+        dropBar.classList.add("bar-active");
+      }
+    };
+    const obs = new IntersectionObserver(callback, options);
+    obs.observe(nav);
   });
 </script>
