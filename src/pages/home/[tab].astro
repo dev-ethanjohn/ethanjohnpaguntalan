@@ -52,7 +52,7 @@ const { tab } = Astro.params;
   </div>
 
   <div class="main-grid">
-    <main class="layout__main">
+    <main class="layout__main" transition:persist>
       <div id="tab-content" class="tab-content">
         <div
           id="projects-content"
@@ -210,6 +210,27 @@ const { tab } = Astro.params;
 </style>
 
 <script is:inline data-astro-rerun>
+  document.addEventListener("astro:before-swap", () => {
+    sessionStorage.setItem("scrollPosition", window.scrollY.toString());
+    console.log("Saving scroll position:", window.scrollY);
+  });
+
+  document.addEventListener("astro:after-swap", () => {
+    const scrollPosition = sessionStorage.getItem("scrollPosition");
+    console.log("Restoring scroll position:", scrollPosition);
+    if (scrollPosition) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo({
+            top: parseInt(scrollPosition, 10),
+            behavior: "instant",
+          });
+          sessionStorage.removeItem("scrollPosition");
+        });
+      });
+    }
+  });
+
   document.addEventListener("astro:page-load", () => {
     const tabButtons = document.querySelectorAll("[data-tab]");
     const tabPanes = document.querySelectorAll(".tab-pane");
@@ -276,42 +297,45 @@ const { tab } = Astro.params;
     const aside__inner = document.querySelector(".profile__templates");
     const aside = document.querySelector(".aside");
 
-    const callback = (entries) => {
-      const entry = entries[0];
+    if (aside__inner && aside) {
+      const callback = (entries) => {
+        const entry = entries[0];
 
-      const moveDown = () => {
-        const asideWidth = getComputedStyle(aside).width;
+        const moveDown = () => {
+          const asideWidth = getComputedStyle(aside).width;
 
-        aside__inner.style.transition = "transform 0.3s ease";
-        aside__inner.style.transform = "translateY(7rem)";
-        aside__inner.style.position = "fixed";
-        aside__inner.style.top = "0";
-        aside__inner.style.width = asideWidth;
+          aside__inner.style.transition = "transform 0.3s ease";
+          aside__inner.style.transform = "translateY(7rem)";
+          aside__inner.style.position = "fixed";
+          aside__inner.style.top = "0";
+          aside__inner.style.width = asideWidth;
+        };
+
+        const moveUp = () => {
+          aside__inner.style.transition = "transform 0.5s ease";
+          aside__inner.style.transform = "translateY(0rem)";
+          aside__inner.style.position = "static";
+          aside__inner.style.top = "";
+          aside__inner.style.width = "";
+        };
+
+        if (entry.isIntersecting) {
+          console.log("entering");
+          dropBar.classList.remove("bar-active");
+          moveUp();
+        } else {
+          console.log("leaving");
+          dropBar.classList.add("bar-active");
+          moveDown();
+        }
       };
 
-      const moveUp = () => {
-        aside__inner.style.transition = "transform 0.5s ease";
-        aside__inner.style.transform = "translateY(0rem)";
-        aside__inner.style.position = "static";
-        aside__inner.style.top = "";
-        aside__inner.style.width = "";
-      };
-
-      if (entry.isIntersecting) {
-        console.log("entering");
-        dropBar.classList.remove("bar-active");
-        moveUp();
-      } else {
-        console.log("leaving");
-        dropBar.classList.add("bar-active");
-        moveDown();
-      }
-    };
-
-    const obs = new IntersectionObserver(callback, options);
-    obs.observe(nav);
+      const obs = new IntersectionObserver(callback, options);
+      obs.observe(nav);
+    }
 
     function toggleSticky() {
+      if (!aside) return;
       aside.classList.remove("sticky-top", "sticky-bottom");
       if (aside.offsetHeight >= window.innerHeight) {
         aside.classList.add("sticky-bottom");
@@ -319,7 +343,10 @@ const { tab } = Astro.params;
         aside.classList.add("sticky-top");
       }
     }
+
     window.addEventListener("load", toggleSticky);
     window.addEventListener("resize", toggleSticky);
+
+    toggleSticky();
   });
 </script>
