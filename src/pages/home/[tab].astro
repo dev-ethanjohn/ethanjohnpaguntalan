@@ -49,7 +49,9 @@ const { tab } = Astro.params;
         <Blurb />
       </section>
     </nav>
+  </div>
 
+  <div class="main-grid">
     <main class="layout__main">
       <div id="tab-content" class="tab-content">
         <div
@@ -75,7 +77,6 @@ const { tab } = Astro.params;
         </div>
       </div>
     </main>
-
     <Aside />
   </div>
 </MainLayout>
@@ -109,16 +110,26 @@ const { tab } = Astro.params;
   .grid {
     display: grid;
     grid-template-columns: 1fr 357px;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto;
     grid-template-areas:
       "header header"
-      "main-nav main-nav"
-      "main aside";
+      "main-nav main-nav";
     gap: 1rem;
     width: clamp(47.125rem, 88vw, 77.5rem);
     margin: 1rem auto;
-    /* align-items: start;
-    min-height: 100vh; */
+    /* min-height: 100vh; */
+  }
+
+  .main-grid {
+    position: relative;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr 357px;
+    width: clamp(47.125rem, 88vw, 77.5rem);
+    grid-template-areas: "main aside";
+    margin: 1rem auto;
+    /* grid-template-rows: auto;
+    background-color: red; */
   }
 
   .main-nav {
@@ -188,14 +199,14 @@ const { tab } = Astro.params;
     background-color: red !important;
   } */
 
-  .aside {
+  /* .aside {
     transition: transform 0.3s ease;
     transform: translateY(0);
   }
 
   .move-aside--down {
     transform: translateY(5rem);
-  }
+  } */
 </style>
 
 <script is:inline data-astro-rerun>
@@ -255,48 +266,60 @@ const { tab } = Astro.params;
       moveUnderlineToActiveTab(tab);
     });
 
-    //NOTE: sticky nav
+    //NOTE: sticky nav + aside
     const options = {
       root: document,
       rootMargin: "32px",
       threshold: 0,
     };
 
-    // const aside__inner = document.querySelector(".profile__templates");
-    // const aside = document.querySelector(".aside");
+    const aside__inner = document.querySelector(".profile__templates");
+    const aside = document.querySelector(".aside");
 
     const callback = (entries) => {
       const entry = entries[0];
 
-      // const moveDown = () => {
-      //   const asideWidth = getComputedStyle(aside).width;
+      const moveDown = () => {
+        const asideWidth = getComputedStyle(aside).width;
 
-      //   aside__inner.style.transition = "transform 0.3s ease";
-      //   aside__inner.style.transform = "translateY(7rem)";
-      //   aside__inner.style.position = "fixed";
-      //   aside__inner.style.top = "0";
-      //   aside__inner.style.width = asideWidth;
-      // };
+        aside__inner.style.transition = "transform 0.3s ease";
+        aside__inner.style.transform = "translateY(7rem)";
+        aside__inner.style.position = "fixed";
+        aside__inner.style.top = "0";
+        aside__inner.style.width = asideWidth;
+      };
 
-      // const moveUp = () => {
-      //   aside__inner.style.transition = "transform 0.5s ease";
-      //   aside__inner.style.transform = "translateY(0rem)";
-      //   aside__inner.style.position = "static";
-      //   aside__inner.style.top = "";
-      //   aside__inner.style.width = "";
-      // };
+      const moveUp = () => {
+        aside__inner.style.transition = "transform 0.5s ease";
+        aside__inner.style.transform = "translateY(0rem)";
+        aside__inner.style.position = "static";
+        aside__inner.style.top = "";
+        aside__inner.style.width = "";
+      };
 
       if (entry.isIntersecting) {
         console.log("entering");
         dropBar.classList.remove("bar-active");
-        // moveUp();
+        moveUp();
       } else {
         console.log("leaving");
         dropBar.classList.add("bar-active");
-        // moveDown();
+        moveDown();
       }
     };
+
     const obs = new IntersectionObserver(callback, options);
     obs.observe(nav);
+
+    function toggleSticky() {
+      aside.classList.remove("sticky-top", "sticky-bottom");
+      if (aside.offsetHeight >= window.innerHeight) {
+        aside.classList.add("sticky-bottom");
+      } else {
+        aside.classList.add("sticky-top");
+      }
+    }
+    window.addEventListener("load", toggleSticky);
+    window.addEventListener("resize", toggleSticky);
   });
 </script>
