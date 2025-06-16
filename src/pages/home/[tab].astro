@@ -10,6 +10,9 @@ import Blurb from "../../components/Blurb.astro";
 import "../../styles/global.css";
 import "../../styles/utils.css";
 
+// data imports
+import { user } from "../../data/user";
+
 export const tabs = ["projects", "blogs", "arts"];
 export async function getStaticPaths() {
   return tabs.map((tab) => ({
@@ -24,9 +27,14 @@ const { tab } = Astro.params;
 ---
 
 <MainLayout title="Home">
-  <div class="dropBar">Hello</div>
+  <div class="dropBar">
+    <div class="dropBar__profile">
+      <img src="" alt="" />
+      <h1>{user.username}</h1>
+    </div>
+  </div>
   <div class="grid">
-    <Header />
+    <Header {...user} />
 
     <nav class="main-nav">
       <div class="tabs main-nav__left" id="tab-container">

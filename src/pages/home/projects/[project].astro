@@ -11,6 +11,9 @@ import { projects } from "../../../data/project";
 import "../../../styles/global.css";
 import "../../../styles/utils.css";
 
+// data imports
+import { user } from "../../../data/user";
+
 export async function getStaticPaths() {
   return projects.map((project) => ({
     params: { project: project.id },
@@ -33,9 +36,14 @@ const capitalize = (str: string): string =>
 ---
 
 <MainLayout title={`Project: ${projectData.title}`} projectId={project.id}>
-  <div class="dropBar">Hello</div>
+  <div class="dropBar">
+    <div class="dropBar__profile">
+      <img src="" alt="" />
+      <h1>{user.username}</h1>
+    </div>
+  </div>
   <div class="grid" transition:animate="fade">
-    <Header />
+    <Header {...user} />
 
     <nav class="main-nav">
       <div class="tabs main-nav__left" id="tab-container">

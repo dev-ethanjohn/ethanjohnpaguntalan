@@ -1,9 +1,5 @@
 ---
-const {
-  username = "EJ",
-  fullName = "Ethan John Paguntalan 💻",
-  profileImage = "/profile-img.jpg",
-} = Astro.props;
+const { username, fullName, profileImage } = Astro.props;
 ---
 
 <header class="layout__header">
@@ -13,8 +9,8 @@ const {
     class="header__profile-image"
   />
   <div class="header__profile-names">
-    <h1 class="header__username">{username}</h1>
-    <p class="header__full-name">{fullName}</p>
+    <h2 class="header__username">{username}</h2>
+    <h3 class="header__full-name">{fullName}</h3>
   </div>
 </header>
 
