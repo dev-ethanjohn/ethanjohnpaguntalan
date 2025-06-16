@@ -1,0 +1,70 @@
+---
+import Blurb from "../components/Blurb.astro";
+const { username, profileImage } = Astro.props;
+---
+
+<div class="dropBar">
+  <div class="dropBar__profile">
+    <img src={profileImage} alt="" class="dropBar__profile-image" />
+    <h1 class="dropBar__username">{username}</h1>
+  </div>
+
+  <div class="blurb">
+    <Blurb />
+  </div>
+</div>
+
+<style>
+  .dropBar {
+    padding: 1rem 0 1rem 1rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    position: fixed;
+    top: 0;
+    z-index: 15;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+
+    color: white;
+    width: clamp(47.125rem, 88vw, 77.5rem);
+    left: 50%;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-100%);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .dropBar.bar-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .dropBar__profile {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .dropBar__profile-image {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+
+  .dropBar__username {
+    font-size: 2.25rem;
+    font-family: "Archivo Black", sans-serif;
+  }
+
+  .blurb {
+    grid-column: 3 / 4;
+  }
+</style>

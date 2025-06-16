@@ -7,6 +7,7 @@ import ArtsTab from "../../../components/main/ArtsTab.astro";
 import BlogsTab from "../../../components/main/BlogsTab.astro";
 import Blurb from "../../../components/Blurb.astro";
 import Modal from "../../../components/Modal.astro";
+import DropBar from "../../../components/DropBar.astro";
 import { projects } from "../../../data/project";
 import "../../../styles/global.css";
 import "../../../styles/utils.css";
@@ -36,12 +37,7 @@ const capitalize = (str: string): string =>
 ---
 
 <MainLayout title={`Project: ${projectData.title}`} projectId={project.id}>
-  <div class="dropBar">
-    <div class="dropBar__profile">
-      <img src="" alt="" />
-      <h1>{user.username}</h1>
-    </div>
-  </div>
+  <DropBar {...user} />
   <div class="grid" transition:animate="fade">
     <Header {...user} />
 
@@ -89,31 +85,6 @@ const capitalize = (str: string): string =>
   <Modal projectId={project.id} withoutImage={true} />
 </MainLayout>
 <style>
-  .dropBar {
-    padding: 2rem;
-    background-color: rgba(0, 0, 0, 0.66);
-    backdrop-filter: blur(24px);
-    position: fixed;
-    top: 0;
-    z-index: 15;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    visibility: hidden;
-    transform: translateX(-50%) translateY(-100%);
-    width: clamp(47.125rem, 88vw, 77.5rem);
-    left: 50%;
-    transition:
-      transform 0.3s,
-      visibility 0.3s;
-  }
-
-  .dropBar.bar-active {
-    transform: translateX(-50%) translateY(0);
-    visibility: visible;
-  }
-
   .grid {
     display: grid;
     grid-template-columns: 1fr 357px;

@@ -6,6 +6,7 @@ import ProjectsTab from "../../components/main/ProjectsTab.astro";
 import ArtsTab from "../../components/main/ArtsTab.astro";
 import BlogsTab from "../../components/main/BlogsTab.astro";
 import Blurb from "../../components/Blurb.astro";
+import DropBar from "../../components/DropBar.astro";
 
 import "../../styles/global.css";
 import "../../styles/utils.css";
@@ -27,12 +28,7 @@ const { tab } = Astro.params;
 ---
 
 <MainLayout title="Home">
-  <div class="dropBar">
-    <div class="dropBar__profile">
-      <img src="" alt="" />
-      <h1>{user.username}</h1>
-    </div>
-  </div>
+  <DropBar {...user} />
   <div class="grid">
     <Header {...user} />
 
@@ -90,34 +86,6 @@ const { tab } = Astro.params;
 </MainLayout>
 
 <style>
-  .dropBar {
-    padding: 2rem;
-    background-color: rgba(0, 0, 0, 0.66);
-    backdrop-filter: blur(24px);
-    position: fixed;
-    top: 0;
-    z-index: 15;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    width: clamp(47.125rem, 88vw, 77.5rem);
-    left: 50%;
-
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(-50%) translateY(-100%);
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s ease;
-  }
-
-  .dropBar.bar-active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-  }
-
   .grid {
     display: grid;
     grid-template-columns: 1fr 357px;
