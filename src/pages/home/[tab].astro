@@ -93,18 +93,21 @@ const { tab } = Astro.params;
     align-items: center;
     justify-content: center;
     color: white;
-    visibility: hidden;
-    transform: translateX(-50%) translateY(-100%);
     width: clamp(47.125rem, 88vw, 77.5rem);
     left: 50%;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-100%);
     transition:
-      transform 0.3s,
-      visibility 0.3s;
+      opacity 0.3s ease,
+      transform 0.3s ease;
   }
 
   .dropBar.bar-active {
-    transform: translateX(-50%) translateY(0);
+    opacity: 1;
     visibility: visible;
+    transform: translateX(-50%) translateY(0);
   }
 
   .grid {
@@ -117,7 +120,6 @@ const { tab } = Astro.params;
     gap: 1rem;
     width: clamp(47.125rem, 88vw, 77.5rem);
     margin: 1rem auto;
-    /* min-height: 100vh; */
   }
 
   .main-grid {
@@ -128,8 +130,6 @@ const { tab } = Astro.params;
     width: clamp(47.125rem, 88vw, 77.5rem);
     grid-template-areas: "main aside";
     margin: 1rem auto;
-    /* grid-template-rows: auto;
-    background-color: red; */
   }
 
   .main-nav {
@@ -186,46 +186,47 @@ const { tab } = Astro.params;
     width: 0;
     left: 0;
   }
-  /* 
-  .dropBar.bar-active ~ .grid .aside {
-    margin-top: 10rem;
-  }
-
-  .aside {
-    transition: margin-top 0.3s ease;
-  } */
-
-  /* .move-asidedown {
-    background-color: red !important;
-  } */
-
-  /* .aside {
-    transition: transform 0.3s ease;
-    transform: translateY(0);
-  }
-
-  .move-aside--down {
-    transform: translateY(5rem);
-  } */
 </style>
 
 <script is:inline data-astro-rerun>
+  // NOTE: control aside sticky positioning before and after page change/transitions
+  // persist scroll position
   document.addEventListener("astro:before-swap", () => {
     sessionStorage.setItem("scrollPosition", window.scrollY.toString());
-    console.log("Saving scroll position:", window.scrollY);
+    const asideInner = document.querySelector(".profile__templates");
+    if (asideInner) {
+      const isSticky = getComputedStyle(asideInner).position === "fixed";
+      sessionStorage.setItem("wasSticky", isSticky ? "true" : "false");
+    }
   });
 
   document.addEventListener("astro:after-swap", () => {
     const scrollPosition = sessionStorage.getItem("scrollPosition");
-    console.log("Restoring scroll position:", scrollPosition);
+    const wasSticky = sessionStorage.getItem("wasSticky") === "true";
+
     if (scrollPosition) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
+          if (wasSticky) {
+            const asideInner = document.querySelector(".profile__templates");
+            const aside = document.querySelector(".aside");
+            if (asideInner && aside) {
+              asideInner.style.transition = "none";
+              asideInner.style.position = "fixed";
+              asideInner.style.top = "0";
+              asideInner.style.width = getComputedStyle(aside).width;
+              asideInner.style.transform = "translateY(7rem)";
+            }
+          }
+
           window.scrollTo({
             top: parseInt(scrollPosition, 10),
             behavior: "instant",
           });
+
           sessionStorage.removeItem("scrollPosition");
+          sessionStorage.removeItem("wasSticky");
+          sessionStorage.removeItem("wasDropBarActive");
         });
       });
     }
@@ -237,6 +238,15 @@ const { tab } = Astro.params;
     const underline = document.getElementById("tab-underline");
     const nav = document.querySelector(".main-nav");
     const dropBar = document.querySelector(".dropBar");
+
+    // e.g. if url is [...home/projects/project-1], remove dropBar
+    const isProjectPage = window.location.pathname.match(
+      /^\/home\/projects\/[^/]+$/
+    );
+    if (isProjectPage && dropBar) {
+      dropBar.classList.remove("bar-active");
+      dropBar.style.transform = "translateX(-50%) translateY(-100%)";
+    }
 
     function moveUnderlineToActiveTab(tabId) {
       const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
@@ -259,6 +269,8 @@ const { tab } = Astro.params;
       moveUnderlineToActiveTab(tabId);
     }
 
+    // change current URL using history to match tab data (client)
+    // e.g., /home/projects, /home/blogs, and more
     tabButtons.forEach((button) => {
       button.addEventListener("click", (e) => {
         e.preventDefault();
@@ -274,7 +286,7 @@ const { tab } = Astro.params;
       return match ? match[1] : "projects";
     }
 
-    const initialTab = getCurrentTabFromPath();
+    const initialTab = getCurrentTabFromPath(); // defaults to "projects", unless path not matched
     showTab(initialTab);
 
     window.addEventListener("popstate", () => {
@@ -287,45 +299,43 @@ const { tab } = Astro.params;
       moveUnderlineToActiveTab(tab);
     });
 
-    //NOTE: sticky nav + aside
+    // NOTE: Handle asdide positioning on 1st load
+    //
     const options = {
       root: document,
       rootMargin: "32px",
       threshold: 0,
     };
 
-    const aside__inner = document.querySelector(".profile__templates");
+    const asideInner = document.querySelector(".profile__templates");
     const aside = document.querySelector(".aside");
 
-    if (aside__inner && aside) {
+    if (asideInner && aside && !isProjectPage) {
       const callback = (entries) => {
         const entry = entries[0];
 
         const moveDown = () => {
-          const asideWidth = getComputedStyle(aside).width;
-
-          aside__inner.style.transition = "transform 0.3s ease";
-          aside__inner.style.transform = "translateY(7rem)";
-          aside__inner.style.position = "fixed";
-          aside__inner.style.top = "0";
-          aside__inner.style.width = asideWidth;
+          const asideWidth = getComputedStyle(aside).width; //? ensures inner width matches parent width when out of doc flow (due to fixed postioning)
+          asideInner.style.transition = "transform 0.3s ease";
+          asideInner.style.transform = "translateY(7rem)";
+          asideInner.style.position = "fixed";
+          asideInner.style.top = "0";
+          asideInner.style.width = asideWidth;
         };
 
         const moveUp = () => {
-          aside__inner.style.transition = "transform 0.5s ease";
-          aside__inner.style.transform = "translateY(0rem)";
-          aside__inner.style.position = "static";
-          aside__inner.style.top = "";
-          aside__inner.style.width = "";
+          asideInner.style.transition = "transform 0.5s ease";
+          asideInner.style.transform = "translateY(0rem)";
+          asideInner.style.position = "static";
+          asideInner.style.top = "";
+          asideInner.style.width = "";
         };
 
         if (entry.isIntersecting) {
-          console.log("entering");
-          dropBar.classList.remove("bar-active");
+          dropBar?.classList.remove("bar-active");
           moveUp();
         } else {
-          console.log("leaving");
-          dropBar.classList.add("bar-active");
+          dropBar?.classList.add("bar-active");
           moveDown();
         }
       };
@@ -346,7 +356,6 @@ const { tab } = Astro.params;
 
     window.addEventListener("load", toggleSticky);
     window.addEventListener("resize", toggleSticky);
-
     toggleSticky();
   });
 </script>
