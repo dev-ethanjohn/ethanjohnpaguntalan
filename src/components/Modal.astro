@@ -17,7 +17,7 @@ if (!project) {
 
 <div class="modal__overlay" transition:name="overlay">
   <div class="modal__card-wrapper">
-    <a href="/home/projects">
+    <a href="/home/projects" transition:name="close-modal">
       <button class="modal__close" aria-label="Close Modal">×</button>
     </a>
 
@@ -26,12 +26,14 @@ if (!project) {
         class="modal__thumbnail-container"
         transition:name={`wrapper-${projectId}`}
       >
-        <img
-          class="modal__image"
-          src={project.src}
-          alt={project.id}
-          transition:name={`image-${projectId}`}
-        />
+        <a href={`/home/projects/`}>
+          <img
+            class="modal__image"
+            src={project.src}
+            alt={project.id}
+            transition:name={`image-${projectId}`}
+          />
+        </a>
       </div>
 
       <div class="modal__content">
@@ -95,10 +97,9 @@ if (!project) {
       display: flex;
       width: 1120px;
       height: 600px;
-      max-width: 90vw;
+      max-width: 80vw;
       max-height: 80vh;
       background-color: white;
-      border-radius: 1rem;
       overflow: hidden;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }

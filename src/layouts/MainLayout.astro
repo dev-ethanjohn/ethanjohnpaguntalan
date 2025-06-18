@@ -46,8 +46,16 @@ const {
           overflow: clip;
         }
 
+        ::view-transition-old(image-${projectId}),
         ::view-transition-new(image-${projectId}) {
-          animation: spring-scale-in 450ms cubic-bezier(0.22, 1, 0.36, 1);
+          animation: none;
+          mix-blend-mode: normal;
+          height: 100%;
+          overflow: clip;
+        }
+
+        ::view-transition-new(image-${projectId}) {
+          animation: spring-scale-in 600ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         ::view-transition-new(meta-${projectId}) {
@@ -68,9 +76,15 @@ const {
           z-index: 1;
         }
 
-        ::view-transition-group(meta-${projectId}),
-        ::view-transition-group(description-${projectId}),
-        ::view-transition-group(image-${projectId}) {
+        ::view-transition-group(meta-${projectId}){
+              z-index: 4;
+        }
+     
+        ::view-transition-group(image-${projectId})  {
+          z-index: 2;
+        }
+
+        ::view-transition-group(description-${projectId})  {
           z-index: 2;
         }
 
@@ -91,11 +105,10 @@ const {
         }
 
         @keyframes spring-scale-in {
-          0% { transform: scale(0.6); }
-          60% { transform: scale(1.005); }
+          0% { transform: scale(0.8); }
+          60% { transform: scale(1.002); }
           100% { 
             transform: scale(1);
-            border-radius: 2rem 0 0 2rem;
           }
         }
       `}
