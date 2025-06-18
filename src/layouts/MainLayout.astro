@@ -1,5 +1,4 @@
 ---
-// component import
 import { ClientRouter } from "astro:transitions";
 
 interface Props {
@@ -13,29 +12,24 @@ const {
   title = "My Astro Blog",
   description = "All about my thoughts and imagination about programming",
 } = Astro.props;
-
-// const classes = Astro.props.class ?? Astro.props["class:list"];
-
-// STYLE IMPORT
-// import "../styles/global.css";
 ---
 
 <html lang="en">
-  <!-- <MainHead {title} {description} /> -->
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!--IMPORTANT FONTS -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Archivo+Black&family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Gaegu&display=swap"
       rel="stylesheet"
     />
+
     <title>{title}</title>
     <ClientRouter />
 
@@ -44,25 +38,8 @@ const {
         <style
           is:global
           set:html={`
-        ::view-transition-old(wrapper-${projectId}),
-        ::view-transition-new(wrapper-${projectId}) {
-          animation: none;
-          mix-blend-mode: normal;
-          height: 100%;
-          overflow: clip;
-        }
-
-        ::view-transition-old(wrapper-${projectId}) {
-          object-fit: contain;
-        }
-
-        ::view-transition-new(wrapper-${projectId}) {
-          object-fit: cover;
-          animation: spring-scale-in 500ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        ::view-transition-old(image-${projectId}),
-        ::view-transition-new(image-${projectId}) {
+        ::view-transition-old(card-${projectId}),
+        ::view-transition-new(card-${projectId}) {
           animation: none;
           mix-blend-mode: normal;
           height: 100%;
@@ -73,55 +50,52 @@ const {
           animation: spring-scale-in 450ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        ::view-transition-group(wrapper-${projectId}),
+        ::view-transition-new(meta-${projectId}) {
+          animation:
+            90ms cubic-bezier(0.4, 0, 1, 1) both fade-in,
+            300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-bottom-2;
+          animation-delay: 250ms;
+        }
+
+        ::view-transition-new(description-${projectId}) {
+          animation:
+            90ms cubic-bezier(0.4, 0, 1, 1) both fade-in,
+            300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-bottom;
+          animation-delay: 250ms;
+        }
+
+        ::view-transition-group(card-${projectId}) {
+          z-index: 1;
+        }
+
+        ::view-transition-group(meta-${projectId}),
+        ::view-transition-group(description-${projectId}),
         ::view-transition-group(image-${projectId}) {
           z-index: 2;
         }
 
-        ::view-transition-group(modal-content) {
-          z-index: 3;
-        }
-
-        ::view-transition-old(modal-content):only-child {
-          display: none;
-        }
-
-        ::view-transition-new(modal-content) {
-          animation: spring-fade-up 500ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-   
-    
         @keyframes fade-in {
           from { opacity: 0; }
-          to { opacity: 1; }
+        }
+
+        @keyframes fade-out {
+          to { opacity: 0; }
+        }
+
+        @keyframes slide-from-bottom {
+          from { transform: translateY(30px); }
+        }
+
+        @keyframes slide-from-bottom-2 {
+          from { transform: translateY(10px); }
         }
 
         @keyframes spring-scale-in {
-          0% { 
-            opacity: 0.2;
-            transform: scale(0.9);
-          }
-          60% {
-            transform: scale(1.01);
-          }
+          0% { transform: scale(0.6); }
+          60% { transform: scale(1.005); }
           100% { 
-            opacity: 1;
             transform: scale(1);
-          }
-        }
-
-        @keyframes spring-fade-up {
-          0% { 
-            opacity: 0;
-            transform: translateY(10px) scale(0.97);
-          }
-          50% {
-            transform: translateY(-2px) scale(1.015);
-          }
-          100% { 
-            opacity: 1;
-            transform: translateY(0) scale(1);
+            border-radius: 2rem 0 0 2rem;
           }
         }
       `}
@@ -131,7 +105,6 @@ const {
   </head>
 
   <body>
-    <!--   <body class=`${classes ?? ""}`> -->
     <slot />
   </body>
 </html>
