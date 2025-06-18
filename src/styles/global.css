@@ -53,6 +53,11 @@ li {
   list-style-type: none;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 button {
   display: inline;
   all: unset;
@@ -62,4 +67,16 @@ button {
 /* UTILITIES */
 .section-container {
   box-shadow: 0 4px 4px 0 hsl(var(--clr-dark-600) / 0.3);
+}
+
+.project__links a {
+  background-color: #ecebeb;
+  border: 1px solid #555555;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  padding: 0.25rem 14px;
+  color: black;
+  transition: box-shadow 200ms ease-in;
 }

@@ -94,7 +94,7 @@ const { tab } = Astro.params;
       "header header"
       "main-nav main-nav";
     gap: 1rem;
-    width: clamp(47.125rem, 88vw, 77.5rem);
+    width: clamp(47.125rem, 88vw, 75.5rem);
     margin: 1rem auto;
   }
 
@@ -103,7 +103,7 @@ const { tab } = Astro.params;
     display: grid;
     justify-content: center;
     grid-template-columns: 1fr 357px;
-    width: clamp(47.125rem, 88vw, 77.5rem);
+    width: clamp(47.125rem, 88vw, 75.5rem);
     grid-template-areas: "main aside";
     margin: 1rem auto;
   }
@@ -130,7 +130,7 @@ const { tab } = Astro.params;
 
   .layout__main {
     grid-area: main;
-    margin-right: 3rem;
+    margin-right: 6rem;
   }
 
   .tabs {
@@ -167,6 +167,8 @@ const { tab } = Astro.params;
 <script is:inline data-astro-rerun>
   // NOTE: control aside sticky positioning before and after page change/transitions
   // persist scroll position
+
+  // https://github.com/withastro/starlight/discussions/971
   document.addEventListener("astro:before-swap", () => {
     sessionStorage.setItem("scrollPosition", window.scrollY.toString());
     const asideInner = document.querySelector(".profile__templates");

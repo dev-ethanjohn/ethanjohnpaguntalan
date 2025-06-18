@@ -1,14 +1,14 @@
 ---
 import Aside from "../../../components/Aside.astro";
+import Blurb from "../../../components/Blurb.astro";
+import DropBar from "../../../components/DropBar.astro";
 import Header from "../../../components/Header.astro";
-import MainLayout from "../../../layouts/MainLayout.astro";
-import ProjectsTab from "../../../components/main/ProjectsTab.astro";
 import ArtsTab from "../../../components/main/ArtsTab.astro";
 import BlogsTab from "../../../components/main/BlogsTab.astro";
-import Blurb from "../../../components/Blurb.astro";
+import ProjectsTab from "../../../components/main/ProjectsTab.astro";
 import Modal from "../../../components/Modal.astro";
-import DropBar from "../../../components/DropBar.astro";
 import { projects } from "../../../data/project";
+import MainLayout from "../../../layouts/MainLayout.astro";
 import "../../../styles/global.css";
 import "../../../styles/utils.css";
 
@@ -93,7 +93,7 @@ const capitalize = (str: string): string =>
       "header header"
       "main-nav main-nav";
     gap: 1rem;
-    width: clamp(47.125rem, 88vw, 77.5rem);
+    width: clamp(47.125rem, 88vw, 75.5rem);
     margin: 1rem auto;
     /* min-height: 100vh; */
   }
@@ -103,7 +103,7 @@ const capitalize = (str: string): string =>
     display: grid;
     justify-content: center;
     grid-template-columns: 1fr 357px;
-    width: clamp(47.125rem, 88vw, 77.5rem);
+    width: clamp(47.125rem, 88vw, 75.5rem);
     grid-template-areas: "main aside";
     margin: 1rem auto;
     /* grid-template-rows: auto;
@@ -166,7 +166,7 @@ const capitalize = (str: string): string =>
   }
 </style>
 
-<script is:inline data-astro-rerun>
+<!-- <script is:inline data-astro-rerun>
   document.addEventListener("astro:before-swap", () => {
     sessionStorage.setItem("scrollPosition", window.scrollY.toString());
     const asideInner = document.querySelector(".profile__templates");
@@ -330,4 +330,4 @@ const capitalize = (str: string): string =>
     window.addEventListener("resize", toggleSticky);
     toggleSticky();
   });
-</script>
+</script> -->
