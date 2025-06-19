@@ -1,0 +1,101 @@
+---
+// src/layouts/BlogPostLayout.astro
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import { slugify } from "../utils/utils";
+import MainLayout from "./MainLayout.astro";
+
+interface Props {
+  data: {
+    title: string;
+    cover: ImageMetadata;
+    coverAlt: string;
+    description?: string;
+  };
+}
+
+const { data } = Astro.props;
+const slug = slugify(data.title);
+---
+
+<MainLayout title={data.title} description={data.description} blogId={slug}>
+  <article class="blog-post">
+    <header>
+      <nav class="back-nav">
+        <a href="/home/blogs" class="back-link">← Back to Home</a>
+      </nav>
+      <h1>{data.title}</h1>
+      {
+        data.cover && (
+          <Image
+            src={data.cover}
+            alt={data.coverAlt || data.title}
+            class="cover__image"
+            format="webp"
+            transition:name={`blog-image-${slug}`}
+          />
+        )
+      }
+    </header>
+    <section class="post-content">
+      <div class="markdown-body">
+        <slot />
+      </div>
+    </section>
+  </article>
+</MainLayout>
+
+<style>
+  body {
+    background-color: black;
+    color: white;
+  }
+
+  .blog-post {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .back-nav {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  .back-link {
+    display: inline-block;
+    color: #0070f3;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  header {
+    text-align: center;
+  }
+
+  .post-content {
+    display: flex;
+    gap: 2rem;
+  }
+  .content {
+    flex: 3;
+  }
+
+  .markdown-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    line-height: 200%;
+  }
+
+  .cover__image {
+    width: 50%;
+    height: auto;
+  }
+
+  .cover {
+    width: 100%;
+    object-fit: contain;
+  }
+</style>
