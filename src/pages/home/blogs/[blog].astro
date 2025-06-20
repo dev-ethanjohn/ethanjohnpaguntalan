@@ -1,0 +1,595 @@
+---
+// src/pages/home/blogs/[blog].astro
+import Aside from "../../../components/Aside.astro";
+import Blurb from "../../../components/Blurb.astro";
+import DropBar from "../../../components/DropBar.astro";
+import Header from "../../../components/Header.astro";
+import ArtsTab from "../../../components/main/ArtsTab.astro";
+import BlogsTab from "../../../components/main/BlogsTab.astro";
+import ProjectsTab from "../../../components/main/ProjectsTab.astro";
+import Modal from "../../../components/Modal.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import "../../../styles/global.css";
+import "../../../styles/utils.css";
+
+// Data imports
+import { user } from "../../../data/user";
+
+export async function getStaticPaths() {
+  const blogPosts = await getCollection("blog");
+  return [
+    {
+      params: { blog: "overview" },
+      props: { posts: blogPosts },
+    },
+  ];
+}
+
+const { blog } = Astro.params;
+const { posts } = Astro.props;
+
+const tabs = ["projects", "blogs", "arts"];
+const activeTab = "blogs";
+const capitalize = (str: string): string =>
+  str.charAt(0).toUpperCase() + str.slice(1);
+
+const title = "Blog Overview";
+---
+
+<MainLayout title={title} blogId={blog}>
+  <DropBar {...user} />
+  <div class="grid" transition:animate="fade">
+    <Header {...user} />
+
+    <nav class="main-nav">
+      <div class="tabs main-nav__left" id="tab-container">
+        {
+          tabs.map((t) => (
+            <button
+              data-tab={t}
+              class={activeTab === t ? "active" : ""}
+              aria-selected={activeTab === t}
+              role="tab"
+            >
+              {capitalize(t)}
+            </button>
+          ))
+        }
+        <div class="tab-underline" id="tab-underline"></div>
+      </div>
+
+      <section class="main-nav__right">
+        <Blurb />
+      </section>
+    </nav>
+  </div>
+
+  <div class="main-grid">
+    <main class="layout__main" transition:persist>
+      <div id="tab-content" class="tab-content">
+        <div id="projects-content" class="tab-pane" style="display: none;">
+          <ProjectsTab />
+        </div>
+        <div id="blogs-content" class="tab-pane" style="display: block;">
+          <BlogsTab posts={posts} />
+        </div>
+        <div id="arts-content" class="tab-pane" style="display: none;">
+          <ArtsTab />
+        </div>
+      </div>
+    </main>
+
+    <Aside />
+  </div>
+</MainLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 357px;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "header header"
+      "main-nav main-nav";
+    gap: 1rem;
+    width: clamp(47.125rem, 88vw, 75.5rem);
+    margin: 1rem auto;
+  }
+
+  .main-grid {
+    position: relative;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr 357px;
+    width: clamp(47.125rem, 88vw, 75.5rem);
+    grid-template-areas: "main aside";
+    margin: 1rem auto;
+  }
+
+  .main-nav {
+    grid-area: main-nav;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .main-nav__left {
+    flex: 2;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .main-nav__right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  .layout__main {
+    grid-area: main;
+    margin-right: 3rem;
+  }
+
+  .tabs {
+    position: relative;
+    display: flex;
+    gap: 3rem;
+  }
+
+  .tabs button {
+    position: relative;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #999999;
+  }
+
+  .tabs button.active,
+  .tabs button:hover {
+    color: white;
+  }
+
+  .tab-underline {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+    width: 0;
+    left: 0;
+  }
+
+  [transition-animate="fade"] {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script is:inline data-astro-rerun>
+  document.addEventListener("astro:page-load", () => {
+    const tabButtons = document.querySelectorAll("[data-tab]");
+    const tabPanes = document.querySelectorAll(".tab-pane");
+    const underline = document.getElementById("tab-underline");
+    const nav = document.querySelector(".main-nav");
+    const dropBar = document.querySelector(".dropBar");
+
+    function moveUnderlineToActiveTab(tabId) {
+      const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
+      if (!activeButton || !underline) return;
+      const { offsetLeft, offsetWidth } = activeButton;
+      underline.style.width = `${offsetWidth}px`;
+      underline.style.left = `${offsetLeft}px`;
+    }
+
+    function showTab(tabId) {
+      tabButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.tab === tabId);
+      });
+      tabPanes.forEach((pane) => {
+        pane.style.display = pane.id === `${tabId}-content` ? "block" : "none";
+      });
+      moveUnderlineToActiveTab(tabId);
+    }
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const tab = button.dataset.tab;
+        history.pushState(null, null, `/home/${tab}`);
+        showTab(tab);
+      });
+    });
+
+    function getCurrentTabFromPath() {
+      const path = window.location.pathname;
+      const match = path.match(/\/home\/(projects|blogs|arts)/);
+      return match ? match[1] : "blogs";
+    }
+
+    const initialTab = getCurrentTabFromPath();
+    showTab(initialTab);
+
+    window.addEventListener("popstate", () => {
+      const tab = getCurrentTabFromPath();
+      showTab(tab);
+    });
+
+    window.addEventListener("resize", () => {
+      const tab = getCurrentTabFromPath();
+      moveUnderlineToActiveTab(tab);
+    });
+
+    const options = {
+      root: document,
+      rootMargin: "32px",
+      threshold: 0,
+    };
+
+    const asideInner = document.querySelector(".profile__templates");
+    const aside = document.querySelector(".aside");
+
+    if (asideInner && aside) {
+      const callback = (entries) => {
+        const entry = entries[0];
+        const dropBar = document.querySelector(".dropBar");
+
+        const moveDown = () => {
+          const asideWidth = getComputedStyle(aside).width;
+          asideInner.style.transition = "transform 0.3s ease";
+          asideInner.style.transform = "translateY(7rem)";
+          asideInner.style.position = "fixed";
+          asideInner.style.top = "0";
+          asideInner.style.width = asideWidth;
+          if (dropBar) dropBar.classList.add("bar-active");
+        };
+
+        const moveUp = () => {
+          asideInner.style.transition = "transform 0.5s ease";
+          asideInner.style.transform = "translateY(0rem)";
+          asideInner.style.position = "static";
+          asideInner.style.top = "";
+          asideInner.style.width = "";
+          if (dropBar) dropBar.classList.remove("bar-active");
+        };
+
+        if (entry.isIntersecting) {
+          moveUp();
+        } else {
+          moveDown();
+        }
+      };
+
+      const obs = new IntersectionObserver(callback, options);
+      obs.observe(nav);
+    }
+
+    function toggleSticky() {
+      if (!aside) return;
+      aside.classList.remove("sticky-top", "sticky-bottom");
+      if (aside.offsetHeight >= window.innerHeight) {
+        aside.classList.add("sticky-bottom");
+      } else {
+        aside.classList.add("sticky-top");
+      }
+    }
+
+    window.addEventListener("load", toggleSticky);
+    window.addEventListener("resize", toggleSticky);
+    toggleSticky();
+  });
+</script>
+
+<!-- ---
+// src/pages/home/blogs/[blog].astro
+import Aside from "../../../components/Aside.astro";
+import Blurb from "../../../components/Blurb.astro";
+import DropBar from "../../../components/DropBar.astro";
+import Header from "../../../components/Header.astro";
+import ArtsTab from "../../../components/main/ArtsTab.astro";
+import BlogsTab from "../../../components/main/BlogsTab.astro";
+import ProjectsTab from "../../../components/main/ProjectsTab.astro";
+import Modal from "../../../components/Modal.astro";
+import { getCollection, render, type CollectionEntry } from "astro:content"; // Updated import
+import MainLayout from "../../../layouts/MainLayout.astro";
+import BlogPostLayout from "../../../layouts/BlogPostLayout.astro"; // Ensure this is imported
+import "../../../styles/global.css";
+import "../../../styles/utils.css";
+
+// Data imports
+import { user } from "../../../data/user";
+import { slugify } from "../../../utils/utils"; // Ensure slugify is imported
+
+export async function getStaticPaths() {
+  const blogPosts = await getCollection("blog");
+  return [
+    {
+      params: { blog: "overview" },
+      props: { isOverview: true, posts: blogPosts },
+    },
+    ...blogPosts.map((post: CollectionEntry<"blog">) => ({
+      params: { blog: slugify(post.data.title) },
+      props: { post },
+    })),
+  ];
+}
+
+const { blog } = Astro.params;
+const { isOverview, post, posts } = Astro.props;
+
+const tabs = ["projects", "blogs", "arts"];
+const activeTab = "blogs";
+const capitalize = (str: string): string =>
+  str.charAt(0).toUpperCase() + str.slice(1);
+
+let title = "Blog Overview";
+if (post) {
+  title = `Blog: ${post.data.title}`;
+}
+
+const blogData = post ? post.data : null;
+
+let Content = null;
+if (post) {
+  const rendered = await render(post);
+  Content = rendered.Content;
+}
+---
+
+<MainLayout title={title} blogId={blog}>
+  <DropBar {...user} />
+  <div class="grid" transition:animate="fade">
+    <Header {...user} />
+
+    <nav class="main-nav">
+      <div class="tabs main-nav__left" id="tab-container">
+        {
+          tabs.map((t) => (
+            <button
+              data-tab={t}
+              class={activeTab === t ? "active" : ""}
+              aria-selected={activeTab === t}
+              role="tab"
+            >
+              {capitalize(t)}
+            </button>
+          ))
+        }
+        <div class="tab-underline" id="tab-underline"></div>
+      </div>
+
+      <section class="main-nav__right">
+        <Blurb />
+      </section>
+    </nav>
+  </div>
+
+  <div class="main-grid">
+    <main class="layout__main" transition:persist>
+      <div id="tab-content" class="tab-content">
+        <div id="projects-content" class="tab-pane" style="display: none;">
+          <ProjectsTab />
+        </div>
+        <div id="blogs-content" class="tab-pane" style="display: block;">
+          {
+            isOverview ? (
+              <BlogsTab posts={posts} />
+            ) : blogData && Content ? (
+              <BlogPostLayout data={blogData}>
+                <Content />
+              </BlogPostLayout>
+            ) : null
+          }
+        </div>
+        <div id="arts-content" class="tab-pane" style="display: none;">
+          <ArtsTab />
+        </div>
+      </div>
+    </main>
+
+    <Aside />
+  </div>
+</MainLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 357px;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "header header"
+      "main-nav main-nav";
+    gap: 1rem;
+    width: clamp(47.125rem, 88vw, 75.5rem);
+    margin: 1rem auto;
+  }
+
+  .main-grid {
+    position: relative;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr 357px;
+    width: clamp(47.125rem, 88vw, 75.5rem);
+    grid-template-areas: "main aside";
+    margin: 1rem auto;
+  }
+
+  .main-nav {
+    grid-area: main-nav;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .main-nav__left {
+    flex: 2;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .main-nav__right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  .layout__main {
+    grid-area: main;
+    margin-right: 3rem;
+  }
+
+  .tabs {
+    position: relative;
+    display: flex;
+    gap: 3rem;
+  }
+
+  .tabs button {
+    position: relative;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #999999;
+  }
+
+  .tabs button.active,
+  .tabs button:hover {
+    color: white;
+  }
+
+  .tab-underline {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+    width: 0;
+    left: 0;
+  }
+</style>
+
+<script is:inline data-astro-rerun>
+  document.addEventListener("astro:page-load", () => {
+    const tabButtons = document.querySelectorAll("[data-tab]");
+    const tabPanes = document.querySelectorAll(".tab-pane");
+    const underline = document.getElementById("tab-underline");
+    const nav = document.querySelector(".main-nav");
+    const dropBar = document.querySelector(".dropBar");
+
+    function moveUnderlineToActiveTab(tabId) {
+      const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
+      if (!activeButton || !underline) return;
+      const { offsetLeft, offsetWidth } = activeButton;
+      underline.style.width = `${offsetWidth}px`;
+      underline.style.left = `${offsetLeft}px`;
+    }
+
+    function showTab(tabId) {
+      tabButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.tab === tabId);
+      });
+      tabPanes.forEach((pane) => {
+        pane.style.display = pane.id === `${tabId}-content` ? "block" : "none";
+      });
+      moveUnderlineToActiveTab(tabId);
+    }
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const tab = button.dataset.tab;
+        history.pushState(null, null, `/home/${tab}`);
+        showTab(tab);
+      });
+    });
+
+    function getCurrentTabFromPath() {
+      const path = window.location.pathname;
+      const match = path.match(/\/home\/(projects|blogs|arts)/);
+      return match ? match[1] : "blogs"; // Default to "blogs" for this page
+    }
+
+    const initialTab = getCurrentTabFromPath();
+    showTab(initialTab);
+
+    window.addEventListener("popstate", () => {
+      const tab = getCurrentTabFromPath();
+      showTab(tab);
+    });
+
+    window.addEventListener("resize", () => {
+      const tab = getCurrentTabFromPath();
+      moveUnderlineToActiveTab(tab);
+    });
+
+    const options = {
+      root: document,
+      rootMargin: "32px",
+      threshold: 0,
+    };
+
+    const asideInner = document.querySelector(".profile__templates");
+    const aside = document.querySelector(".aside");
+
+    if (asideInner && aside) {
+      const callback = (entries) => {
+        const entry = entries[0];
+        const dropBar = document.querySelector(".dropBar");
+
+        const moveDown = () => {
+          const asideWidth = getComputedStyle(aside).width;
+          asideInner.style.transition = "transform 0.3s ease";
+          asideInner.style.transform = "translateY(7rem)";
+          asideInner.style.position = "fixed";
+          asideInner.style.top = "0";
+          asideInner.style.width = asideWidth;
+          if (dropBar) dropBar.classList.add("bar-active");
+        };
+
+        const moveUp = () => {
+          asideInner.style.transition = "transform 0.5s ease";
+          asideInner.style.transform = "translateY(0rem)";
+          asideInner.style.position = "static";
+          asideInner.style.top = "";
+          asideInner.style.width = "";
+          if (dropBar) dropBar.classList.remove("bar-active");
+        };
+
+        if (entry.isIntersecting) {
+          moveUp();
+        } else {
+          moveDown();
+        }
+      };
+
+      const obs = new IntersectionObserver(callback, options);
+      obs.observe(nav);
+    }
+
+    function toggleSticky() {
+      if (!aside) return;
+      aside.classList.remove("sticky-top", "sticky-bottom");
+      if (aside.offsetHeight >= window.innerHeight) {
+        aside.classList.add("sticky-bottom");
+      } else {
+        aside.classList.add("sticky-top");
+      }
+    }
+
+    window.addEventListener("load", toggleSticky);
+    window.addEventListener("resize", toggleSticky);
+    toggleSticky();
+  });
+</script> -->

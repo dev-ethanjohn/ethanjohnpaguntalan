@@ -1,18 +1,64 @@
 ---
 title: Beginning with CSS
-cover: "./post-3.jpg"
+cover: "./images/basic-structure.png"
 coverAlt: "A picture of a coder"
 description: CSS is a great way to style your website. In fact, there are no alternatives! Learn how to use it here.
 ---
 
-Nisi duis ex aliqua eu officia eiusmod duis magna pariatur. Irure laborum qui aliqua nulla esse cillum laborum aliquip nulla elit. Id id Lorem duis irure cillum culpa. Nulla sint et aliqua velit do. Nulla sit sit proident consectetur enim ullamco aliqua in reprehenderit ullamco officia.
+> 💡 **Idea:** Variables are like labeled boxes in memory. You put a value in and use the label to retrieve it.
 
-## Well, then. Let’s talk.
+- Ensures up to HTML5 standards: Using <!DOCTYPE html> at the beginning before the <html> root element tells that your document conforms to the latest version of HTML. Hence, the browser will process and render according to the current HTML5 specifications.
 
-Ad ipsum velit sint enim exercitation mollit consequat elit mollit qui commodo aute. Laboris culpa voluptate aliquip incididunt duis. Cupidatat aliquip et sunt aute fugiat cupidatat irure voluptate. Occaecat officia et sunt.
+- Can I not include it? Excluding this declaration will still cause browsers to render the content, but only in "quirk mode". In this mode, browsers try to display the content based on older versions of HTML, which can lead to inconsistent rendering and layout issues.
 
-Officia tempor voluptate enim consequat cillum aute fugiat cupidatat incididunt magna labore in commodo. Eiusmod nostrud non deserunt. Incididunt excepteur pariatur magna. Proident aute ad in velit labore enim sit cillum ad mollit proident et qui. Esse sunt ullamco ullamco ipsum enim eu esse id eu exercitation laboris magna Lorem. Anim nostrud officia anim velit do exercitation labore mollit excepteur excepteur ex.
+- Be aware of its significance: HTML evolves and may introduce more features and changes in the future. Knowing the significance of the <!DOCTYPE html> declaration is valuable.
 
-Ipsum adipisicing exercitation dolor pariatur labore qui. Culpa cupidatat ea elit eiusmod tempor ea qui dolor Lorem laborum adipisicing. Ad ea laboris qui cupidatat deserunt culpa. Nulla ex velit adipisicing proident fugiat deserunt sunt eu adipisicing sint incididunt quis qui. Nulla fugiat labore duis ullamco reprehenderit excepteur laboris tempor ullamco aliquip laborum aliqua. Est tempor nisi magna ut elit pariatur commodo.
+Features: Display: None | Void element | Structural Usage
 
-Labore commodo do incididunt amet ad et exercitation magna veniam veniam aute laboris excepteur occaecat Lorem. Fugiat in magna commodo magna nulla eu. Fugiat nulla aliqua sunt duis enim irure aliquip fugiat aliqua Lorem ad tempor incididunt proident incididunt. Labore fugiat tempor esse cillum voluptate culpa anim sunt consequat. Ipsum minim nostrud laborum sit aliquip duis officia consequat est. Fugiat mollit elit nulla. Sit minim est elit labore. Sunt eu pariatur pariatur ut deserunt nulla labore in non sit tempor voluptate ex.
+<hr/>
+
+> 💡 `<html>` element serves as the root element of the document. Anything between the opening and the closing </html> tag contains the content of the HTML document.
+
+- The root of all elements: <html> element is a top-level element often tagged as the "root element" as it encloses all elements necessary to give instructions to the web browser for display.
+
+- Nested structure: <html> element contains two distinct sections: the <head> and the <body> section. With nesting, the <html> element acts as a container of all the HTML code of an entire document.
+
+- May contain attributes: Attributes provide additional information about the element. One prime example is the <lang> attribute. More on this on the next topics.
+
+Features: Display: Block | Structural Usage
+
+<hr />
+
+## The Head Section:
+
+![Another local image](../../content/blog/images/html-head.webp)
+
+> `<head>` element is used to define the metadata and provide instructions about the document itself.
+
+- Metadata and Semantic Information: These are set of instructions inside the opening <head> tag and the closing </head> that cannot be viewed on the browsers' webpage.
+
+- Examples of common elements in the <head>: <meta> , <links>, <title> , and <scripts> - for internal styling (Topic to be covered in CSS)
+
+Features: Display: None | Structural Usage
+
+<hr />
+
+## The Body Section:
+
+![Another local image](../../content/blog/images/html-body.png)
+
+> `<body>` element is where your content is displayed and visible in your web browser. This is where the majority of your code is usually written. The elements used in the body will determine the organization and structure of your webpage's content.
+
+- Structure and Organization: The <body> element comes after your <head> element. It is where you create and organize your content through hierarchal and appropriate use of elements. This is like your canvas for building and arranging the content of your webpage.
+
+- Presentation: In the <body> element, you can apply styling to your content, especially when working with libraries and frameworks. More advanced topics on Inline Styling in CSS will cover this aspect of style customization.
+
+- Javascript Interactions: The <body> element is also the place where you can place your JavaScript code either inline (not recommended for larger code) or by using <script> element.
+
+By understanding the HTML document structure, you'll be able to create a well-organized and semantically meaningful webpage. This basic yet comprehensive overview of the HTML Document Structure will be your friend as you move forward to learning advance Web Development concepts.
+
+Ops, here is the output we get for the code above, simple yet fundemantally correct.
+
+![Another local image](../../content/blog/images/html-output.png)
+
+References: HTML Standard (whatwg.org) | HTML Tutorial (w3schools.com) | HTML: HyperText Markup Language | MDN (mozilla.org)

@@ -1,24 +1,36 @@
 ---
 title: HTML - Your Starting Point to Web Development
-cover: "./1-starting-point.jpeg"
+cover: "./images/1-starting-point.jpeg"
 coverAlt: "A picture of a coder"
-description: Have you ever wondered what the most important items of life are? Well, wonder no more!xw
+description: HTML, also known as Hypertext Markup Language is one of the core markup languages interpreted by our web browsers to display the content and structure of a website.
 ---
 
-`HELLLO`
-
-HTML, also known as Hypertext Markup Language is one of the core markup languages interpreted by our web browsers to display the content and structure of a website.
+HTML, also known as **Hypertext Markup Language** is one of the core markup languages interpreted by our web browsers to display the content and structure of a website.
 
 It was created by physicist Time Berners-Lee in 1989 while working at CERN. He paved the way for the World Wide Web to its birth and has been used by us humans ever since.
 
-<!-- A local image relative to the project root -->
-
 ![Another local image](../../content/blog/images/html-css-javascript.gif)
 
-<!--  -->
+You see the skeleton up there? That is a perfect analogy for HTML. HTML creates the structure of the body, CSS dresses it up with style, and JavaScript provides the movements and interactivity, bringing the body of the web page to life.
 
-Officia tempor voluptate enim consequat cillum aute fugiat cupidatat incididunt magna labore in commodo. Eiusmod nostrud non deserunt. Incididunt excepteur pariatur magna. Proident aute ad in velit labore enim sit cillum ad mollit proident et qui. Esse sunt ullamco ullamco ipsum enim eu esse id eu exercitation laboris magna Lorem. Anim nostrud officia anim velit do exercitation labore mollit excepteur excepteur ex.
+In context, HTML sets up the overall layout and organization of the content such as headings, paragraphs, images, links, and others.
 
-Ipsum adipisicing exercitation dolor pariatur labore qui. Culpa cupidatat ea elit eiusmod tempor ea qui dolor Lorem laborum adipisicing. Ad ea laboris qui cupidatat deserunt culpa. Nulla ex velit adipisicing proident fugiat deserunt sunt eu adipisicing sint incididunt quis qui. Nulla fugiat labore duis ullamco reprehenderit excepteur laboris tempor ullamco aliquip laborum aliqua. Est tempor nisi magna ut elit pariatur commodo.
+## HTML is _Not_ a Programming Language
 
-Labore commodo do incididunt amet ad et exercitation magna veniam veniam aute laboris excepteur occaecat Lorem. Fugiat in magna commodo magna nulla eu. Fugiat nulla aliqua sunt duis enim irure aliquip fugiat aliqua Lorem ad tempor incididunt proident incididunt. Labore fugiat tempor esse cillum voluptate culpa anim sunt consequat. Ipsum minim nostrud laborum sit aliquip duis officia consequat est. Fugiat mollit elit nulla. Sit minim est elit labore. Sunt eu pariatur pariatur ut deserunt nulla labore in non sit tempor voluptate ex.
+Like CSS, HTML is not a programming language because it lacks the ability to perform logic and algorithm necessary to process and manipulate data**.** Rather, HTML is considered a markup language in a way that it assigns meaning to a content through the use of elements and attributes.
+
+### How does it work?
+
+As mentioned earlier, HTML works by setting up the structure and contents of a webpage. It utilizes markup elements to instruct the browser on how to render various types of content.
+
+Sure, it is more complicated than you think it is, but you’ll find interesting intricacies as you practice and collaborate with others.
+
+### A look at an HTML Element
+
+![Another local image](../../content/blog/images/element.webp)
+
+A basic yet common HTML element consists of an opening tag and closing tag, encapsulating the content which is displayed visibly on your browser’s screen.
+
+So, I laid some simple yet important overview about HTML. Awesome right? Hope you learn something here as I am also continually learning by sharing my knowledge to everyone.
+
+If you’re reading this, especially if you’re on a similar path as I am in programming, welcome aboard! Let’s learn, grow, and conquer the world of coding together!

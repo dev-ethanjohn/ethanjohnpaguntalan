@@ -4,16 +4,18 @@ import { ClientRouter } from "astro:transitions";
 interface Props {
   title: string;
   projectId?: string;
-  description?: string;
   blogId?: string;
+  description?: string;
+  data?: {
+    title: string;
+    cover: ImageMetadata;
+    coverAlt: string;
+    description?: string;
+    inlineImages?: Array<{ src: string; alt: string }>;
+  };
 }
 
-const {
-  projectId,
-  title = "My Astro Blog",
-  description = "All about my thoughts and imagination about programming",
-  blogId,
-} = Astro.props;
+const { title, projectId, blogId, description } = Astro.props;
 ---
 
 <html lang="en">

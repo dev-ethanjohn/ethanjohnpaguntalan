@@ -22,9 +22,8 @@ const slug = slugify(data.title);
   <article class="blog-post">
     <header>
       <nav class="back-nav">
-        <a href="/home/blogs" class="back-link">← Back to Home</a>
+        <a href="/home/blogs" class="back-link">← Take Me Home 🏡</a>
       </nav>
-      <h1>{data.title}</h1>
       {
         data.cover && (
           <Image
@@ -36,33 +35,59 @@ const slug = slugify(data.title);
           />
         )
       }
+      <h1 class="blog__detail-title">{data.title}</h1>
+      <br />
+      <hr class="divider" />
     </header>
+
     <section class="post-content">
       <div class="markdown-body">
-        <slot />
+        <slot class="markdown-b" />
       </div>
     </section>
+
+    <button id="backToTopBtn" class="back-to-top" aria-label="Back to top"
+      >↑</button
+    >
   </article>
 </MainLayout>
 
-<style>
+<style is:inline>
   body {
-    background-color: black;
+    background-color: rgb(20, 19, 25);
     color: white;
+    display: flex;
+    justify-content: center;
+    font-family: "Inter", sans-serif;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px dashed rgba(255, 255, 255, 0.45); /* or dotted */
+  }
+
+  .blog__detail-title {
+    font-size: 2.5rem;
   }
 
   .blog-post {
     max-width: 800px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
     padding: 2rem;
   }
+
+  .blog-post header {
+    margin-bottom: 2rem;
+  }
+
   .back-nav {
     margin-bottom: 1.5rem;
     text-align: left;
   }
   .back-link {
     display: inline-block;
-    color: #0070f3;
+    color: #ffffff;
     text-decoration: none;
     font-weight: 500;
   }
@@ -73,6 +98,9 @@ const slug = slugify(data.title);
     text-align: center;
   }
 
+  .headi {
+    color: orange;
+  }
   .post-content {
     display: flex;
     gap: 2rem;
@@ -81,12 +109,18 @@ const slug = slugify(data.title);
     flex: 3;
   }
 
+  .blog__text {
+    color: rgb(196, 196, 196);
+  }
+
   .markdown-body {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    :center;
     font-family: "Inter", sans-serif;
     line-height: 200%;
+    margin-bottom: 6rem;
+    position: relative;
   }
 
   .cover__image {
@@ -98,4 +132,97 @@ const slug = slugify(data.title);
     width: 100%;
     object-fit: contain;
   }
+
+  [transition-animate="fade"] {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    background-color: #ffffff;
+    color: rgb(24, 24, 24);
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .back-to-top.show {
+    display: block;
+  }
+
+  .markdown-body hr {
+    border: none;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    width: 100%;
+    margin: 2rem 0;
+  }
+
+  .markdown-body blockquote {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #ffd54f;
+    padding: 1rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    font-style: normal;
+    color: #f1f1f1;
+  }
+
+  /* img[src*="#image"] {
+    width: 150px;
+    height: 100px;
+  } */
 </style>
+
+<script is:inline data-astro-rerun>
+  document.addEventListener("astro:page-load", () => {
+    if (
+      window.location.pathname.startsWith("/home/blogs/") &&
+      window.location.pathname !== "/home/blogs/overview"
+    ) {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 100);
+    }
+
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add("show");
+      } else {
+        backToTopBtn.classList.remove("show");
+      }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+
+  window.addEventListener("load", () => {
+    if (
+      window.location.pathname.startsWith("/home/blogs/") &&
+      window.location.pathname !== "/home/blogs/overview"
+    ) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+</script>

@@ -1,0 +1,39 @@
+---
+// src/pages/home/blogs/[slug].astro
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BlogPostLayout from "../../../layouts/BlogPostLayout.astro";
+import { slugify } from "../../../utils/utils";
+
+export async function getStaticPaths() {
+  const blogPosts = await getCollection("blog");
+  return blogPosts.map((post: CollectionEntry<"blog">) => ({
+    params: { slug: slugify(post.data.title) },
+    props: { post },
+  }));
+}
+
+const { slug } = Astro.params;
+const { post } = Astro.props;
+
+const { Content } = await render(post);
+const title = `Blog: ${post.data.title}`;
+---
+
+<BlogPostLayout data={post.data} transition:animate="fade">
+  <Content />
+</BlogPostLayout>
+
+<style>
+  [transition-animate="fade"] {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
