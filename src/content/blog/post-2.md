@@ -1,65 +1,45 @@
 ---
 title: JS Variables and Data Types
 cover: "./images/javascript.png"
-coverAlt: "A picture of a coder"
+coverAlt: "Illustration of a JavaScript box representing the language"
 description: Hey there! Welcome to my JavaScript learning journey. 🚀 This is my way of breaking down complex concepts and making them easier to understand. So, let's dive right into the first part - Variables and Data Types.
 ---
 
-<p class="blog__text">
 Hey there! Welcome to my JavaScript learning journey. 🚀 This is my way of breaking down complex concepts and making them easier to understand. So, let's dive right into the first part: Variables and Data Types.
-</p>
 
-# Variables: Your Memory Box 🧠
+## Variables: Your Memory Box 🧠
 
-<p class="blog__text">
 Okay, so think of variables as the gatekeepers of your data, providing a means to store, manipulate, and protect your information. In JavaScript, we have two reliable companions for this purpose: let and const. Let's explore how they work
-</p>
 
 ### I. Declaring Variables
 
-<h3 class="headi"> I </h3>
-
-<p class="blog__text">
 Declaring a variable is akin to reserving a storage unit in your computer's memory. You tell your computer, "I need a place to store something, and I'll call it by this name." Here's how it's done:
-</p>
 
 ```js
 let myVariable;
 ```
 
-<p class="blog__text">
 So, we've just told our computer, "Hey, get ready to remember something for us, and we'll call it `myVariable`."
-</p>
 
-<p class="blog__text">
 However, be cautious! If you attempt to access the value of this variable right away, you'll find it's `undefined`, like an empty notebook waiting to be filled:
-</p>
 
 ```js
 console.log(myVariable); // undefined
 ```
 
-<p class="blog__text">
 Since we haven't put anything in it yet, it's undefined as explained above.
-</p>
 
 ### II. Initializing and Reassigning
 
-<p class="blog__text">
 Now, remember that empty myVariable box we created? Let's put something in it:
-</p>
 
 ```js
 myVariable = "Hello";
 ```
 
-<p class="blog__text">
 Now, our myVariable has the value "Hello" inside. We've initialized myVariable with the string "Hello." It's like placing a precious item into your storage box. Cool, right?
-</p>
 
-<p class="blog__text">
 Here's the fascinating part: Once you've declared your variable, you don't need to use let again when you want to change its content. For instance:
-</p>
 
 ```js
 myVariable = "Hello World";
@@ -68,7 +48,7 @@ console.log(myVariable); // Hello World
 
 You can switch its content as many times as you please!
 
-## III. Variable Naming
+### III. Variable Naming
 
 Selecting the right name for your variable is akin to granting it a superpower. Follow these golden rules:
 
@@ -229,8 +209,6 @@ console.log(typeof isMarried); // "boolean"
 ```
 
 This operator ensures you're using the right data type in your code, like having the right tool for the job.
-
-< hr/>
 
 ### Wrapping Up
 

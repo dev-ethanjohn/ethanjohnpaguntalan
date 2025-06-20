@@ -42,7 +42,7 @@ const slug = slugify(data.title);
 
     <section class="post-content">
       <div class="markdown-body">
-        <slot class="markdown-b" />
+        <slot />
       </div>
     </section>
 
@@ -55,19 +55,14 @@ const slug = slugify(data.title);
 <style is:inline>
   body {
     background-color: rgb(20, 19, 25);
-    color: white;
     display: flex;
     justify-content: center;
     font-family: "Inter", sans-serif;
   }
 
-  .divider {
-    border: none;
-    border-top: 1px dashed rgba(255, 255, 255, 0.45); /* or dotted */
-  }
-
   .blog__detail-title {
     font-size: 2.5rem;
+    color: white;
   }
 
   .blog-post {
@@ -107,20 +102,6 @@ const slug = slugify(data.title);
   }
   .content {
     flex: 3;
-  }
-
-  .blog__text {
-    color: rgb(196, 196, 196);
-  }
-
-  .markdown-body {
-    display: flex;
-    flex-direction: column;
-    :center;
-    font-family: "Inter", sans-serif;
-    line-height: 200%;
-    margin-bottom: 6rem;
-    position: relative;
   }
 
   .cover__image {
@@ -167,12 +148,72 @@ const slug = slugify(data.title);
     display: block;
   }
 
+  /* NOTE: MARKDOWN STYLES */
+
+  .markdown-body {
+    display: flex;
+    flex-direction: column;
+    :center;
+    font-family: "Inter", sans-serif;
+    line-height: 200%;
+    margin-bottom: 6rem;
+    position: relative;
+  }
+
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4 {
+    color: white;
+  }
+  .markdown-body p {
+    color: rgb(172, 172, 172);
+  }
+
   .markdown-body hr {
     border: none;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.2);
+    border-top: 1px solid transparent;
+    border-image: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3) 6px,
+      transparent 6px,
+      transparent 10px
+    );
+    border-image-slice: 1;
     width: 100%;
     margin: 2rem 0;
+  }
+
+  .markdown-body pre {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .markdown-body ul li p {
+    margin: 0 0 0.5em 0;
+  }
+
+  .markdown-body ul {
+    padding-left: 1.625em;
+  }
+
+  .markdown-body ul li::marker {
+    color: rgb(196, 196, 196);
+    font-weight: 900;
+  }
+
+  .markdown-body p img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+  }
+
+  .markdown-body ul li > p {
+    color: rgb(196, 196, 196);
   }
 
   .markdown-body blockquote {
