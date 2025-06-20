@@ -65,6 +65,8 @@ let firstName = "Ethan John"; // A clear and descriptive variable name.
 let pokemon = 25000; // Less informative.
 ```
 
+<br />
+
 <hr />
 
 ## Constants: The const Sentinel
@@ -81,6 +83,7 @@ Once you've assigned a value to a constant variable, you can't replace it with s
 numberOfDaysInAWeek = 8; // This will trigger an error!
 ```
 
+<br />
 <hr/>
 
 ## Data Types: The Essence of Information
@@ -210,11 +213,13 @@ console.log(typeof isMarried); // "boolean"
 
 This operator ensures you're using the right data type in your code, like having the right tool for the job.
 
+<hr />
+
 ### Wrapping Up
 
 Let's put your skills to the test. Create two variables, myAge and myName. Assign your age and name to them, respectively. Then, craft a message like this:
 
-Hi, I'm John, and I'm 25 years old.
+> Hi, I'm John, and I'm 25 years old.
 
 Feel free to replace the values of myAge and myName with your own information to personalize the message. This exercise is a great way to practice what you've learned about variables and template literals in JavaScript. Happy coding! 🚀🌟
 

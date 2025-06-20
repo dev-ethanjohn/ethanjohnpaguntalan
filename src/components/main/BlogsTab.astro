@@ -1,20 +1,24 @@
 ---
-// src/components/main/BlogsTab.astro
 import { Image } from "astro:assets";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { slugify } from "../../utils/utils";
 
-// Define props type
 interface Props {
   posts?: CollectionEntry<"blog">[];
 }
 
-// Fetch posts during build
 const posts = await getCollection("blog");
 ---
 
 <div class="blogs-tab">
   <div class="blog-grid">
+    <p>
+      <span class="italic-text"
+        >P.S. Wrote this a few months ago but only publishing it now while
+        trying to make this portfolio look presentable</span
+      > 😅.
+    </p>
+
     {
       posts?.map((post) => {
         const slug = slugify(post.data.title);
@@ -52,9 +56,21 @@ const posts = await getCollection("blog");
   .blog-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 4rem;
-    padding: 1rem 0;
-    background-color: rgba(20, 19, 25, 0.702);
+    gap: 2rem;
+    padding: 1rem;
+    background-color: rgba(249, 249, 249, 0.07);
+    /* background-color: rgba(0, 0, 0, 0.12); */
+    border-radius: 1rem;
+  }
+
+  .italic-text {
+    font-style: italic;
+  }
+
+  .blog-grid > p {
+    font-size: 0.875rem;
+    color: gray;
+    text-transform: lowercase;
   }
 
   .post-card {
@@ -67,6 +83,7 @@ const posts = await getCollection("blog");
       transform 0.3s ease,
       box-shadow 0.3s ease;
     padding-right: 1rem;
+    margin-bottom: 2rem;
   }
 
   .post-card:hover {
@@ -88,7 +105,7 @@ const posts = await getCollection("blog");
 
   .post-card-content {
     grid-column: span 7;
-    padding: 0 1rem;
+    padding-right: 1rem;
     display: flex;
     flex-direction: column;
   }

@@ -1,11 +1,21 @@
 ---
-title: Beginning with CSS
+title: A nice view of the basic HTML Document Structure
 cover: "./images/basic-structure.png"
-coverAlt: "A picture of a coder"
-description: CSS is a great way to style your website. In fact, there are no alternatives! Learn how to use it here.
+coverAlt: "Screenshot of a basic HTML structure"
+description: The HTML Document Structure can be easily scanned in a matter of minutes. Tutorials and courses often lead learners to rush the materials since it cut time, leaving many beginners like me struggling to grasp each component's fundamentals. This results in more questions and confusion at a later time.
 ---
 
-> 💡 **Idea:** Variables are like labeled boxes in memory. You put a value in and use the label to retrieve it.
+The HTML Document Structure can be easily scanned in a matter of minutes. Tutorials and courses often lead learners to rush the materials since it cut time, leaving many beginners like me struggling to grasp each component's fundamentals. This results in more questions and confusion at a later time.
+
+The HTML Document Structure composes four (4) main areas: <!DOCTYPE html>, <html>, <head>, and <body>
+
+Let's look at them now!
+
+Document Type Declaration and the Root Element
+
+![Another local image](./images/basic-structure.png)
+
+> 💡 `<!DOCTYPE html>` declaration lets the browser know how the document should be interpreted and specifies the version of HTML which is currently HTML5.
 
 - Ensures up to HTML5 standards: Using <!DOCTYPE html> at the beginning before the <html> root element tells that your document conforms to the latest version of HTML. Hence, the browser will process and render according to the current HTML5 specifications.
 
@@ -61,4 +71,4 @@ Ops, here is the output we get for the code above, simple yet fundemantally corr
 
 ![Another local image](../../content/blog/images/html-output.png)
 
-References: HTML Standard (whatwg.org) | HTML Tutorial (w3schools.com) | HTML: HyperText Markup Language | MDN (mozilla.org)
+_References: HTML Standard (whatwg.org) | HTML Tutorial (w3schools.com) | HTML: HyperText Markup Language | MDN (mozilla.org)_
