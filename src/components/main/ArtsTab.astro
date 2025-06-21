@@ -15,15 +15,10 @@ const { withoutImage, artId } = Astro.props;
       <div>
         {withoutImage && artId === art.id ? (
           <div class="card">
-            <img
-              class="image opacity-zero"
-              src={art.src}
-              alt=""
-              transition:name={`art-wrapper-${art.id}`}
-            />
+            <img class="image-s" src={art.src} alt={art.id} />
           </div>
         ) : (
-          <div class="card">
+          <div class="card" transition:name={`art-wrapper-${art.id}`}>
             <a href={`/home/arts/${art.id}`}>
               <img
                 class="image"
@@ -65,6 +60,10 @@ const { withoutImage, artId } = Astro.props;
     height: auto;
     display: block;
     border-radius: 0.5rem;
+  }
+
+  .image-s {
+    opacity: 0;
   }
 
   .opacity-zero {

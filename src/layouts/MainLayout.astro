@@ -123,7 +123,7 @@ const { title, projectId, blogId, description, artId } = Astro.props;
     }
 
     <!-- Blog transitions -->
-    {
+    <!-- {
       blogId && (
         <style
           is:global
@@ -144,17 +144,17 @@ const { title, projectId, blogId, description, artId } = Astro.props;
       `}
         />
       )
-    }
+    } -->
 
     <!-- Image (Arts) transitions -->
-    <!-- {
+    {
       artId && (
         <style
           is:global
           set:html={`
-         ::view-transition-group(art-wrapper-${artId}) {
-          animation-duration: 450ms;
-          animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        ::view-transition-group(art-wrapper-${artId}) {
+          animation-duration: 400ms;
+          animation-timing-function: cubic-bezier(0.35, 1.2, 0.4, 1);
         }
 
         ::view-transition-old(art-wrapper-${artId}),
@@ -162,23 +162,24 @@ const { title, projectId, blogId, description, artId } = Astro.props;
           mix-blend-mode: normal;
           height: 100%;
           overflow: clip;
-          animation-duration: 450ms;
-          animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          animation-duration: 400ms;
+          animation-timing-function: cubic-bezier(0.35, 1.2, 0.4, 1);
         }
 
         ::view-transition-old(art-wrapper-${artId}) {
           object-fit: contain;
-          animation: fade-out-spring 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          animation: fade-out 400ms cubic-bezier(0.35, 1.2, 0.4, 1);
         }
 
         ::view-transition-new(art-wrapper-${artId}) {
           object-fit: cover;
-          animation: fade-in-spring 450ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          animation: fade-in 400ms cubic-bezier(0.35, 1.2, 0.4, 1);
         }
 
         ::view-transition-group(art-image-${artId}) {
-          animation-duration: 450ms;
-          animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          animation-duration: 400ms;
+          animation-timing-function: cubic-bezier(0.35, 1.2, 0.4, 1);
+          z-index: 2;
         }
 
         ::view-transition-old(art-image-${artId}),
@@ -186,47 +187,40 @@ const { title, projectId, blogId, description, artId } = Astro.props;
           mix-blend-mode: normal;
           height: 100%;
           overflow: clip;
-          animation-duration: 450ms;
-          animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          animation-duration: 400ms;
+          animation-timing-function: cubic-bezier(0.35, 1.2, 0.4, 1);
         }
 
-        ::view-transition-group(art-overlay) {
-          z-index: 1;
-          animation-duration: 450ms;
-          animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        ::view-transition-old(art-image-${artId}) {
+          animation: fade-out 400ms cubic-bezier(0.35, 1.2, 0.4, 1);
         }
 
-        ::view-transition-group(art-wrapper-${artId}),
-        ::view-transition-group(art-image-${artId}) {
-          z-index: 2;
+        ::view-transition-new(art-image-${artId}) {
+          animation: fade-in 400ms cubic-bezier(0.35, 1.2, 0.4, 1);
+        }
+
+        ::view-transition-group(art-wrapper-${artId}) {
         }
 
         ::view-transition-group(modal-content) {
           z-index: 3;
           animation-duration: 400ms;
-          animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.175);
+          animation-timing-function: cubic-bezier(0.35, 1.2, 0.4, 1);
         }
 
         ::view-transition-old(modal-content):only-child {
           display: none;
         }
 
-        ::view-transition-new(art-overlay) {
-          animation: spring-fade-in 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        ::view-transition-old(art-overlay) {
-          animation: spring-fade-out 300ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
-        }
 
         @keyframes spring-fade-in {
           0% { 
             opacity: 0;
-            transform: scale(0.95);
+            transform: scale(0.98);
           }
           60% {
-            opacity: 0.8;
-            transform: scale(1.02);
+            opacity: 1;
+            transform: scale(1.012);
           }
           100% { 
             opacity: 1;
@@ -245,92 +239,29 @@ const { title, projectId, blogId, description, artId } = Astro.props;
           }
         }
 
-        @keyframes fade-in-spring {
-          0% { 
-            opacity: 0;
-            transform: scale(0.92) translateY(8px);
-          }
-          50% {
-            opacity: 0.7;
-            transform: scale(1.03) translateY(-2px);
-          }
-          100% { 
-            opacity: 1;
-            transform: scale(1) translateY(0);
-          }
-        }
-
-        @keyframes fade-out-spring {
-          0% { 
-            opacity: 1;
-            transform: scale(1) translateY(0);
-          }
-          100% { 
-            opacity: 0;
-            transform: scale(0.95) translateY(4px);
-          }
-        }
-      `}
-        />
-      )
-    } -->
-
-    {
-      artId && (
-        <style
-          is:global
-          set:html={`
-        ::view-transition-old(art-wrapper-${artId}),
-        ::view-transition-new(rt-wrapper-${artId}) {
-          animation: none;
-          mix-blend-mode: normal;
-          height: 100%;
-          overflow: clip;
-        }
-
-        ::view-transition-old(art-image-${artId}),
-        ::view-transition-new(art-image-${artId}) {
-          animation: none;
-          mix-blend-mode: normal;
-          height: 100%;
-          overflow: clip;
-        }
-
-        ::view-transition-new(art-image-${artId}}) {
-          animation: spring-scale-in 600ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        ::view-transition-group(art-wrapper-${projectId}) {
-          z-index: 1;
-        }
-     
-        ::view-transition-group(art-image-${projectId})  {
-          z-index: 2;
-        }
-
-
-
         @keyframes fade-in {
-          from { opacity: 0; }
+          0% { 
+            opacity: 0;
+            transform: scale(0.98) translateY(4px);
+          }
+          60% {
+            opacity: 1;
+            transform: scale(1.012) translateY(-1.2px);
+          }
+          100% { 
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
         }
 
         @keyframes fade-out {
-          to { opacity: 0; }
-        }
-
-        @keyframes slide-from-bottom {
-          from { transform: translateY(30px); }
-        }
-
-        @keyframes slide-from-bottom-2 {
-          from { transform: translateY(10px); }
-        }
-
-        @keyframes spring-scale-in {
-          0% { transform: scale(0.8); }
-          60% { transform: scale(1.002); }
+          0% { 
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
           100% { 
-            transform: scale(1);
+            opacity: 0;
+            transform: scale(0.98) translateY(4px);
           }
         }
       `}
