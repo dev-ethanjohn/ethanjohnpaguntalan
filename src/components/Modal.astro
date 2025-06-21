@@ -10,8 +10,10 @@ import { projects } from "../data/project";
 
 const project = projects.find((img) => img.id === projectId);
 
+console.log(`Project: ${project}`);
+
 if (!project) {
-  throw new Error(`Image with id "${projectId}" not found`);
+  throw new Error(`Project Image with id "${projectId}" not found`);
 }
 ---
 

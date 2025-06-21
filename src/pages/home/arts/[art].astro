@@ -1,0 +1,166 @@
+---
+import ArtsModal from "../../../components/ArtsModal.astro";
+import Aside from "../../../components/Aside.astro";
+import Blurb from "../../../components/Blurb.astro";
+import DropBar from "../../../components/DropBar.astro";
+import Header from "../../../components/Header.astro";
+import ArtsTab from "../../../components/main/ArtsTab.astro";
+import BlogsTab from "../../../components/main/BlogsTab.astro";
+import ProjectsTab from "../../../components/main/ProjectsTab.astro";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import "../../../styles/global.css";
+import "../../../styles/utils.css";
+
+// data imports
+import { arts } from "../../../data/art";
+import { user } from "../../../data/user";
+
+export async function getStaticPaths() {
+  return arts.map((art) => ({
+    params: { art: art.id },
+    props: { art },
+  }));
+}
+
+const { art } = Astro.props;
+console.log("Props in [art].astro:", Astro.props);
+
+const artData = arts.find((img) => img.id === art.id);
+
+if (!artData) {
+  return Astro.redirect("/404");
+}
+
+const tabs = ["projects", "blogs", "arts"];
+const activeTab = "arts";
+const capitalize = (str: string): string =>
+  str.charAt(0).toUpperCase() + str.slice(1);
+---
+
+<MainLayout title={`Art: ${artData.id}`} artId={art.id}>
+  <DropBar {...user} />
+  <div class="grid" transition:animate="fade">
+    <Header {...user} />
+
+    <nav class="main-nav">
+      <div class="tabs main-nav__left" id="tab-container">
+        {
+          tabs.map((t) => (
+            <button
+              data-tab={t}
+              class={activeTab === t ? "active" : ""}
+              aria-selected={activeTab === t}
+              role="tab"
+            >
+              {capitalize(t)}
+            </button>
+          ))
+        }
+        <div class="tab-underline" id="tab-underline"></div>
+      </div>
+
+      <section class="main-nav__right">
+        <Blurb />
+      </section>
+    </nav>
+  </div>
+
+  <div class="main-grid">
+    <main class="layout__main" transition:persist>
+      <div id="tab-content" class="tab-content">
+        <div id="projects-content" class="tab-pane" style="display: none;">
+          <ProjectsTab />
+        </div>
+        <div id="blogs-content" class="tab-pane" style="display: none;">
+          <BlogsTab />
+        </div>
+        <div id="arts-content" class="tab-pane" style="display: block;">
+          <ArtsTab withoutImage={true} artId={art.id} />
+        </div>
+      </div>
+    </main>
+
+    <Aside />
+  </div>
+
+  <ArtsModal artId={art.id} />
+</MainLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 357px;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "header header"
+      "main-nav main-nav";
+    gap: 1rem;
+    width: clamp(47.125rem, 88vw, 75.5rem);
+    margin: 1rem auto;
+  }
+
+  .main-grid {
+    position: relative;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr 357px;
+    width: clamp(47.125rem, 88vw, 75.5rem);
+    grid-template-areas: "main aside";
+    margin: 1rem auto;
+  }
+
+  .main-nav {
+    grid-area: main-nav;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .main-nav__left {
+    flex: 2;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .main-nav__right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  .layout__main {
+    grid-area: main;
+    margin-right: 3rem;
+  }
+
+  .tabs {
+    position: relative;
+    display: flex;
+    gap: 3rem;
+  }
+
+  .tabs button {
+    position: relative;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #999999;
+  }
+
+  .tabs button.active,
+  .tabs button:hover {
+    color: white;
+  }
+
+  .tab-underline {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+    width: 0;
+    left: 0;
+  }
+</style>
