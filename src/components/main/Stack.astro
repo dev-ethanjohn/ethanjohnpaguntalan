@@ -1,0 +1,137 @@
+---
+// src/components/TechStack.astro
+import { Image } from "astro:assets";
+import { techStack } from "../../data/tools";
+---
+
+<section class="tools">
+  <ul class="tools-container">
+    {
+      Object.entries(techStack.categories).map(([category, items]) => (
+        <li>
+          <h3>{category}</h3>
+          <ul class="tech-list">
+            {items.map((item) => (
+              <li class="tech-item">
+                <div class="image-container">
+                  {typeof item.icon === "string" ? (
+                    <img
+                      class="logo"
+                      src={item.icon}
+                      alt={`${item.name} icon`}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <Image
+                      class="logo"
+                      src={item.icon}
+                      alt={`${item.name} icon`}
+                      loading="lazy"
+                    />
+                  )}
+                  <span class="tooltip">{item.name}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .tools {
+    background-color: white;
+    color: black;
+    padding: 2rem;
+    border-radius: 1.5rem;
+  }
+
+  .tools-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    list-style: none;
+  }
+
+  .tools-container > li > h3 {
+    margin: 0 0 1.25rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .tech-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    row-gap: 2.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tech-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .image-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .logo {
+    width: 3.75rem;
+    height: 3.75rem;
+    object-fit: contain;
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.175);
+    filter: grayscale(100%) brightness(0.8) contrast(1.2);
+  }
+
+  .tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px) scale(0.8);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      visibility 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    z-index: 10;
+    margin-bottom: 0.5rem;
+  }
+
+  .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.9);
+  }
+
+  .image-container:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  .image-container:hover .logo {
+    transform: scale(1.08);
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.175);
+    filter: none;
+  }
+</style>

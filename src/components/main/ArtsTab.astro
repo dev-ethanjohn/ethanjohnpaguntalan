@@ -9,7 +9,7 @@ interface Props {
 const { withoutImage, artId } = Astro.props;
 ---
 
-<div class="gallery-grid">
+<div class="gallery-grid" transition:name={`art-overlay`}>
   {
     arts.map((art) => (
       <div>
@@ -36,7 +36,7 @@ const { withoutImage, artId } = Astro.props;
 
 <style>
   .gallery-grid {
-    columns: 160px;
+    columns: 15rem;
     column-gap: 0.5rem;
     margin-bottom: 0.5rem;
   }
@@ -49,7 +49,7 @@ const { withoutImage, artId } = Astro.props;
 
   .card {
     background-color: white;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     margin-bottom: 1rem;
     overflow: hidden;
     break-inside: avoid;
@@ -59,7 +59,7 @@ const { withoutImage, artId } = Astro.props;
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
   }
 
   .image-s {

@@ -6,6 +6,7 @@ import Header from "../../../components/Header.astro";
 import ArtsTab from "../../../components/main/ArtsTab.astro";
 import BlogsTab from "../../../components/main/BlogsTab.astro";
 import ProjectsTab from "../../../components/main/ProjectsTab.astro";
+import Stack from "../../../components/main/Stack.astro";
 import Modal from "../../../components/Modal.astro";
 import MainLayout from "../../../layouts/MainLayout.astro";
 import "../../../styles/global.css";
@@ -30,7 +31,7 @@ if (!projectData) {
   return Astro.redirect("/404");
 }
 
-const tabs = ["projects", "blogs", "arts"];
+const tabs = ["projects", "blogs", "arts", "tech stack"];
 const activeTab = "projects";
 const capitalize = (str: string): string =>
   str.charAt(0).toUpperCase() + str.slice(1);
@@ -72,6 +73,9 @@ const capitalize = (str: string): string =>
         </div>
         <div id="blogs-content" class="tab-pane" style="display: none;">
           <BlogsTab />
+        </div>
+        <div id="tech-stack-content" class="tab-pane" style="display: none">
+          <Stack />
         </div>
         <div id="arts-content" class="tab-pane" style="display: none;">
           <ArtsTab />
@@ -164,7 +168,7 @@ const capitalize = (str: string): string =>
   }
 </style>
 
-<script is:inline data-astro-rerun>
+<!-- <script is:inline data-astro-rerun>
   document.addEventListener("astro:before-swap", () => {
     sessionStorage.setItem("scrollPosition", window.scrollY.toString());
     const asideInner = document.querySelector(".profile__templates");
@@ -328,4 +332,4 @@ const capitalize = (str: string): string =>
     window.addEventListener("resize", toggleSticky);
     toggleSticky();
   });
-</script>
+</script> -->

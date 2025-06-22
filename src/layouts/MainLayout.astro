@@ -183,6 +183,13 @@ const { title, projectId, blogId, description, artId } = Astro.props;
           z-index: 6;
         }
 
+
+        ::view-transition-group(overlay) {
+          z-index: 1;
+          animation-duration: 450ms;
+          animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
         ::view-transition-old(art-image-${artId}),
         ::view-transition-new(art-image-${artId}) {
           mix-blend-mode: normal;

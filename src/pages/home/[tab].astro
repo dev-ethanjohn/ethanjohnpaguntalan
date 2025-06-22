@@ -7,6 +7,7 @@ import ArtsTab from "../../components/main/ArtsTab.astro";
 import BlogsTab from "../../components/main/BlogsTab.astro";
 import Blurb from "../../components/Blurb.astro";
 import DropBar from "../../components/DropBar.astro";
+import Stack from "../../components/main/Stack.astro";
 import ArtsModal from "../../components/ArtsModal.astro";
 
 import "../../styles/global.css";
@@ -14,7 +15,7 @@ import "../../styles/utils.css";
 
 import { user } from "../../data/user";
 
-export const tabs = ["projects", "blogs", "arts"];
+export const tabs = ["projects", "blogs", "arts", "stack"];
 export async function getStaticPaths() {
   return tabs.map((tab) => ({
     params: { tab },
@@ -71,6 +72,13 @@ const { tab } = Astro.params;
           style={tab === "blogs" ? "display: block;" : "display: none;"}
         >
           <BlogsTab />
+        </div>
+        <div
+          id="stack-content"
+          class="tab-pane"
+          style={tab === "stack" ? "display: block;" : "display: none;"}
+        >
+          <Stack />
         </div>
         <div
           id="arts-content"
@@ -260,7 +268,7 @@ const { tab } = Astro.params;
 
     function getCurrentTabFromPath() {
       const path = window.location.pathname;
-      const match = path.match(/\/home\/(projects|blogs|arts)/);
+      const match = path.match(/\/home\/(projects|blogs|stack|arts)/);
       return match ? match[1] : "projects";
     }
 
@@ -277,7 +285,7 @@ const { tab } = Astro.params;
       moveUnderlineToActiveTab(tab);
     });
 
-    // NOTE: Handle asdide positioning on 1st load
+    // NOTE: Handle aside positioning on 1st load
     //
     const options = {
       root: document,
