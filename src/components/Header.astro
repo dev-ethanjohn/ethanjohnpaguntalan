@@ -1,17 +1,36 @@
 ---
 const { username, fullName, profileImage } = Astro.props;
+
+import Blurb from "./Blurb.astro";
 ---
 
 <header class="layout__header">
-  <img
-    src={profileImage}
-    alt={`${username} profile`}
-    class="header__profile-image"
-  />
-  <div class="header__profile-names">
-    <h2 class="header__username">{username}</h2>
-    <h3 class="header__full-name">{fullName}</h3>
+  <div class="header__profile">
+    <img
+      src={profileImage}
+      alt={`${username} profile`}
+      class="header__profile-image"
+    />
+
+    <div class="header__role">
+      <h4>Frontend Developer</h4>
+      <p class="subtitle">developer | artist</p>
+    </div>
   </div>
+
+  <div class="bio">
+    <div class="header__profile-names">
+      <h2 class="header__username">{username}</h2>
+      <h3 class="header__full-name">{fullName}</h3>
+    </div>
+
+    <p class="bio-description">
+      Design-focused dev building clean, user-friendly interfaces ☁︎ AI has
+      speed. I have soul.
+    </p>
+  </div>
+
+  <Blurb />
 </header>
 
 <style>
@@ -43,6 +62,10 @@ const { username, fullName, profileImage } = Astro.props;
     background-repeat: no-repeat;
     filter: grayscale(0.1);
     z-index: -1;
+  }
+
+  .header__role {
+    display: none;
   }
 
   .header__profile-image {
@@ -81,5 +104,70 @@ const { username, fullName, profileImage } = Astro.props;
     color: #999999;
     letter-spacing: 0.1em;
     font-weight: bold;
+  }
+
+  .bio-description {
+    display: none;
+  }
+
+  /* NOTE: MEDIA QUERY */
+  @media (max-width: 50em) {
+    .layout__header {
+      align-items: start;
+      flex-direction: column;
+      padding: 1.25rem;
+      gap: 1rem;
+    }
+
+    .layout__header::before {
+      background: none;
+    }
+
+    .header__profile {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .header__profile-image {
+      width: 6.75rem;
+      height: 6.75rem;
+    }
+
+    .header__role {
+      text-align: end;
+      display: block;
+      padding: 0.5rem;
+      color: #ffffff;
+      font-size: 1rem;
+      font-family: "Inter", sans-serif;
+      letter-spacing: 0.1em;
+      font-weight: bold;
+    }
+
+    .header__username {
+      background-color: transparent;
+      padding: 0;
+    }
+
+    .header__full-name {
+      display: none;
+    }
+
+    .subtitle {
+      font-weight: normal;
+      font-family: "Gaegu", sans-serif;
+      color: #d5d5d5;
+      margin-top: 0.25rem;
+    }
+
+    .bio {
+      margin-top: 1rem;
+    }
+
+    .bio-description {
+      display: block;
+      margin-top: 0.5rem;
+    }
   }
 </style>
