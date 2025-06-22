@@ -138,7 +138,7 @@ const { tab } = Astro.params;
 
   .layout__main {
     grid-area: main;
-    margin-right: 3rem;
+    margin-right: clamp(1rem, 4vw + 0.125rem, 5rem);
   }
 
   .tabs {
