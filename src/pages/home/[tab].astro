@@ -56,6 +56,7 @@ const { tab } = Astro.params;
     </nav>
   </div>
 
+  <!-- Desktop layout: Tab-dependent main-grid -->
   <div class="main-grid">
     <main class="layout__main" transition:persist>
       <div id="tab-content" class="tab-content">
@@ -91,13 +92,20 @@ const { tab } = Astro.params;
     </main>
     <Aside />
   </div>
+
+  <section class="mobile-content">
+    <Aside />
+    <ProjectsTab />
+    <ArtsTab />
+    <BlogsTab />
+    <Stack />
+  </section>
 </MainLayout>
 
 <style>
   .grid {
     display: grid;
     grid-template-columns: 1fr 357px;
-    grid-template-rows: auto;
     grid-template-areas:
       "header header"
       "main-nav main-nav";
@@ -106,19 +114,12 @@ const { tab } = Astro.params;
     margin: 1rem auto;
   }
 
-  @media (max-width: 50em) {
-    .grid {
-      width: 393px;
-    }
-  }
-
   .main-grid {
     position: relative;
     display: grid;
-    justify-content: center;
     grid-template-columns: 1fr 357px;
-    width: clamp(47.125rem, 88vw, 75.5rem);
     grid-template-areas: "main aside";
+    width: clamp(47.125rem, 88vw, 75.5rem);
     margin: 1rem auto;
   }
 
@@ -176,13 +177,34 @@ const { tab } = Astro.params;
     width: 0;
     left: 0;
   }
+
+  .mobile-content {
+    display: none;
+  }
+
+  @media (max-width: 50em) {
+    .grid {
+      display: block;
+      width: 393px;
+    }
+    .main-nav {
+      display: none;
+    }
+    .main-grid {
+      display: none;
+    }
+    .mobile-content {
+      display: block;
+      width: 353px;
+      margin: 1rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
 </style>
 
 <script is:inline data-astro-rerun>
-  // NOTE: control aside sticky positioning before and after page change/transitions
-  // persist scroll position
-
-  // https://github.com/withastro/starlight/discussions/971
   document.addEventListener("astro:before-swap", () => {
     sessionStorage.setItem("scrollPosition", window.scrollY.toString());
     const asideInner = document.querySelector(".profile__templates");
@@ -199,7 +221,7 @@ const { tab } = Astro.params;
     if (scrollPosition) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          if (wasSticky) {
+          if (wasSticky && window.innerWidth > 800) {
             const asideInner = document.querySelector(".profile__templates");
             const aside = document.querySelector(".aside");
             if (asideInner && aside) {
@@ -225,20 +247,18 @@ const { tab } = Astro.params;
   });
 
   document.addEventListener("astro:page-load", () => {
+    // Skip tab logic on mobile where main-nav is hidden
+    if (window.innerWidth <= 800) return;
+
     const tabButtons = document.querySelectorAll("[data-tab]");
     const tabPanes = document.querySelectorAll(".tab-pane");
     const underline = document.getElementById("tab-underline");
     const nav = document.querySelector(".main-nav");
     const dropBar = document.querySelector(".dropBar");
 
-    // e.g. if url is [...home/projects/project-1], remove dropBar
     const isProjectPage = window.location.pathname.match(
       /^\/home\/projects\/[^/]+$/
     );
-    if (isProjectPage && dropBar) {
-      dropBar.classList.remove("bar-active");
-      dropBar.style.transform = "translateX(-50%) translateY(-100%)";
-    }
 
     function moveUnderlineToActiveTab(tabId) {
       const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
@@ -261,8 +281,6 @@ const { tab } = Astro.params;
       moveUnderlineToActiveTab(tabId);
     }
 
-    // change current URL using history to match tab data (client)
-    // e.g., /home/projects, /home/blogs, and more
     tabButtons.forEach((button) => {
       button.addEventListener("click", (e) => {
         e.preventDefault();
@@ -278,7 +296,7 @@ const { tab } = Astro.params;
       return match ? match[1] : "projects";
     }
 
-    const initialTab = getCurrentTabFromPath(); // defaults to "projects", unless path not matched
+    const initialTab = getCurrentTabFromPath();
     showTab(initialTab);
 
     window.addEventListener("popstate", () => {
@@ -287,62 +305,68 @@ const { tab } = Astro.params;
     });
 
     window.addEventListener("resize", () => {
-      const tab = getCurrentTabFromPath();
-      moveUnderlineToActiveTab(tab);
+      if (window.innerWidth > 800) {
+        const tab = getCurrentTabFromPath();
+        moveUnderlineToActiveTab(tab);
+      }
     });
 
-    // NOTE: Handle aside positioning on 1st load
-    //
-    const options = {
-      root: document,
-      rootMargin: "32px",
-      threshold: 0,
-    };
-
-    const asideInner = document.querySelector(".profile__templates");
-    const aside = document.querySelector(".aside");
-
-    if (asideInner && aside && !isProjectPage) {
-      const callback = (entries) => {
-        const entry = entries[0];
-
-        const moveDown = () => {
-          const asideWidth = getComputedStyle(aside).width; //? ensures inner width matches parent width when out of doc flow (due to fixed postioning)
-          asideInner.style.transition = "transform 0.3s ease";
-          asideInner.style.transform = "translateY(7rem)";
-          asideInner.style.position = "fixed";
-          asideInner.style.top = "0";
-          asideInner.style.width = asideWidth;
-        };
-
-        const moveUp = () => {
-          asideInner.style.transition = "transform 0.5s ease";
-          asideInner.style.transform = "translateY(0rem)";
-          asideInner.style.position = "static";
-          asideInner.style.top = "";
-          asideInner.style.width = "";
-        };
-
-        if (entry.isIntersecting) {
-          dropBar?.classList.remove("bar-active");
-          moveUp();
-        } else {
-          dropBar?.classList.add("bar-active");
-          moveDown();
-        }
+    // Only handle DropBar and IntersectionObserver if screen width is > 800px
+    if (!isProjectPage && dropBar && nav) {
+      const options = {
+        root: document,
+        rootMargin: "32px",
+        threshold: 0,
       };
 
-      const obs = new IntersectionObserver(callback, options);
-      obs.observe(nav);
+      const asideInner = document.querySelector(".profile__templates");
+      const aside = document.querySelector(".aside");
+
+      if (asideInner && aside) {
+        const callback = (entries) => {
+          const entry = entries[0];
+
+          const moveDown = () => {
+            const asideWidth = getComputedStyle(aside).width;
+            asideInner.style.transition = "transform 0.3s ease";
+            asideInner.style.transform = "translateY(7rem)";
+            asideInner.style.position = "fixed";
+            asideInner.style.top = "0";
+            asideInner.style.width = asideWidth;
+          };
+
+          const moveUp = () => {
+            asideInner.style.transition = "transform 0.5s ease";
+            asideInner.style.transform = "translateY(0)";
+            asideInner.style.position = "static";
+            asideInner.style.top = "";
+            asideInner.style.width = "";
+          };
+
+          if (entry.isIntersecting) {
+            dropBar.classList.remove("bar-active");
+            moveUp();
+          } else {
+            dropBar.classList.add("bar-active");
+            moveDown();
+          }
+        };
+
+        const obs = new IntersectionObserver(callback, options);
+        obs.observe(nav);
+      }
     }
 
     function toggleSticky() {
+      const aside = document.querySelector(".aside");
       if (!aside) return;
       aside.classList.remove("sticky-top", "sticky-bottom");
-      if (aside.offsetHeight >= window.innerHeight) {
-        aside.classList.add("sticky-bottom");
-      } else {
-        aside.classList.add("sticky-top");
+      if (window.innerWidth > 800) {
+        if (aside.offsetHeight >= window.innerHeight) {
+          aside.classList.add("sticky-bottom");
+        } else {
+          aside.classList.add("sticky-top");
+        }
       }
     }
 
