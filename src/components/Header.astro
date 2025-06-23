@@ -30,7 +30,9 @@ import Blurb from "./Blurb.astro";
     </p>
   </div>
 
-  <Blurb />
+  <div class="cta">
+    <Blurb />
+  </div>
 </header>
 
 <style>
@@ -45,6 +47,10 @@ import Blurb from "./Blurb.astro";
     gap: 2rem;
     overflow: hidden;
     z-index: 0;
+  }
+
+  .cta {
+    display: none;
   }
 
   .layout__header::before {
@@ -168,6 +174,10 @@ import Blurb from "./Blurb.astro";
     .bio-description {
       display: block;
       margin-top: 0.5rem;
+    }
+    .cta {
+      width: 100%;
+      display: block;
     }
   }
 </style>
