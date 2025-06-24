@@ -2,173 +2,535 @@
 // src/components/TechStack.astro
 import { Image } from "astro:assets";
 import { techStack } from "../../data/tools";
+
+import astro from "../../images/techstack/astro.svg";
+import bootstrap from "../../images/techstack/bootstrap.svg";
+import css from "../../images/techstack/css3.svg";
+import figma from "../../images/techstack/figma.svg";
+import git from "../../images/techstack/git.svg";
+import github from "../../images/techstack/github.svg";
+import html from "../../images/techstack/html5.svg";
+import javascript from "../../images/techstack/javascript.svg";
+import npm from "../../images/techstack/npm.svg";
+import reactrouter from "../../images/techstack/react-router.svg";
+import react from "../../images/techstack/react.svg";
+import sass from "../../images/techstack/sass:scss.svg";
+import styledcomponents from "../../images/techstack/styled-components 1.svg";
+import tailwind from "../../images/techstack/tailwind.svg";
+import vscode from "../../images/techstack/vscode.svg";
+import xcode from "../../images/techstack/xcode.svg";
 ---
 
 <section class="tools">
-  <ul class="tools-container">
-    {
-      Object.entries(techStack.categories).map(([category, items]) => (
-        <li>
-          <h3 class="tools-category">{category}</h3>
-          <ul class="tech-list">
-            {items.map((item) => (
-              <li class="tech-item">
-                <div class="image-container">
-                  {typeof item.icon === "string" ? (
-                    <img
-                      class="logo"
-                      src={item.icon}
-                      alt={`${item.name} icon`}
-                      loading="lazy"
-                    />
-                  ) : (
-                    <Image
-                      class="logo"
-                      src={item.icon}
-                      alt={`${item.name} icon`}
-                      loading="lazy"
-                    />
-                  )}
-                  <span class="tooltip">{item.name}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </li>
-      ))
+  <!-- Desktop Layout -->
+  <div class="tools-list">
+    <ul class="tools-container">
+      {
+        Object.entries(techStack.categories).map(([category, items]) => (
+          <li>
+            <h3 class="tools-category">{category}</h3>
+            <ul class="tech-list">
+              {items.map((item) => (
+                <li class="tech-item">
+                  <div class="image-container">
+                    {typeof item.icon === "string" ? (
+                      <img
+                        class="logo"
+                        src={item.icon}
+                        alt={`${item.name} icon`}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <Image
+                        class="logo"
+                        src={item.icon}
+                        alt={`${item.name} icon`}
+                        loading="lazy"
+                      />
+                    )}
+                    <span class="tooltip">{item.name}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <!-- Mobile/Tablet Layout -->
+  <section class="tools-mobile section-container">
+    <div class="tools__header">
+      <h2 class="tools__header-title">
+        Tools <span class="tools__header-caption">Stack in progress 🧩</span>
+      </h2>
+      <div
+        class="header-icon"
+        data-modal-toggle="swiftui-modal"
+        tabindex="0"
+        aria-label="Open SwiftUI projects modal"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          color="#999999"
+          fill="none"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="#999999"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></circle>
+          <path
+            d="M12 16V11.5"
+            stroke="#999999"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+          <path
+            d="M12 8.01172V8.00172"
+            stroke="#999999"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </div>
+    </div>
+
+    <div class="tools__grid-container">
+      <div class="tools__grid">
+        <figure class="tools__grid-item" style="grid-area: js;" data-area="js">
+          <Image src={javascript} alt="JavaScript icon" />
+          <span class="tooltip">JavaScript</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: boot;"
+          data-area="boot"
+        >
+          <Image src={bootstrap} alt="Bootstrap icon" />
+          <span class="tooltip">Bootstrap</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: styled;"
+          data-area="styled"
+        >
+          <Image src={styledcomponents} alt="Styled Components icon" />
+          <span class="tooltip">Styled Components</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: css;"
+          data-area="css"
+        >
+          <Image src={css} alt="CSS icon" />
+          <span class="tooltip">CSS</span>
+        </figure>
+        <div class="tools__grid-item" style="grid-area: html;" data-area="html">
+          <Image src={html} alt="HTML icon" />
+          <span class="tooltip">HTML</span>
+        </div>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: react;"
+          data-area="react"
+        >
+          <Image src={react} alt="React icon" />
+          <span class="tooltip">React</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: router;"
+          data-area="router"
+        >
+          <Image src={reactrouter} alt="React Router icon" />
+          <span class="tooltip">React Router</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: astro;"
+          data-area="astro"
+        >
+          <Image src={astro} alt="Astro icon" />
+          <span class="tooltip">Astro</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: sass;"
+          data-area="sass"
+        >
+          <Image src={sass} alt="SASS/SCSS icon" />
+          <span class="tooltip">SASS/SCSS</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: tail;"
+          data-area="tail"
+        >
+          <Image src={tailwind} alt="Tailwind icon" />
+          <span class="tooltip">Tailwind</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: git;"
+          data-area="git"
+        >
+          <Image src={git} alt="Git icon" />
+          <span class="tooltip">Git</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: github;"
+          data-area="github"
+        >
+          <Image src={github} alt="Github icon" />
+          <span class="tooltip">Github</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: npm;"
+          data-area="npm"
+        >
+          <Image src={npm} alt="Npm icon" />
+          <span class="tooltip">Npm</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: vscode;"
+          data-area="vscode"
+        >
+          <Image src={vscode} alt="VSCode icon" />
+          <span class="tooltip">VSCode</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: figma;"
+          data-area="figma"
+        >
+          <Image src={figma} alt="Figma icon" />
+          <span class="tooltip">Figma</span>
+        </figure>
+        <figure
+          class="tools__grid-item"
+          style="grid-area: xcode;"
+          data-area="xcode"
+        >
+          <Image src={xcode} alt="XCode icon" />
+          <span class="tooltip">XCode</span>
+        </figure>
+      </div>
+    </div>
+    <p class="tools__ps">
+      😌🍎..<mark class="highlight-light-blue">.playing too in iOS dev</mark>
+    </p>
+  </section>
+
+  <style>
+    :root {
+      --clr-dark-800: 240, 20%, 20%;
+      --clr-white: 0, 0%, 100%;
+      --clr-grey-200: 240, 10%, 90%;
+      --ff-sans-gaegu: "Gaegu", sans-serif;
+      --fs-500: 1rem;
+      --fs-600: 1.25rem;
     }
-  </ul>
+
+    /* desktop Layout */
+    .tools-list {
+      background-color: rgba(255, 255, 255, 0.07);
+      color: rgb(255, 255, 255);
+      padding: 2rem;
+      border-radius: 1.5rem;
+    }
+
+    .tools-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+      list-style: none;
+    }
+
+    .tools-container > li {
+      padding: 0 0 2rem 0;
+    }
+
+    .tools-container > li > h3 {
+      margin: 0 0 2rem 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .tools-category {
+      display: inline-block;
+      padding: 0.125rem 1.5rem;
+      border-left: 2px solid rgba(255, 255, 255, 0.33);
+      border-right: 2px solid rgba(255, 255, 255, 0.33);
+      background-color: rgba(12, 12, 22, 0.786);
+      color: rgb(255, 255, 255);
+    }
+
+    .tech-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+      row-gap: 2.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .tech-item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .image-container {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .logo {
+      width: 4rem;
+      height: 4rem;
+      object-fit: contain;
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.175);
+      filter: grayscale(100%) brightness(0.7) contrast(1.4) invert(1);
+    }
+
+    .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px) scale(0.8);
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        visibility 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+      z-index: 10;
+      margin-bottom: 0.5rem;
+    }
+
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .image-container:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    .image-container:hover .logo {
+      transform: scale(1.125);
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.175);
+      filter: none;
+    }
+
+    .image-container:hover::after {
+      content: "";
+      position: absolute;
+      bottom: -1rem;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: rgb(89, 141, 255);
+      animation: slideFromLeft 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.175)
+        forwards;
+    }
+
+    @keyframes slideFromLeft {
+      0% {
+        transform: scaleX(0);
+        transform-origin: left;
+      }
+      100% {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+    }
+
+    /* smaller devices Layout */
+    .tools-mobile {
+      display: none;
+      flex-direction: column;
+      border-radius: 1.25rem;
+      padding: 1rem;
+      color: hsl(var(--clr-dark-800));
+      gap: 0.5rem;
+      background-color: hsl(var(--clr-white));
+    }
+
+    .tools__header {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .tools__header-title {
+      font-size: var(--fs-600);
+    }
+
+    .tools__header-caption {
+      margin-left: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      font-family: "Inter", sans-serif;
+    }
+
+    .tools__grid-container {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      position: relative;
+    }
+
+    .tools__grid {
+      display: grid;
+      height: 100%;
+      width: 100%;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      gap: 0.25rem;
+      grid-template-areas:
+        "js     js     js     html   html   astro"
+        "js     js     js     html   html   git"
+        "js     js     js     css    css    router"
+        "sass   sass   boot   css    css    styled"
+        "sass   sass   tail   xcode  react  react"
+        "github npm    vscode figma  react  react";
+    }
+
+    .tools__grid-item {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+      border-radius: 0.25rem;
+      text-align: center;
+      box-sizing: border-box;
+      border: 1px solid hsl(var(--clr-grey-200) / 0.7);
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+      position: relative;
+    }
+
+    .tools__grid-item .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px) scale(0.8);
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        visibility 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+      z-index: 10;
+      margin-bottom: 0.5rem;
+    }
+
+    .tools__grid-item .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .tools__grid-item:hover .tooltip,
+    .tools__grid-item:focus .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    .tools__grid-item:hover,
+    .tools__grid-item:focus {
+      transform: translateY(-3px);
+      box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.2);
+      z-index: 2;
+    }
+
+    .tools__grid-item:active {
+      transform: translateY(-1px);
+    }
+
+    .tools__ps {
+      font-family: var(--ff-sans-gaegu);
+      font-size: var(--fs-600);
+    }
+
+    .tools__grid-item img {
+      border-radius: 0.25rem;
+      min-width: 60%;
+      min-height: 60%;
+      object-fit: contain;
+    }
+
+    .highlight-light-blue {
+      background-color: hsl(200, 50%, 90%);
+    }
+
+    @media (max-width: 50em) {
+      .tools-list {
+        display: none;
+      }
+      .tools-mobile {
+        display: flex;
+      }
+      .tools__grid {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        gap: 0.25rem;
+        grid-template-areas:
+          "js     js     js     html   html   astro"
+          "js     js     js     html   html   git"
+          "js     js     js     css    css    router"
+          "sass   sass   boot   css    css    styled"
+          "sass   sass   tail   xcode  react  react"
+          "github npm    vscode figma  react  react";
+      }
+      .tools__grid-item {
+        padding: 0.25rem;
+        border: 1px solid #dddddd;
+      }
+    }
+  </style>
 </section>
-
-<style>
-  .tools {
-    background-color: rgba(255, 255, 255, 0.07);
-    color: rgb(255, 255, 255);
-    padding: 2rem;
-    border-radius: 1.5rem;
-  }
-
-  .tools-container {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-    list-style: none;
-  }
-
-  .tools-container > li {
-    padding: 0 0 2rem 0;
-  }
-
-  .tools-container > li > h3 {
-    margin: 0 0 2rem 0;
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-
-  .tools-category {
-    display: inline-block;
-    padding: 0.125rem 1.5rem;
-    border-left: 2px solid rgba(255, 255, 255, 0.33);
-    border-right: 2px solid rgba(255, 255, 255, 0.33);
-    background-color: rgba(12, 12, 22, 0.786);
-    color: rgb(255, 255, 255);
-    /* border-radius: 100rem; */
-  }
-
-  .tech-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
-    row-gap: 2.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .tech-item {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  .image-container {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-  }
-
-  .logo {
-    width: 4rem;
-    height: 4rem;
-    object-fit: contain;
-    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.175);
-    filter: grayscale(100%) brightness(0.7) contrast(1.4) invert(1);
-  }
-
-  .tooltip {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%) translateY(10px) scale(0.8);
-    background-color: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition:
-      opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-      visibility 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-      transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    pointer-events: none;
-    z-index: 10;
-    margin-bottom: 0.5rem;
-  }
-
-  .tooltip::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top-color: rgba(0, 0, 0, 0.9);
-  }
-
-  .image-container:hover .tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0) scale(1);
-  }
-
-  .image-container:hover .logo {
-    transform: scale(1.125);
-    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.175);
-    filter: none;
-  }
-
-  .image-container:hover::after {
-    content: "";
-    position: absolute;
-    bottom: -1rem;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: rgb(89, 141, 255);
-    animation: slideFromLeft 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.175)
-      forwards;
-  }
-
-  @keyframes slideFromLeft {
-    0% {
-      transform: scaleX(0);
-      transform-origin: left;
-    }
-    100% {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-  }
-</style>
