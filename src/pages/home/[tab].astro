@@ -8,6 +8,7 @@ import BlogsTab from "../../components/main/BlogsTab.astro";
 import Blurb from "../../components/Blurb.astro";
 import DropBar from "../../components/DropBar.astro";
 import Stack from "../../components/main/Stack.astro";
+import Divider from "../../components/Divider.astro";
 import ArtsModal from "../../components/ArtsModal.astro";
 
 import "../../styles/global.css";
@@ -32,6 +33,7 @@ const { tab } = Astro.params;
   <DropBar {...user} />
   <div class="grid">
     <Header {...user} />
+    <Divider />
 
     <nav class="main-nav">
       <div class="tabs main-nav__left" id="tab-container">
@@ -193,13 +195,15 @@ const { tab } = Astro.params;
     .main-grid {
       display: none;
     }
+
     .mobile-content {
       display: block;
-      width: 353px;
-      margin: 1rem auto;
+      width: 393px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      padding: 0 1rem;
     }
   }
 </style>

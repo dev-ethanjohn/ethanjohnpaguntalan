@@ -9,82 +9,167 @@ interface Props {
 const { withoutImage, projectId } = Astro.props;
 ---
 
-<div class="projects-grid">
-  {
-    projects.map(async (project) => (
-      <div>
-        {withoutImage && projectId === project.id ? (
-          <div style="height: 457px" />
-        ) : (
-          // card
-          <div transition:name={`card-${project.id}`} class="project">
-            <div
-              class="project__thumbnail-container"
-              transition:name={`wrapper-${project.id}`}
-            >
-              <a href={`/home/projects/${project.id}`}>
-                <img
-                  class="project__image"
-                  src={project.src}
-                  alt={project.id}
-                  transition:name={`image-${project.id}`}
-                />
-              </a>
-            </div>
-
-            <div class="project__content">
-              <h3 class="project__title">{project.title}</h3>
-              <p
-                class="project__description"
-                transition:name={`description-${project.id}`}
+<section class="projects">
+  <div class="projects-grid">
+    {
+      projects.map(async (project) => (
+        <div>
+          {withoutImage && projectId === project.id ? (
+            <div style="height: 457px" />
+          ) : (
+            // card
+            <div transition:name={`card-${project.id}`} class="project">
+              <div
+                class="project__thumbnail-container"
+                transition:name={`wrapper-${project.id}`}
               >
-                {project.description[0]}
-              </p>
+                <a href={`/home/projects/${project.id}`}>
+                  <img
+                    class="project__image"
+                    src={project.src}
+                    alt={project.id}
+                    transition:name={`image-${project.id}`}
+                  />
+                </a>
+              </div>
 
-              <div class="project__meta" transition:name={`meta-${project.id}`}>
-                <div class="project__stacks">
-                  {project.stack.map((stack) => {
-                    return (
-                      <small
-                        class="tech-stack"
-                        style={`background-color: ${stack.color}`}
+              <div class="project__content">
+                <h3 class="project__title">{project.title}</h3>
+                <p
+                  class="project__description"
+                  transition:name={`description-${project.id}`}
+                >
+                  {project.description[0]}
+                </p>
+
+                <div
+                  class="project__meta"
+                  transition:name={`meta-${project.id}`}
+                >
+                  <div class="project__stacks">
+                    {project.stack.map((stack) => {
+                      return (
+                        <small
+                          class="tech-stack"
+                          style={`background-color: ${stack.color}`}
+                        >
+                          {stack.name}
+                        </small>
+                      );
+                    })}
+                  </div>
+
+                  <ul class="project__links">
+                    <li>
+                      <a
+                        href="https://example.com/live"
+                        target="_blank"
+                        class="project__links-live"
                       >
-                        {stack.name}
-                      </small>
-                    );
-                  })}
+                        live
+                      </a>
+                    </li>
+
+                    <li>
+                      <a
+                        href="https://example.com/repo"
+                        target="_blank"
+                        class="project__links-github"
+                      >
+                        repo
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-
-                <ul class="project__links">
-                  <li>
-                    <a
-                      href="https://example.com/live"
-                      target="_blank"
-                      class="project__links-live"
-                    >
-                      live
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      href="https://example.com/repo"
-                      target="_blank"
-                      class="project__links-github"
-                    >
-                      repo
-                    </a>
-                  </li>
-                </ul>
               </div>
             </div>
-          </div>
-          // </div>
-        )}
+            // </div>
+          )}
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="projects--mobile">
+    <div class="projects__header">
+      <h2 class="projects__header-title">
+        Projects <span class="projects__header-count"
+          >{`(${projects.length})`}</span
+        >
+      </h2>
+    </div>
+
+    <div class="projects__scroll">
+      <div class="projects__list">
+        <!-- NOTE: DYNAMIC -->
+        {
+          projects.map(async (project) => (
+            <div class="project-card">
+              {withoutImage && projectId === project.id ? (
+                <div style="height: 200px" />
+              ) : (
+                // card
+                <div transition:name={`card-${project.id}`} class="project">
+                  <div
+                    class="project__thumbnail-container"
+                    transition:name={`wrapper-${project.id}`}
+                  >
+                    <a href={`/home/projects/${project.id}`}>
+                      <img
+                        class="project__image"
+                        src={project.src}
+                        alt={project.id}
+                        transition:name={`image-${project.id}`}
+                      />
+                    </a>
+                  </div>
+
+                  <div class="project__content">
+                    <h3 class="project__title">{project.title}</h3>
+                    <p
+                      class="project__description"
+                      transition:name={`description-${project.id}`}
+                    >
+                      {project.description[0]}
+                    </p>
+
+                    <div
+                      class="project__meta"
+                      transition:name={`meta-${project.id}`}
+                    >
+                      <ul class="project__links">
+                        <li>
+                          <a
+                            href="https://example.com/live"
+                            target="_blank"
+                            class="project__links-live"
+                          >
+                            live
+                          </a>
+                        </li>
+
+                        <li>
+                          <a
+                            href="https://example.com/repo"
+                            target="_blank"
+                            class="project__links-github"
+                          >
+                            repo
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                // </div>
+              )}
+            </div>
+          ))
+        }
       </div>
-    ))
-  }
-</div>
+    </div>
+  </div>
+</section>
 
 <style>
   /* GRID */
@@ -156,10 +241,118 @@ const { withoutImage, projectId } = Astro.props;
     flex-wrap: wrap;
   }
 
+  /* NOTE: MOBILE */
+  .projects--mobile {
+    display: none;
+  }
+
+  .projects__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .projects__header-title {
+    font-size: 1.125rem;
+  }
+
+  .projects__header-count {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .projects__scroll {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    will-change: transform;
+    border-radius: 0.5rem 0 0 0.5rem;
+  }
+
+  .projects__list {
+    display: flex;
+    gap: 1rem;
+    min-width: max-content;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .project-card {
+    display: grid;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 12.5rem;
+  }
+
+  .project-card__thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition:
+      transform 0.4s ease,
+      object-position 0.4s ease;
+  }
+
+  .project-card__thumbnail:hover {
+    object-position: center center;
+    object-fit: cover;
+  }
+
+  .project-card__buttons {
+    display: flex;
+  }
+
+  .project-card__btn {
+    text-decoration: none;
+    padding: 0.25rem 0.75rem;
+    color: hsl(var(--clr-dark-800));
+    font-size: var(--fs-300);
+  }
+
   /* MEDIA */
   @media (max-width: 50em) {
-    .projects-grid {
+    .projects--mobile {
+      max-width: 28.75rem;
       background-color: white;
+      color: black;
+      border-radius: 1.5rem;
+      padding: 0.75rem 0 0.75rem 0.75rem;
+      display: grid;
+      gap: 0.75rem;
+      max-height: 24rem;
+    }
+    .project__description {
+      -webkit-line-clamp: 2;
+    }
+    .projects-grid {
+      display: none;
+    }
+
+    .project__title {
+      margin-top: 1.5rem;
+      margin-bottom: 0;
+    }
+
+    .project__content {
+      padding: 0;
+      gap: 0.5rem;
+    }
+
+    .project__description {
+      font-size: 0.875rem;
+    }
+
+    .projects__list {
+      padding-bottom: 0;
+    }
+
+    /* .project__meta {
+      margin-top: 0 auto;
+    } */
+
+    .project__thumbnail-container {
+      height: 9rem;
+      border-radius: 0.5rem;
     }
   }
 </style>
