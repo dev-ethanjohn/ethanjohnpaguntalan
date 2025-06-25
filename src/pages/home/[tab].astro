@@ -184,7 +184,7 @@ const { tab } = Astro.params;
     display: none;
   }
 
-  @media (max-width: 50em) {
+  @media (max-width: 800px) {
     .grid {
       display: block;
       width: 393px;
@@ -204,6 +204,7 @@ const { tab } = Astro.params;
       flex-direction: column;
       gap: 1rem;
       padding: 0 1rem;
+      margin-bottom: 4rem;
     }
   }
 </style>
@@ -251,18 +252,22 @@ const { tab } = Astro.params;
   });
 
   document.addEventListener("astro:page-load", () => {
-    // Skip tab logic on mobile where main-nav is hidden
-    if (window.innerWidth <= 800) return;
+    const isMobile = window.innerWidth <= 800;
+    const path = window.location.pathname;
+    const isDetailPage = path.match(/^\/home\/(projects|arts)\/[^/]+$/);
+
+    if (isMobile && !isDetailPage && path !== "/home") {
+      console.log(`Forcing URL to /home on mobile (current: ${path})`);
+      history.replaceState(null, null, "/home");
+    }
+
+    if (isMobile || isDetailPage) return;
 
     const tabButtons = document.querySelectorAll("[data-tab]");
     const tabPanes = document.querySelectorAll(".tab-pane");
     const underline = document.getElementById("tab-underline");
     const nav = document.querySelector(".main-nav");
     const dropBar = document.querySelector(".dropBar");
-
-    const isProjectPage = window.location.pathname.match(
-      /^\/home\/projects\/[^/]+$/
-    );
 
     function moveUnderlineToActiveTab(tabId) {
       const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
@@ -276,6 +281,10 @@ const { tab } = Astro.params;
     function showTab(tabId) {
       tabButtons.forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.tab === tabId);
+        btn.setAttribute(
+          "aria-selected",
+          btn.dataset.tab === tabId ? "true" : "false"
+        );
       });
 
       tabPanes.forEach((pane) => {
@@ -304,21 +313,32 @@ const { tab } = Astro.params;
     showTab(initialTab);
 
     window.addEventListener("popstate", () => {
+      if (isMobile && !isDetailPage) {
+        console.log(
+          `Popstate: Forcing /home on mobile (current: ${window.location.pathname})`
+        );
+        history.replaceState(null, null, "/home");
+        return;
+      }
       const tab = getCurrentTabFromPath();
       showTab(tab);
     });
 
     window.addEventListener("resize", () => {
-      if (window.innerWidth > 800) {
+      if (window.innerWidth <= 800 && !isDetailPage) {
+        console.log(
+          `Resize: Forcing /home on mobile (current: ${window.location.pathname})`
+        );
+        history.replaceState(null, null, "/home");
+      } else if (!isDetailPage) {
         const tab = getCurrentTabFromPath();
         moveUnderlineToActiveTab(tab);
       }
     });
 
-    // Only handle DropBar and IntersectionObserver if screen width is > 800px
-    if (!isProjectPage && dropBar && nav) {
+    if (dropBar && nav) {
       const options = {
-        root: document,
+        root: null,
         rootMargin: "32px",
         threshold: 0,
       };

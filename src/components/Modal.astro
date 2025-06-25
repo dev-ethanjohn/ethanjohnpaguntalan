@@ -176,3 +176,15 @@ if (!project) {
     }
   </style>
 </div>
+
+<script is:inline>
+  document.addEventListener("astro:page-load", () => {
+    const isMobile = window.innerWidth <= 800;
+    const backUrl = isMobile ? "/home" : "/home/projects";
+    const backLinks = document.querySelectorAll(".close-link, .thumbnail-link");
+    console.log(`Setting back URL to ${backUrl} (isMobile: ${isMobile})`);
+    backLinks.forEach((link) => {
+      link.href = backUrl;
+    });
+  });
+</script>
