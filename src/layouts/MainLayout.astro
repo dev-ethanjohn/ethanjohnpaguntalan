@@ -135,11 +135,16 @@ const { title, projectId, blogId, description, artId } = Astro.props;
           height: 100%;
           overflow: clip;
         }
-        ::view-transition-new(blog-image-${blogId}) {
-          animation: spring-scale-in 600ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
+
         ::view-transition-group(blog-image-${blogId}) {
-          z-index: 2;
+          z-index: 4;
+          animation-duration: 2000ms !important;
+          animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
+        }
+
+        ::view-transition {
+          animation-duration: 2000ms !important;
+          animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
         }
       `}
         />

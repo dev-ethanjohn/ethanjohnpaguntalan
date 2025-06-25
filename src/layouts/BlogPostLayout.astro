@@ -114,19 +114,6 @@ const slug = slugify(data.title);
     object-fit: contain;
   }
 
-  [transition-animate="fade"] {
-    animation: fadeIn 0.3s ease-out;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
   .back-to-top {
     position: fixed;
     bottom: 2rem;
@@ -234,6 +221,20 @@ const slug = slugify(data.title);
 
 <script is:inline data-astro-rerun>
   document.addEventListener("astro:page-load", () => {
+    // Set dynamic back link
+    const isMobile = window.innerWidth <= 800;
+    const backUrl = isMobile ? "/home" : "/home/blogs";
+    const backLink = document.querySelector(".back-link");
+    if (backLink) {
+      console.log(
+        `Setting blog back URL to ${backUrl} (isMobile: ${isMobile})`
+      );
+      backLink.href = backUrl;
+    } else {
+      console.warn("Back link not found");
+    }
+
+    // Scroll and back-to-top logic
     if (
       window.location.pathname.startsWith("/home/blogs/") &&
       window.location.pathname !== "/home/blogs/overview"

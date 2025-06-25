@@ -58,7 +58,7 @@ const { tab } = Astro.params;
     </nav>
   </div>
 
-  <!-- Desktop layout: Tab-dependent main-grid -->
+  <!-- NOTE: DESKTOP up -->
   <div class="main-grid">
     <main class="layout__main" transition:persist>
       <div id="tab-content" class="tab-content">
@@ -95,6 +95,7 @@ const { tab } = Astro.params;
     <Aside />
   </div>
 
+  <!-- NOTE: TABS to mobile! -->
   <section class="mobile-content">
     <Aside />
     <ProjectsTab />
@@ -254,9 +255,13 @@ const { tab } = Astro.params;
   document.addEventListener("astro:page-load", () => {
     const isMobile = window.innerWidth <= 800;
     const path = window.location.pathname;
-    const isDetailPage = path.match(/^\/home\/(projects|arts)\/[^/]+$/);
+    const isDetailPage = path.match(/^\/home\/(projects|blogs|arts)\/[^/]+$/);
 
-    if (isMobile && !isDetailPage && path !== "/home") {
+    if (
+      isMobile &&
+      !isDetailPage &&
+      path.match(/^\/home(\/(projects|blogs|arts|stack))?$/)
+    ) {
       console.log(`Forcing URL to /home on mobile (current: ${path})`);
       history.replaceState(null, null, "/home");
     }
@@ -313,7 +318,11 @@ const { tab } = Astro.params;
     showTab(initialTab);
 
     window.addEventListener("popstate", () => {
-      if (isMobile && !isDetailPage) {
+      if (
+        isMobile &&
+        !isDetailPage &&
+        path.match(/^\/home(\/(projects|blogs|arts|stack))?$/)
+      ) {
         console.log(
           `Popstate: Forcing /home on mobile (current: ${window.location.pathname})`
         );
@@ -325,7 +334,13 @@ const { tab } = Astro.params;
     });
 
     window.addEventListener("resize", () => {
-      if (window.innerWidth <= 800 && !isDetailPage) {
+      if (
+        window.innerWidth <= 800 &&
+        !isDetailPage &&
+        window.location.pathname.match(
+          /^\/home(\/(projects|blogs|arts|stack))?$/
+        )
+      ) {
         console.log(
           `Resize: Forcing /home on mobile (current: ${window.location.pathname})`
         );
@@ -357,6 +372,7 @@ const { tab } = Astro.params;
             asideInner.style.position = "fixed";
             asideInner.style.top = "0";
             asideInner.style.width = asideWidth;
+            dropBar.classList.add("bar-active");
           };
 
           const moveUp = () => {
@@ -365,6 +381,7 @@ const { tab } = Astro.params;
             asideInner.style.position = "static";
             asideInner.style.top = "";
             asideInner.style.width = "";
+            dropBar.classList.remove("bar-active");
           };
 
           if (entry.isIntersecting) {
