@@ -67,10 +67,7 @@ if (!project) {
         </div>
 
         <div class="description-wrapper">
-          <p
-            class="modal__content-description"
-            transition:name={`description-${project.id}`}
-          >
+          <p class="modal__content-description">
             {project.description}
           </p>
         </div>
@@ -115,6 +112,7 @@ if (!project) {
 
     .meta-wrapper {
       padding: 1rem;
+      background-color: white;
       border-top: 1px solid rgba(0, 0, 0, 0.138);
     }
 
