@@ -186,10 +186,11 @@ function getLogoComponent(name: string) {
 
   .layout__aside {
     grid-area: aside;
-    position: relative;
+    position: sticky;
+    top: 6rem;
     align-self: flex-start;
   }
-
+  /* 
   .layout__aside.sticky-top {
     position: sticky;
     align-self: flex-start;
@@ -200,7 +201,7 @@ function getLogoComponent(name: string) {
     top: auto;
     bottom: 0;
     align-self: flex-end;
-  }
+  } */
 
   .profile__templates {
     gap: 2rem;
@@ -379,6 +380,10 @@ function getLogoComponent(name: string) {
 
     .aside.layout__aside {
       padding-top: 0.5rem;
+    }
+
+    .layout__aside {
+      position: static;
     }
   }
 </style>
