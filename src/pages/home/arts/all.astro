@@ -6,7 +6,7 @@ import MainLayout from "../../../layouts/MainLayout.astro";
 <MainLayout title="All Artworks">
   <section class="arts">
     <div class="nav-container">
-      <a href="/home" class="back-button" aria-label="Go back to gallery"
+      <a href="/home/arts" class="back-button" aria-label="Go back to gallery"
         >← Back</a
       >
       <h1>All Artworks</h1>
@@ -14,62 +14,33 @@ import MainLayout from "../../../layouts/MainLayout.astro";
     <div class="gallery-grid">
       {
         arts.map((art) => (
-          <div class="card">
-            <a href={`/home/arts/${art.id}`}>
-              <img
-                class="image"
-                src={art.src}
-                alt={art.id}
-                loading="lazy"
-                onerror="console.error('Image failed to load:', this.src)"
-              />
-            </a>
-          </div>
+          // <div class="card">
+          <img
+            class="image"
+            src={art.src}
+            alt={art.id}
+            loading="lazy"
+            onerror="console.error('Image failed to load:', this.src)"
+          />
+          // </div>
         ))
       }
     </div>
   </section>
-
-  <script is:inline>
-    // Handle click on back button
-    document
-      .querySelector(".back-button")
-      .addEventListener("click", (event) => {
-        event.preventDefault(); // Prevent default link navigation
-        if (window.history.length > 1) {
-          window.history.back();
-        } else {
-          window.location.href = "/home"; // Fallback to /home if no history
-        }
-      });
-
-    // Handle Escape key for back navigation
-    document.addEventListener("keydown", (event) => {
-      if (
-        event.key === "Escape" &&
-        event.target.tagName !== "INPUT" &&
-        event.target.tagName !== "TEXTAREA"
-      ) {
-        if (window.history.length > 1) {
-          window.history.back();
-        } else {
-          window.location.href = "/home"; // Fallback to /home if no history
-        }
-      }
-    });
-  </script>
 </MainLayout>
 
 <style>
+  body {
+    background-color: black;
+  }
   .arts {
-    padding: 1rem;
+    padding: 4rem;
   }
 
   .nav-container {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
   }
 
   .back-button {
@@ -91,27 +62,24 @@ import MainLayout from "../../../layouts/MainLayout.astro";
   }
 
   .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    row-gap: 0.5rem;
+    column-gap: 0.5rem;
+    columns: 12rem;
   }
 
   .card {
     background-color: white;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     overflow: hidden;
     transition: transform 0.3s ease;
-  }
-
-  .card:hover {
-    transform: scale(1.05);
   }
 
   .image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 0.25rem;
   }
 
   h1 {

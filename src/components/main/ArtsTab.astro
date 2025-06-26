@@ -1,35 +1,13 @@
 ---
 import { arts } from "../../data/art";
-
-interface Props {
-  withoutImage?: boolean;
-  artId?: string;
-}
-
-const { withoutImage, artId } = Astro.props;
 ---
 
 <section class="arts">
   <div class="gallery-grid" transition:name={`art-overlay`}>
     {
       arts.map((art) => (
-        <div>
-          {withoutImage && artId === art.id ? (
-            <div class="card">
-              <img class="image-s" src={art.src} alt={art.id} />
-            </div>
-          ) : (
-            <div class="card" transition:name={`art-wrapper-${art.id}`}>
-              <a href={`/home/arts/${art.id}`}>
-                <img
-                  class="image"
-                  src={art.src}
-                  alt={art.id}
-                  transition:name={`art-image-${art.id}`}
-                />
-              </a>
-            </div>
-          )}
+        <div class="card">
+          <img class="image" src={art.src} alt={art.id} />
         </div>
       ))
     }
@@ -55,15 +33,13 @@ const { withoutImage, artId } = Astro.props;
                 </div>
               </a>
             ) : (
-              <a href={`/home/arts/${art.id}`} class="image-container">
-                <img
-                  class="image grid-image"
-                  src={art.src}
-                  alt={art.id}
-                  loading="lazy"
-                  onerror="console.error('Image failed to load:', this.src)"
-                />
-              </a>
+              <img
+                class="image grid-image"
+                src={art.src}
+                alt={art.id}
+                loading="lazy"
+                onerror="console.error('Image failed to load:', this.src)"
+              />
             )}
           </div>
         ))
@@ -167,9 +143,17 @@ const { withoutImage, artId } = Astro.props;
     font-weight: bold;
   }
 
+  .art__photos {
+    display: none;
+  }
+
   @media (max-width: 50em) {
     .gallery-grid {
       display: none;
+    }
+
+    .art__photos {
+      display: block;
     }
   }
 </style>
