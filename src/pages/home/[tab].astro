@@ -213,39 +213,20 @@ const { tab } = Astro.params;
 <script is:inline data-astro-rerun>
   document.addEventListener("astro:before-swap", () => {
     sessionStorage.setItem("scrollPosition", window.scrollY.toString());
-    const asideInner = document.querySelector(".profile__templates");
-    if (asideInner) {
-      const isSticky = getComputedStyle(asideInner).position === "fixed";
-      sessionStorage.setItem("wasSticky", isSticky ? "true" : "false");
-    }
   });
 
   document.addEventListener("astro:after-swap", () => {
     const scrollPosition = sessionStorage.getItem("scrollPosition");
-    const wasSticky = sessionStorage.getItem("wasSticky") === "true";
 
     if (scrollPosition) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          if (wasSticky && window.innerWidth > 800) {
-            const asideInner = document.querySelector(".profile__templates");
-            const aside = document.querySelector(".aside");
-            if (asideInner && aside) {
-              asideInner.style.transition = "none";
-              asideInner.style.position = "fixed";
-              asideInner.style.top = "0";
-              asideInner.style.width = getComputedStyle(aside).width;
-              asideInner.style.transform = "translateY(7rem)";
-            }
-          }
-
           window.scrollTo({
             top: parseInt(scrollPosition, 10),
             behavior: "instant",
           });
 
           sessionStorage.removeItem("scrollPosition");
-          sessionStorage.removeItem("wasSticky");
           sessionStorage.removeItem("wasDropBarActive");
         });
       });
@@ -365,31 +346,10 @@ const { tab } = Astro.params;
         const callback = (entries) => {
           const entry = entries[0];
 
-          const moveDown = () => {
-            const asideWidth = getComputedStyle(aside).width;
-            asideInner.style.transition = "transform 0.3s ease";
-            asideInner.style.transform = "translateY(7rem)";
-            asideInner.style.position = "fixed";
-            asideInner.style.top = "0";
-            asideInner.style.width = asideWidth;
-            dropBar.classList.add("bar-active");
-          };
-
-          const moveUp = () => {
-            asideInner.style.transition = "transform 0.5s ease";
-            asideInner.style.transform = "translateY(0)";
-            asideInner.style.position = "static";
-            asideInner.style.top = "";
-            asideInner.style.width = "";
-            dropBar.classList.remove("bar-active");
-          };
-
           if (entry.isIntersecting) {
             dropBar.classList.remove("bar-active");
-            moveUp();
           } else {
             dropBar.classList.add("bar-active");
-            moveDown();
           }
         };
 
@@ -397,22 +357,5 @@ const { tab } = Astro.params;
         obs.observe(nav);
       }
     }
-
-    function toggleSticky() {
-      const aside = document.querySelector(".aside");
-      if (!aside) return;
-      aside.classList.remove("sticky-top", "sticky-bottom");
-      if (window.innerWidth > 800) {
-        if (aside.offsetHeight >= window.innerHeight) {
-          aside.classList.add("sticky-bottom");
-        } else {
-          aside.classList.add("sticky-top");
-        }
-      }
-    }
-
-    window.addEventListener("load", toggleSticky);
-    window.addEventListener("resize", toggleSticky);
-    toggleSticky();
   });
 </script>
