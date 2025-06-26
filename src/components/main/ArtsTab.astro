@@ -35,35 +35,39 @@ const { withoutImage, artId } = Astro.props;
     }
   </div>
 
-  <!-- MOBILE -->
+  <!-- mobile view -->
   <div class="art__photos" id="arts__photos-pop">
-    <div class="slider">
+    <div class="mobile-grid">
       {
-        arts.map((art, index) => (
-          <img
-            class={`image photo slide slide--${index}`}
-            src={art.src}
-            alt={art.id}
-            loading="lazy"
-            onerror="console.error('Image failed to load:', this.src)"
-          />
+        arts.slice(0, 4).map((art, index) => (
+          <div class="grid-item">
+            {index === 3 && arts.length > 4 ? (
+              <a href="/home/arts/all" class="overlay-container">
+                <img
+                  class="image grid-image"
+                  src={art.src}
+                  alt={art.id}
+                  loading="lazy"
+                  onerror="console.error('Image failed to load:', this.src)"
+                />
+                <div class="overlay">
+                  <span class="overlay-text">+{arts.length - 4}</span>
+                </div>
+              </a>
+            ) : (
+              <a href={`/home/arts/${art.id}`} class="image-container">
+                <img
+                  class="image grid-image"
+                  src={art.src}
+                  alt={art.id}
+                  loading="lazy"
+                  onerror="console.error('Image failed to load:', this.src)"
+                />
+              </a>
+            )}
+          </div>
         ))
       }
-      <button class="slider-btn slider-btn--left" aria-label="Previous slide">
-   
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"                class="button-icon button-icon--left" color="#000000" fill="none">
-    <path d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-      </button>
-      <button class="slider-btn slider-btn--right" aria-label="Next slide">
-      
-
-
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"   class="button-icon button-icon--right"color="#000000" fill="none">
-    <path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-      </button>
-      <div class="dots"></div>
     </div>
   </div>
 </section>
@@ -94,110 +98,74 @@ const { withoutImage, artId } = Astro.props;
   /* NOTE: mobile */
   .art__photos {
     border-radius: 1.25rem;
-    box-shadow: 0.05rem 0.2rem 0.4rem rgba(0, 0, 0, 0.221));
+    box-shadow: 0.05rem 0.2rem 0.4rem rgba(0, 0, 0, 0.221);
     position: relative;
     overflow: hidden;
     width: auto;
-    aspect-ratio: 1 /1;
+    aspect-ratio: 1/1;
     border: 1px solid black;
   }
 
-  .slider {
-  display: flex;
-  position: relative;
-  aspect-ratio: 1 /1;
-}
+  .mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0.25rem;
+    aspect-ratio: 1/1;
+  }
 
-.slide {
-  position: absolute;
-  transition: transform 0.5s;
-}
+  .grid-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.625rem;
+  }
 
-.photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 1.25rem;
-}
+  .image-container {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 
-.slider-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  border: none;
-  background: rgb(0, 0, 0, 0.3);
-  padding: 4px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s;
-}
+  .grid-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
 
-.slider-btn--left {
-  left: 0.5rem;
-  bottom: 0.5rem;
-}
+  .image-container:hover .grid-image {
+    transform: scale(1.1);
+  }
 
-.slider-btn--right {
-  right: 0.5rem;
-  bottom: 0.5rem;
-}
+  .overlay-container {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 
-.slider-btn:hover {
-  background-color: rgba(0, 0, 0, 0.701);
-  transform: scale(1.2);
-}
+  .overlay-container:hover .grid-image {
+    transform: scale(1.1);
+  }
 
-.slider-btn:active {
-  background-color: rgb(33, 33, 33);
-  transform: scale(1.1);
-}
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.button-icon {
-  position: relative;
-  color: #fff;
-  height: 1rem;
-  width: 1rem;
-  border-radius: 100px;
-}
-
-.button-icon--left {
-  left: -1px;
-}
-
-.button-icon--right {
-  right: -1px;
-}
-
-.dots {
-  position: absolute;
-  bottom: 0.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.dots--dot {
-  border: none;
-  background-color: #e6e6e6;
-  opacity: 0.4;
-  height: 6px;
-  width: 6px;
-  border-radius: 100%;
-  margin-right: 0.375rem;
-  cursor: pointer;
-  transition: all 0.5s;
-  box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.8);
-}
-
-.dots--dot:last-child {
-  margin: 0;
-}
-
-.dots--dot--active {
-  background-color: white;
-  opacity: 1;
-}
-
+  .overlay-text {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 
   @media (max-width: 50em) {
     .gallery-grid {
@@ -205,108 +173,3 @@ const { withoutImage, artId } = Astro.props;
     }
   }
 </style>
-
-<!-- <script is:inline>
-const Imgslides = document.querySelectorAll(`.slide`);
-const buttonLeft = document.querySelector(`.slider-btn--left`);
-const buttonRight = document.querySelector(`.slider-btn--right`);
-const dotContainer = document.querySelector(`.dots`);
-
-let currentSlide = 0;
-const maxSlide = slides.length;
-
-const createDots = function () {
-  Imgslides.forEach(function (slide, index) {
-    dotContainer.insertAdjacentHTML(
-      `beforeend`,
-      `<button  class="dots--dot" data-slide="${index}" aria-label="photo-${
-        index + 1
-      }"></button>`
-    );
-  });
-};
-
-const activeDot = function (slide) {
-  document
-    .querySelectorAll(`.dots--dot`)
-    .forEach((dot) => dot.classList.remove(`dots--dot--active`));
-  document
-    .querySelector(`.dots--dot[data-slide="${slide}"]`)
-    .classList.add(`dots--dot--active`);
-};
-
-const updateCaption = function (slideNumber) {
-  const captionContainer = document.querySelector(".art__captions");
-  const data = slideData[slideNumber];
-
-  const hashtagsString = data.hashtags.map((tag) => `#${tag}`).join(" ");
-
-  captionContainer.innerHTML = `
-          <p class="art__caption-main">
-            <img class="art__caption-pic" src="${data.profilePic}" alt="Profile picture">
-            <span class="art__caption-username">${data.username}</span>
-             ${data.caption}
-          </p>
-          <p class="art__caption-hashtags">${hashtagsString}</p>
-  `;
-
-  const hashtagsElement = captionContainer.querySelector(
-    ".art__caption-hashtags"
-  );
-  if (hashtagsElement) {
-    hashtagsElement.classList.add("scale-up");
-    setTimeout(() => {
-      hashtagsElement.classList.remove("scale-up");
-    }, 300);
-  }
-};
-
-const goToSlide = function (slideNumber) {
-  Imgslides.forEach(
-    (slide, index) =>
-      (slide.style.transform = `translateX(${100 * (index - slideNumber)}%)`)
-  );
-};
-
-const nextSlide = function () {
-  if (currentSlide === maxSlide - 1) {
-    currentSlide = 0;
-  } else {
-    currentSlide++;
-  }
-  goToSlide(currentSlide);
-  activeDot(currentSlide);
-  updateCaption(currentSlide);
-};
-
-const previousSlide = function () {
-  if (currentSlide === 0) {
-    currentSlide = maxSlide - 1;
-  } else {
-    currentSlide--;
-  }
-  goToSlide(currentSlide);
-  activeDot(currentSlide);
-  updateCaption(currentSlide);
-};
-
-const init = function () {
-  goToSlide(0);
-  createDots();
-  activeDot(0);
-  updateCaption(0);
-};
-init();
-
-buttonLeft.addEventListener(`click`, previousSlide);
-buttonRight.addEventListener(`click`, nextSlide);
-dotContainer.addEventListener(`click`, function (event) {
-  if (event.target.classList.contains(`dots--dot`)) {
-    currentSlide = Number(event.target.dataset.slide);
-    goToSlide(currentSlide);
-    activeDot(currentSlide);
-    updateCaption(currentSlide` `);
-  }
-});
-
-</script> -->
