@@ -15,7 +15,7 @@ const { withoutImage, projectId } = Astro.props;
       projects.map(async (project) => (
         <div>
           {withoutImage && projectId === project.id ? (
-            <div style="height: 457px" />
+            <div style="height: 457px, width: 100%" />
           ) : (
             // card
             <div transition:name={`card-${project.id}`} class="project">
@@ -35,12 +35,7 @@ const { withoutImage, projectId } = Astro.props;
 
               <div class="project__content">
                 <h3 class="project__title">{project.title}</h3>
-                <p
-                  class="project__description"
-                  transition:name={`description-${project.id}`}
-                >
-                  {project.description[0]}
-                </p>
+                <p class="project__description">{project.description[0]}</p>
 
                 <div
                   class="project__meta"

@@ -33,13 +33,15 @@ import { arts } from "../../data/art";
                 </div>
               </a>
             ) : (
-              <img
-                class="image grid-image"
-                src={art.src}
-                alt={art.id}
-                loading="lazy"
-                onerror="console.error('Image failed to load:', this.src)"
-              />
+              <div class="overlay-container">
+                <img
+                  class="image grid-image"
+                  src={art.src}
+                  alt={art.id}
+                  loading="lazy"
+                  onerror="console.error('Image failed to load:', this.src)"
+                />
+              </div>
             )}
           </div>
         ))
