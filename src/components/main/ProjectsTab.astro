@@ -183,7 +183,6 @@ const { withoutImage, projectId } = Astro.props;
 
   .project__thumbnail-container {
     height: 14rem;
-    /* background-color: red; */
     overflow: hidden;
     border: 0.5px solid #555555;
   }
@@ -192,7 +191,11 @@ const { withoutImage, projectId } = Astro.props;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.2s ease;
+  }
+
+  .project__image:hover {
+    transform: scale(1.05);
   }
 
   .project__title {
