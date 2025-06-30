@@ -1,5 +1,4 @@
 ---
-// src/layouts/BlogPostLayout.astro
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import { slugify } from "../utils/utils";
@@ -22,7 +21,7 @@ const slug = slugify(data.title);
   <article class="blog-post">
     <header>
       <nav class="back-nav">
-        <a href="/home/blogs" class="back-link">← Take Me Home 🏡</a>
+        <a href="/" class="back-link">← Take Me Home 🏡</a>
       </nav>
       {
         data.cover && (
@@ -212,32 +211,23 @@ const slug = slugify(data.title);
     font-style: normal;
     color: #f1f1f1;
   }
-
-  /* img[src*="#image"] {
-    width: 150px;
-    height: 100px;
-  } */
 </style>
 
 <script is:inline data-astro-rerun>
   document.addEventListener("astro:page-load", () => {
-    // Set dynamic back link
-    const isMobile = window.innerWidth <= 800;
-    const backUrl = isMobile ? "/home" : "/home/blogs";
+    // Set back link to root "/"
     const backLink = document.querySelector(".back-link");
     if (backLink) {
-      console.log(
-        `Setting blog back URL to ${backUrl} (isMobile: ${isMobile})`
-      );
-      backLink.href = backUrl;
+      console.log(`Setting blog back URL to /`);
+      backLink.href = "/";
     } else {
       console.warn("Back link not found");
     }
 
     // Scroll and back-to-top logic
     if (
-      window.location.pathname.startsWith("/home/blogs/") &&
-      window.location.pathname !== "/home/blogs/overview"
+      window.location.pathname.startsWith("/blogs/") &&
+      window.location.pathname !== "/blogs/overview"
     ) {
       setTimeout(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -261,8 +251,8 @@ const slug = slugify(data.title);
 
   window.addEventListener("load", () => {
     if (
-      window.location.pathname.startsWith("/home/blogs/") &&
-      window.location.pathname !== "/home/blogs/overview"
+      window.location.pathname.startsWith("/blogs/") &&
+      window.location.pathname !== "/blogs/overview"
     ) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }

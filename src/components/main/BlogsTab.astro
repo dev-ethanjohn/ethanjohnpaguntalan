@@ -22,7 +22,7 @@ const posts = await getCollection("blog");
       posts?.map((post) => {
         const slug = slugify(post.data.title);
         return (
-          <a href={`/home/blogs/${slug}`} class="post-card">
+          <a href={`/blogs/${slug}`} class="post-card">
             <div class="post-card-content">
               <div>
                 <h3 class="post-card-title">{post.data.title}</h3>
@@ -63,7 +63,7 @@ const posts = await getCollection("blog");
       posts?.map((post) => {
         const slug = slugify(post.data.title);
         return (
-          <a href={`/home/blogs/${slug}`} class="post-card">
+          <a href={`/blogs/${slug}`} class="post-card">
             <div class="post-card-content">
               <div>
                 <span class="post-card-text">
