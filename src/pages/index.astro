@@ -16,7 +16,7 @@ import "../styles/utils.css";
 import { user } from "../data/user";
 
 const tabs = ["projects", "blogs", "arts", "stack"];
-const initialTab = "projects"; // Default tab
+const initialTab = "projects";
 ---
 
 <MainLayout title="Home">
@@ -237,20 +237,18 @@ const initialTab = "projects"; // Default tab
       moveUnderlineToActiveTab(tabId);
     }
 
-    // Set initial tab
     showTab("projects");
 
     tabButtons.forEach((button) => {
       button.addEventListener("click", (e) => {
         e.preventDefault();
         const tab = button.dataset.tab;
-        showTab(tab); // No URL change, just switch content
+        showTab(tab);
       });
     });
 
-    window.addEventListener("popstate", () => {
-      // No URL change, so no tab update needed from popstate
-    });
+    // window.addEventListener("popstate", () => {
+    // });
 
     window.addEventListener("resize", () => {
       const activeTab = document.querySelector(".tabs .active");

@@ -1,20 +1,20 @@
 ---
-import ArtsModal from "../../../components/ArtsModal.astro";
-import Aside from "../../../components/Aside.astro";
-import Blurb from "../../../components/Blurb.astro";
-import DropBar from "../../../components/DropBar.astro";
-import Header from "../../../components/Header.astro";
-import ArtsTab from "../../../components/main/ArtsTab.astro";
-import BlogsTab from "../../../components/main/BlogsTab.astro";
-import ProjectsTab from "../../../components/main/ProjectsTab.astro";
-import Stack from "../../../components/main/Stack.astro";
-import MainLayout from "../../../layouts/MainLayout.astro";
-import "../../../styles/global.css";
-import "../../../styles/utils.css";
+import ArtsModal from "../../components/ArtsModal.astro";
+import Aside from "../../components/Aside.astro";
+import Blurb from "../../components/Blurb.astro";
+import DropBar from "../../components/DropBar.astro";
+import Header from "../../components/Header.astro";
+import ArtsTab from "../../components/main/ArtsTab.astro";
+import BlogsTab from "../../components/main/BlogsTab.astro";
+import ProjectsTab from "../../components/main/ProjectsTab.astro";
+import Stack from "../../components/main/Stack.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import "../../styles/global.css";
+import "../../styles/utils.css";
 
 // data imports
-import { arts } from "../../../data/art";
-import { user } from "../../../data/user";
+import { arts } from "../../data/art";
+import { user } from "../../data/user";
 
 export async function getStaticPaths() {
   return arts.map((art) => ({

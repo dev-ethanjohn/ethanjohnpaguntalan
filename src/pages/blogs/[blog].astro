@@ -1,20 +1,20 @@
 ---
 // src/pages/home/blogs/[blog].astro
-import Aside from "../../../components/Aside.astro";
-import Blurb from "../../../components/Blurb.astro";
-import DropBar from "../../../components/DropBar.astro";
-import Header from "../../../components/Header.astro";
-import ArtsTab from "../../../components/main/ArtsTab.astro";
-import BlogsTab from "../../../components/main/BlogsTab.astro";
-import ProjectsTab from "../../../components/main/ProjectsTab.astro";
-import Modal from "../../../components/Modal.astro";
+import Aside from "../../components/Aside.astro";
+import Blurb from "../../components/Blurb.astro";
+import DropBar from "../../components/DropBar.astro";
+import Header from "../../components/Header.astro";
+import ArtsTab from "../../components/main/ArtsTab.astro";
+import BlogsTab from "../../components/main/BlogsTab.astro";
+import ProjectsTab from "../../components/main/ProjectsTab.astro";
+import Modal from "../../components/Modal.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
-import MainLayout from "../../../layouts/MainLayout.astro";
-import "../../../styles/global.css";
-import "../../../styles/utils.css";
+import MainLayout from "../../layouts/MainLayout.astro";
+import "../../styles/global.css";
+import "../../styles/utils.css";
 
 // Data imports
-import { user } from "../../../data/user";
+import { user } from "../../data/user";
 
 export async function getStaticPaths() {
   const blogPosts = await getCollection("blog");

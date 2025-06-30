@@ -1,8 +1,8 @@
 ---
 // src/pages/home/blogs/[slug].astro
 import { getCollection, render, type CollectionEntry } from "astro:content";
-import BlogPostLayout from "../../../layouts/BlogPostLayout.astro";
-import { slugify } from "../../../utils/utils";
+import BlogPostLayout from "../../layouts/BlogPostLayout.astro";
+import { slugify } from "../../utils/utils";
 
 export async function getStaticPaths() {
   const blogPosts = await getCollection("blog");
