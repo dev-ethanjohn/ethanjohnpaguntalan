@@ -42,7 +42,12 @@ export const projects = [
     ],
     src: "/images/donote.png",
     category: "projects",
-    stack: [TechStack.REACT, TechStack.TAILWIND, TechStack.REACT_ROUTER],
+    stack: [
+      TechStack.REACT,
+      TechStack.TAILWIND,
+      TechStack.REACT_ROUTER,
+      TechStack.FIGMA,
+    ],
   },
   {
     id: "project-3",
@@ -76,6 +81,7 @@ export const projects = [
       TechStack.CSS,
       TechStack.JAVASCRIPT,
       TechStack.SCSS,
+      TechStack.FIGMA,
     ],
   },
 

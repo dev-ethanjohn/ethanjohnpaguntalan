@@ -1,5 +1,4 @@
 ---
-import ArtsModal from "../../components/ArtsModal.astro";
 import Aside from "../../components/Aside.astro";
 import Blurb from "../../components/Blurb.astro";
 import DropBar from "../../components/DropBar.astro";
@@ -94,8 +93,6 @@ const capitalize = (str: string): string =>
     <BlogsTab />
     <ArtsTab withoutImage={true} artId={art.id} />
   </section>
-
-  <ArtsModal artId={art.id} />
 </MainLayout>
 
 <style>
