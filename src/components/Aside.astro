@@ -4,11 +4,31 @@ import AboutMe from "./about/AboutMe.astro";
 import Favorites from "./about/Favorites.astro";
 
 const links = [
-  { name: "LinkedIn", logo: "linkedIn" },
-  { name: "Instagram", logo: "instagram" },
-  { name: "Code Wars", logo: "codewars" },
-  { name: "Facebook", logo: "facebook" },
-  { name: "Frontend Mentor", logo: "frontendmentor" },
+  {
+    name: "LinkedIn",
+    logo: "linkedIn",
+    url: "https://www.linkedin.com/in/ethanjohnpaguntalan-io/",
+  },
+  {
+    name: "Instagram",
+    logo: "instagram",
+    url: "https://www.instagram.com/dev.ejohn/",
+  },
+  {
+    name: "Code Wars",
+    logo: "codewars",
+    url: "https://www.codewars.com/users/dev-ethanjohn",
+  },
+  {
+    name: "Facebook",
+    logo: "facebook",
+    url: "https://www.facebook.com/ethanjohn.paguntalan/",
+  },
+  {
+    name: "Frontend Mentor",
+    logo: "frontendmentor",
+    url: "https://www.frontendmentor.io/profile/dev-ethanjohn",
+  },
 ];
 
 function getLogoComponent(name: string) {
@@ -39,7 +59,12 @@ function getLogoComponent(name: string) {
             const Logo = getLogoComponent(link.logo);
             return (
               <li>
-                <a href="/" class="links" rel="noopener noreferrer">
+                <a
+                  href={link.url}
+                  target="_blank"
+                  class="links"
+                  rel="noopener noreferrer"
+                >
                   {Logo && <Logo />}
                   <small class="link-name">{link.name}</small>
                 </a>
@@ -100,7 +125,7 @@ function getLogoComponent(name: string) {
             <ul class="about__nav-socials">
               <li class="about__nav-social">
                 <a
-                  href="https://instagram.com/yourhandle"
+                  href="https://www.instagram.com/dev.ejohn/"
                   class="social__link"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -110,7 +135,7 @@ function getLogoComponent(name: string) {
               </li>
               <li class="about__nav-social">
                 <a
-                  href="https://facebook.com/yourhandle"
+                  href="https://www.facebook.com/ethanjohn.paguntalan/"
                   class="social__link"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -120,7 +145,7 @@ function getLogoComponent(name: string) {
               </li>
               <li class="about__nav-social">
                 <a
-                  href="https://twitter.com/yourhandle"
+                  href="https://x.com/ethanjohn_dev"
                   class="social__link"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -189,6 +214,16 @@ function getLogoComponent(name: string) {
     top: 6rem;
     align-self: flex-start;
   }
+
+  .blurb__bio li a {
+    color: #999999;
+    transition: color 0.2s ease-out;
+  }
+
+  .blurb__bio li a:hover {
+    color: white;
+  }
+
   /* 
   .layout__aside.sticky-top {
     position: sticky;
@@ -365,6 +400,10 @@ function getLogoComponent(name: string) {
     text-decoration: none;
     font-weight: 600;
     color: hsl(var(--clr-dark-800));
+  }
+
+  .social__link:hover {
+    text-decoration: underline;
   }
 
   .about__nav-social + .about__nav-social::before {
