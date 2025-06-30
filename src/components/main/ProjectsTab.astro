@@ -23,7 +23,7 @@ const { withoutImage, projectId } = Astro.props;
                 class="project__thumbnail-container"
                 transition:name={`wrapper-${project.id}`}
               >
-                <a href={`/home/projects/${project.id}`}>
+                <a href={`/projects/${project.id}`}>
                   <img
                     class="project__image"
                     src={project.src}
@@ -109,7 +109,7 @@ const { withoutImage, projectId } = Astro.props;
                     class="project__thumbnail-container"
                     transition:name={`wrapper-${project.id}`}
                   >
-                    <a href={`/home/projects/${project.id}`}>
+                    <a href={`/projects/${project.id}`}>
                       <img
                         class="project__image"
                         src={project.src}

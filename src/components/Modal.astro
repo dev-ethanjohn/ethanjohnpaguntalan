@@ -10,8 +10,6 @@ import { projects } from "../data/project";
 
 const project = projects.find((img) => img.id === projectId);
 
-console.log(`Project: ${project}`);
-
 if (!project) {
   throw new Error(`Project Image with id "${projectId}" not found`);
 }
@@ -19,7 +17,7 @@ if (!project) {
 
 <div class="modal__overlay" transition:name="overlay">
   <div class="modal__card-wrapper">
-    <a href="/home/projects" transition:name="close-modal">
+    <a href="/" transition:name="close-modal">
       <button class="modal__close" aria-label="Close Modal">×</button>
     </a>
 
@@ -28,7 +26,7 @@ if (!project) {
         class="modal__thumbnail-container"
         transition:name={`wrapper-${projectId}`}
       >
-        <a href={`/home/projects/`}>
+        <a href="/">
           <img
             class="modal__image"
             src={project.src}
@@ -173,15 +171,3 @@ if (!project) {
     }
   </style>
 </div>
-
-<script is:inline>
-  document.addEventListener("astro:page-load", () => {
-    const isMobile = window.innerWidth <= 800;
-    const backUrl = isMobile ? "/home" : "/home/projects";
-    const backLinks = document.querySelectorAll(".close-link, .thumbnail-link");
-    console.log(`Setting back URL to ${backUrl} (isMobile: ${isMobile})`);
-    backLinks.forEach((link) => {
-      link.href = backUrl;
-    });
-  });
-</script>
