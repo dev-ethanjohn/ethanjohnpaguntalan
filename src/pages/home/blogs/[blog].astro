@@ -169,13 +169,11 @@ const title = "Blog Overview";
     const path = window.location.pathname;
     const isDetailPage = path.match(/^\/home\/(projects|blogs|arts)\/[^/]+$/);
 
-    // Enforce /home on mobile unless on a detail page
     if (isMobile && !isDetailPage && path !== "/home") {
       console.log(`Forcing URL to /home on mobile (current: ${path})`);
       history.replaceState(null, null, "/home");
     }
 
-    // Skip tab logic on mobile
     if (isMobile) return;
 
     const tabButtons = document.querySelectorAll("[data-tab]");
