@@ -109,19 +109,17 @@ const { withoutImage, projectId } = Astro.props;
                     class="project__thumbnail-container"
                     transition:name={`wrapper-${project.id}`}
                   >
-                    <a href={`/projects/${project.id}`}>
-                      <img
-                        class="project__image"
-                        src={project.src}
-                        alt={project.id}
-                        transition:name={`image-${project.id}`}
-                      />
-                    </a>
+                    <img
+                      class="project__image"
+                      src={project.src}
+                      alt={project.id}
+                      transition:name={`image-${project.id}`}
+                    />
                   </div>
 
                   <div class="project__content">
                     <h3 class="project__title">{project.title}</h3>
-                    <p class="project__description">{project.description[0]}</p>
+                    <p class="project__description">{project.summary}</p>
 
                     <div
                       class="project__meta"
@@ -192,6 +190,7 @@ const { withoutImage, projectId } = Astro.props;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
+    scale: 0.9;
   }
 
   .project__title {
