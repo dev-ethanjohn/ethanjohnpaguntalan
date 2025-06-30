@@ -185,7 +185,7 @@ const { withoutImage, projectId } = Astro.props;
     height: 14rem;
     /* background-color: red; */
     overflow: hidden;
-    border-bottom: 0.5px solid #555555;
+    border: 0.5px solid #555555;
   }
 
   .project__image {
@@ -300,6 +300,12 @@ const { withoutImage, projectId } = Astro.props;
     font-size: var(--fs-300);
   }
 
+  @media (max-width: 1228px) {
+    .project__image {
+      object-fit: contain;
+    }
+  }
+
   /* MEDIA */
   @media (max-width: 50em) {
     .projects--mobile {
@@ -311,6 +317,10 @@ const { withoutImage, projectId } = Astro.props;
       display: grid;
       gap: 0.75rem;
       max-height: 24rem;
+    }
+
+    .project__image {
+      object-fit: cover;
     }
     .project__description {
       -webkit-line-clamp: 2;
