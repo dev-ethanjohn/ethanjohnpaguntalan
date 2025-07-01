@@ -1,0 +1,54 @@
+---
+import { links } from "../data/socialLinks";
+
+import { logos, type LogoKey } from "../../public/icons/LogoLinkMap.ts";
+
+function getLogoComponent(name: string) {
+  return name.toLowerCase() in logos
+    ? logos[name.toLowerCase() as LogoKey]
+    : null;
+}
+---
+
+<section class="social-links">
+  <ul>
+    {
+      links.map((link) => {
+        const Logo = getLogoComponent(link.logo);
+        return (
+          <li>
+            <a
+              href={link.url}
+              target="_blank"
+              class="links"
+              rel="noopener noreferrer"
+            >
+              {Logo && <Logo />}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>
+
+<style>
+  .social-links > ul {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  li {
+    font-size: 1rem;
+  }
+
+  li {
+    transition: all 0.2s ease-out;
+  }
+
+  ul > li:hover {
+    color: white;
+    transform: translateY(-2px) scale(1.2);
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+import SocialLinks from "./SocialLinks.astro";
+---
+
+<footer>
+  <SocialLinks />
+  <a href="https://github.com/dev-ethanjohn" class="footer">
+    Built by <span>Ethan John Paguntalan</span>
+  </a>
+</footer>
+
+<style>
+  footer {
+    display: none;
+  }
+
+  @media (max-width: 50em) {
+    footer {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      align-items: top;
+      color: #999999;
+    }
+
+    .footer {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+      text-decoration: none;
+      color: #999999;
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer:hover {
+      color: white;
+    }
+
+    .footer span {
+      margin-top: 0.25rem;
+    }
+  }
+</style>

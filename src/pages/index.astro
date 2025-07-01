@@ -9,6 +9,7 @@ import Blurb from "../components/Blurb.astro";
 import DropBar from "../components/DropBar.astro";
 import Stack from "../components/main/Stack.astro";
 import Divider from "../components/Divider.astro";
+import Footer from "../components/Footer.astro";
 
 import "../styles/global.css";
 import "../styles/utils.css";
@@ -68,13 +69,16 @@ const initialTab = "projects";
     <Aside />
   </div>
 
-  <section class="mobile-content">
-    <Aside />
-    <ProjectsTab />
-    <Stack />
-    <BlogsTab />
-    <ArtsTab />
-  </section>
+  <main>
+    <div class="mobile-content">
+      <Aside />
+      <ProjectsTab />
+      <Stack />
+      <BlogsTab />
+      <ArtsTab />
+    </div>
+  </main>
+  <Footer />
 </MainLayout>
 
 <style>
@@ -175,9 +179,9 @@ const initialTab = "projects";
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
       padding: 0 1rem;
-      margin-bottom: 4rem;
+      margin-bottom: 6rem;
+      gap: 1.25rem;
     }
   }
 </style>
