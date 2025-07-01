@@ -23,8 +23,8 @@ export const projects = [
       "My portfolio is a thoughtfully crafted web showcase built with Astro for a static site generation framework, leveraging vanilla HTML, CSS, and JavaScript for a lightweight and customizable structure, View Transitions for smooth page animations, and Markdown for dynamic content management. Designed with a responsive and adaptive style using CSS, it adapts seamlessly across devices, from desktops to mobiles, ensuring an optimal viewing experience. This project highlights a blend of modern web development practices, emphasizing good adaptive design, while serving as a professional platform to display my projects, skills, and creative works. p.s. I would probably transition this project to React with React Router to handle even better client side interactions and transitions. Also, I will add more robust routing especially on desktop tabs",
     ],
     imagePath: "/images/portfolio.png",
-    liveUrl: "https://portfolio-astro-nine-omega.vercel.app/",
-    sourceCodeUrl: "https://github.com/dev-ethanjohn/portfolio-astro",
+    liveUrl: "https://ethanjohnpaguntalan-u6v8.vercel.app/",
+    sourceCodeUrl: "https://github.com/dev-ethanjohn/ethanjohnpaguntalan",
     category: "projects",
     stack: [
       TechStack.HTML,
