@@ -83,6 +83,16 @@ const { withoutImage, projectId } = Astro.props;
         </div>
       ))
     }
+    <p class="hover-group">
+      <a
+        href="https://github.com/dev-ethanjohn?tab=repositories"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline-hover"
+      >
+        View more on my <span class="underline-span">GitHub 🙆‍♂️</span>
+      </a>
+    </p>
   </div>
 
   <div class="projects--mobile">
@@ -165,6 +175,7 @@ const { withoutImage, projectId } = Astro.props;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     gap: 2rem;
+    margin-bottom: 4rem;
   }
 
   .project {
@@ -301,6 +312,43 @@ const { withoutImage, projectId } = Astro.props;
     padding: 0.25rem 0.75rem;
     color: hsl(var(--clr-dark-800));
     font-size: var(--fs-300);
+  }
+
+  /* below projects */
+  .hover-group {
+    color: #999999;
+  }
+
+  .underline-hover {
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .underline-span {
+    position: relative;
+    display: inline-block;
+    color: inherit;
+    transition: all 0.2s ease;
+  }
+
+  .underline-span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background-color: currentColor;
+    transition: all 0.2s ease;
+  }
+
+  .hover-group:hover .underline-span {
+    color: white;
+    transform: scale(1.05) translateX(6px) translateY(-2px);
+  }
+
+  .hover-group:hover .underline-span::after {
+    width: 100%;
   }
 
   @media (max-width: 1228px) {
