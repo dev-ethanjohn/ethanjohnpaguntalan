@@ -26,7 +26,7 @@ const { withoutImage, projectId } = Astro.props;
                 <a href={`/projects/${project.id}`}>
                   <img
                     class="project__image"
-                    src={project.src}
+                    src={project.imagePath}
                     alt={project.id}
                     transition:name={`image-${project.id}`}
                   />
@@ -111,7 +111,7 @@ const { withoutImage, projectId } = Astro.props;
                   >
                     <img
                       class="project__image"
-                      src={project.src}
+                      src={project.imagePath}
                       alt={project.id}
                       transition:name={`image-${project.id}`}
                     />

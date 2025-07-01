@@ -22,7 +22,7 @@ export const projects = [
     description: [
       "My portfolio is a thoughtfully crafted web showcase built with Astro for a static site generation framework, leveraging vanilla HTML, CSS, and JavaScript for a lightweight and customizable structure, View Transitions for smooth page animations, and Markdown for dynamic content management. Designed with a responsive and adaptive style using CSS, it adapts seamlessly across devices, from desktops to mobiles, ensuring an optimal viewing experience. This project highlights a blend of modern web development practices, emphasizing good adaptive design, while serving as a professional platform to display my projects, skills, and creative works. p.s. I would probably transition this project to React with React Router to handle even better client side interactions and transitions. Also, I will add more robust routing especially on desktop tabs",
     ],
-    src: "/images/portfolio.png",
+    imagePath: "/images/portfolio.png",
     category: "projects",
     stack: [
       TechStack.HTML,
@@ -40,7 +40,7 @@ export const projects = [
     description: [
       "Donote is a sleek note-taking web application built with React for a dynamic user interface, React Router for seamless navigation, View Transitions for smooth page animations, Tailwind CSS for a responsive and stylish design, and local storage for offline data persistence. This project offers an intuitive experience where users can create, edit, and delete notes with real-time updates, navigate effortlessly between views, and enjoy a polished look across devices, all without requiring a backend server. Highlighting modern frontend techniques, Donote serves as a lightweight, standalone tool with potential for future enhancements like cloud synchronization, authentication and accessibility features.",
     ],
-    src: "/images/donote.png",
+    imagePath: "/images/donote.png",
     category: "projects",
     stack: [
       TechStack.REACT,
@@ -56,7 +56,7 @@ export const projects = [
     description: [
       "Foodie AI is a collaborative web application developed with a friend, utilizing React for a dynamic frontend, React Router with the newer createBrowserRouter for efficient navigation, the Gemini API for advanced photo analysis, and Framer Motion for engaging animations. This innovative tool allows users to upload a meal photo, which Gemini analyzes to provide detailed insights including benefits, outcomes, ingredients, and nutrients. My contributions included organizing and refining styling, refactoring CSS to resolve responsive layout issues, enhancing animations and user interactions, simplifying JSX by reducing div containers for a more intuitive structure, converting global CSS to modular CSS files with a maintainable filing system for easier access and scalability, and refactoring routing to leverage modern createBrowserRouter, making Foodie AI a user-friendly and efficiently structured resource for food enthusiasts.",
     ],
-    src: "/images/foodieAi.png",
+    imagePath: "/images/foodieAi.png",
     category: "projects",
     stack: [
       TechStack.REACT,
@@ -74,7 +74,7 @@ export const projects = [
     description: [
       "The Tip Calculator is a fun little project I tackled from a Frontend Mentor challenge, where I built a handy tool to figure out tips based on your bill and how good the service was. I used HTML to set up the structure, SCSS/SASS to style it with a clean and flexible look, ES6 modules to keep my JavaScript nice and organized, and plain JavaScript to make it all work smoothly with real-time feedback for users. I really enjoyed crafting a responsive design that’s easy to use, and it turned out to be a solid way to show off my frontend skills while meeting the challenge’s goals!",
     ],
-    src: "/images/tip-calculator.png",
+    imagePath: "/images/tip-calculator.png",
     category: "projects",
     stack: [
       TechStack.HTML,
@@ -92,17 +92,8 @@ export const projects = [
     description: [
       "The Meet Landing Page is a project I built from the ground up (Frontend Mentor), using Semantic HTML5 markup to create a well-structured and accessible foundation, CSS custom properties for easy theme management, Grid for dynamic layouts, Flexbox for flexible component alignment, and Media Queries to ensure it looks great on all screen sizes. Through this project, I dove deeper into mastering CSS Grid and Flexbox for adaptive layouts, got the hang of utility class flows, and honed my skills with media queries and positioning—especially for larger desktop screens",
     ],
-    src: "/images/meet.png",
+    imagePath: "/images/meet.png",
     category: "projects",
     stack: [TechStack.HTML, TechStack.CSS, TechStack.JAVASCRIPT],
   },
 ];
-
-// export const imageList = projects.map((project) => ({
-//   id: project.id,
-//   title: project.title,
-//   src: project.src,
-//   category: project.category,
-//   description: project.description,
-//   stack: project.stack,
-// }));
