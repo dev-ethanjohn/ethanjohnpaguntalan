@@ -3,7 +3,13 @@
 ---
 
 <div class="blurb__cta">
-  <button class="button button--primary">Contact</button>
+  <a
+    href="mailto:dev.ejohnpaguntalan@gmail.com?body=Hi"
+    class="button button--primary"
+  >
+    Contact
+  </a>
+
   <button class="button button--secondary">Resume</button>
 
   <a
@@ -34,11 +40,14 @@
   }
 
   .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     border-radius: 0.5rem;
     width: 100%;
+    height: 100%;
   }
-
   .button--primary {
     background-color: #303030;
     border: 0.5px solid #ffffff3b;
