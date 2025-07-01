@@ -1,47 +1,51 @@
-# Astro Starter Kit: Minimal
+# 🎨 Ethan John Paguntalan's Portfolio
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A clean, modern, and responsive portfolio website built to showcase my front-end development skills, personal projects, and professional profile. This site serves as my room for the world to see my skills as a developer and an artist
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+> 🌐 **Live Demo**: [ethan-portfolio.vercel.app](https://ethan-portfolio.vercel.app)  
+> 💻 **GitHub Repo**: [github.com/EthanPaguntalan/front-end-portfolio](https://github.com/EthanPaguntalan/front-end-portfolio)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+---
 
-## 🚀 Project Structure
+## ✨ Features
 
-Inside of your Astro project, you'll see the following folders and files:
+- 👨‍💻 About Me section introducing myself as a frontend developer
+- 🧰 Projects section with live previews and GitHub links
+- ⚙️ Techstack section for tools and technologies I use for learning and developing projects
+- 📱 Fully responsive and adaptive across devices
+- 🎨 Dedicated Artworks page showcasing creative works
+- 🔝 Scroll-to-top feature for blogs and arts page
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+---
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🧰 Tech Stack
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- **Technologies**: Astro, HTML, MarkDown
+- **Styling:** Custom CSS with responsive and adaptive design
+- **Transitions:** Astro View Transitions
+- **Deployment**: Vercel
 
-Any static assets, like images, can be placed in the `public/` directory.
+## 🛠️ Installation
 
-## 🧞 Commands
+1. **Clone the repository:**
 
-All commands are run from the root of the project, from a terminal:
+git clone https://github.com/EthanPaguntalan/front-end-portfolio.git
+cd front-end-portfolio
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+2. **Install dependencies:**
 
-## 👀 Want to learn more?
+npm install
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+3. **A: Run for development**
+
+npm run dev
+
+3. **B1: Run for development**
+
+npm run build
+
+3. **B2: Preview build**
+
+npm run preview
+
+---
