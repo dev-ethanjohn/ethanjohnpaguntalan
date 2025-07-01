@@ -215,7 +215,6 @@ const slug = slugify(data.title);
 
 <script is:inline data-astro-rerun>
   document.addEventListener("astro:page-load", () => {
-    // Set back link to root "/"
     const backLink = document.querySelector(".back-link");
     if (backLink) {
       console.log(`Setting blog back URL to /`);
@@ -224,7 +223,6 @@ const slug = slugify(data.title);
       console.warn("Back link not found");
     }
 
-    // Scroll and back-to-top logic
     if (
       window.location.pathname.startsWith("/blogs/") &&
       window.location.pathname !== "/blogs/overview"
